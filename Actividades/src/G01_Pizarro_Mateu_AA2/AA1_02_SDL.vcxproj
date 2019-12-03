@@ -162,10 +162,20 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Blinky.cpp" />
+    <ClCompile Include="Clyde.cpp" />
+    <ClCompile Include="Enemies.cpp" />
+    <ClCompile Include="Inky.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Blinky.h" />
+    <ClInclude Include="Clyde.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Enemies.h" />
+    <ClInclude Include="Inky.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
