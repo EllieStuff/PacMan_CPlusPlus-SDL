@@ -5,17 +5,17 @@
 #include <string>
 
 namespace Utils {
-	bool SquareCollidingMouse(Vec2 mouse, Vec2Square square) {
-		
+	bool SquareCollidingMouse(Vector2 mouse, Rect square) {
+
 		return mouse.x > square.x && mouse.x < square.x + square.w
 			&& mouse.y > square.y && mouse.y < square.y + square.h;
 
 	}
 
-	Vec2Square Rect_Vec2Sq(SDL_Rect rect) {
-		Vec2Square v(rect.x, rect.y, rect.w, rect.h);
+	Rect SDLRect_Rect(SDL_Rect rect) {
+		Rect r(rect.x, rect.y, rect.w, rect.h);
 
-		return v;
+		return r;
 	}
 
 	void Resize(char *text, int size) {
@@ -38,14 +38,14 @@ namespace Utils {
 			return text;
 		}
 		int numCopy = num;
-		int size = 1;		
+		int size = 1;
 		while (numCopy >= 10) {
 			size++;
 			numCopy /= 10;
 		}
 		Resize(text, size);
 		text[0] = numCopy + 48;
-		
+
 		for (int i = 1; i < size; i++) {
 			int lastNum = numCopy;
 			numCopy = num;
@@ -59,7 +59,7 @@ namespace Utils {
 		//Prq collons surten aquelles Ý si l'array només té dos espais??!!
 		//Arreglo provisional
 		for (int i = 2; i < 6; i++) text[i] = ' ';
-		
+
 		return text;
 
 	}

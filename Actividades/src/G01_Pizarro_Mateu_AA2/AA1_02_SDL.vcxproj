@@ -167,7 +167,9 @@
     <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="Inky.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Blinky.h" />
@@ -175,7 +177,9 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Enemies.h" />
     <ClInclude Include="Inky.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
