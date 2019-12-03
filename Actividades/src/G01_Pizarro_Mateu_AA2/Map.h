@@ -24,6 +24,25 @@ struct Wall : Objects {
 
 };
 
+struct Points : Objects {
+	void InteractWithPlayer();
+	void TouchingPlayer();
+
+};
+
+struct Fruit : Objects {
+	void InteractWithPlayer();
+	void TouchingPlayer();
+
+};
+
+struct PowerUp : Objects {
+	void InteractWithPlayer();
+	void TouchingPlayer();
+
+};
+
+
 class Map {
 public:
 	char tiles[MAP_WIDTH][MAP_HEIGHT];
