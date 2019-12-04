@@ -10,56 +10,71 @@ void Controller::SceneControl()
 	switch (scene->state) {
 	case SceneState::RUNNING_PLAY:
 		PollForPlay();
-
-		//UPDATE
+		scene = reinterpret_cast<Play*>(scene);
+		scene->Update();
+		scene->Draw();
 
 		break;
 
 	case SceneState::RUNNING_MENU:	//Provisional
 		GeneralPoll();
-		/*Etc...*/
+		scene = reinterpret_cast<Menu*>(scene);
+		scene->Update();
+		scene->Draw();
 
-		scene->state = SceneState::GO_TO_PLAY;
+		//Això al scene->Update()
+		//scene->state = SceneState::GO_TO_PLAY;
 
 		break;
 
 	case SceneState::RUNNING_RANKING:
 		GeneralPoll();
+		scene = reinterpret_cast<Ranking*>(scene);
+		scene->Update();
+		scene->Draw();
 
 		break;
 
-	case SceneState::RUNNING_SPLASH_SCREEN:	//Provisional
-		Sleep(3);
-		scene->state = SceneState::GO_TO_MENU;
+	case SceneState::RUNNING_SPLASH_SCREEN:
+		scene = reinterpret_cast<SplashScreen*>(scene);
+		scene->Update();
+		scene->Draw();
+
+		//Això al scene->Update()
+		//scene->state = SceneState::GO_TO_MENU;
 
 		break;
 
 	case SceneState::GO_TO_PLAY:
-		/*Etc...*/
 		quitSceneTarget = SceneState::GO_TO_MENU;
+		scene = reinterpret_cast<Play*>(scene);
+		scene->Load();
 
 		scene->state = SceneState::RUNNING_PLAY;
 
 		break;
 
-	case SceneState::GO_TO_MENU:	//Provisional
-		/*Etc...*/
+	case SceneState::GO_TO_MENU:
 		quitSceneTarget = SceneState::GO_TO_EXIT;
+		scene = reinterpret_cast<Menu*>(scene);
+		scene->Load();
 
 		scene->state = SceneState::RUNNING_MENU;
 
 		break;
 
 	case SceneState::GO_TO_RANKING:
-		/*Etc...*/
 		quitSceneTarget = SceneState::GO_TO_MENU;
+		scene = reinterpret_cast<Ranking*>(scene);
+		scene->Load();
 
 		scene->state = SceneState::RUNNING_RANKING;
 
 		break;
 
 	case SceneState::GO_TO_EXIT:
-		/*Etc...*/
+		scene = reinterpret_cast<Exit*>(scene);
+		scene->Load();
 
 		scene->state = SceneState::EXIT;
 
@@ -106,7 +121,6 @@ void Controller::PollForPlay()
 void Controller::GeneralPoll()
 {
 	SDL_Event event;
-	std::vector<bool> keys(255);
 	// HANDLE EVENTS
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {

@@ -1,6 +1,4 @@
 #pragma once
-#include <Windows.h>
-
 #include "Constants.h"
 #include "Types.h"
 #include "Utils.h"

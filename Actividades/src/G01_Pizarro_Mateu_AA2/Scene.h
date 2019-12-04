@@ -1,4 +1,6 @@
 #pragma once
+#include <Windows.h>
+
 #include "Constants.h"
 #include "Types.h"
 #include "Utils.h"
@@ -10,7 +12,7 @@ public:
 
 	virtual void Update();
 
-	virtual void GoTo();
+	virtual void Load();
 
 	virtual void Draw();
 
@@ -22,7 +24,7 @@ private:
 class Play : public Scene {
 public:
 	void Update();
-	void GoTo();
+	void Load();
 	void Draw();
 
 };
@@ -30,7 +32,7 @@ public:
 class Menu : public Scene {
 public:
 	void Update();
-	void GoTo();
+	void Load();
 	void Draw();
 
 };
@@ -38,7 +40,7 @@ public:
 class Ranking : public Scene {
 public:
 	void Update();
-	void GoTo();
+	void Load();
 	void Draw();
 
 };
@@ -52,6 +54,6 @@ public:
 
 class Exit : public Scene {
 public:
-	void GoTo();
+	void Load();
 
 };
