@@ -162,7 +162,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Blinky.cpp" />
     <ClCompile Include="Clyde.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Enemies.cpp" />

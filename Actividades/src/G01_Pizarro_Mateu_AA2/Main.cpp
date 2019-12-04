@@ -17,6 +17,7 @@
 //#include "Scene.h"
 //#include "Controller.h"
 //#include "Characters.h"	//Ha de ser el pare dels Enemies i del Player
+#include "Map.h"
 
 #include "Types.h"
 #include "Constants.h"
@@ -88,7 +89,9 @@ int main(int, char*[])
 	//playerPosition.h = playerRect.h = frameHeight;
 	//playerPosition.w = playerRect.w = frameWidth;
 	//int frameTimePlayerSprite = 0;
-
+	Map map;
+	map.Create();
+	
 
 	// --- QUIT ---
 	SDL_Quit();
