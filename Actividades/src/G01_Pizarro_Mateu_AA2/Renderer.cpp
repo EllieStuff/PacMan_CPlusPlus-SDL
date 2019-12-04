@@ -6,7 +6,7 @@ Renderer::Renderer()
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) throw "No es pot inicialitzar SDL subsystems";
 
 	// --- WINDOW ---
-	m_window = SDL_CreateWindow("SDL...", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, MAP_WIDTH, MAP_HEIGHT, SDL_WINDOW_SHOWN);
+	m_window = SDL_CreateWindow("SDL...", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (m_window == nullptr) throw "No es pot inicialitzar SDL_Window";
 
 	// --- RENDERER ---
@@ -58,7 +58,8 @@ void Renderer::LoadTexture(const std::string &id, const std::string &path) {
 };
 
 void Renderer::LoadTextureText(const std::string &fontId, Text text) {
-	SDL_Surface	*tmpSurf = TTF_RenderText_Blended(m_fontData[fontId], text.text.c_str(), SDL_Color{ text.color.r, text.color.g, text.color.b,text.color.a });
+	SDL_Surface	*tmpSurf = TTF_RenderText_Blended(m_fontData[fontId], text.text.c_str(), SDL_Color{ static_cast<Uint8>(text.color.r), 
+		static_cast<Uint8>(text.color.g), static_cast<Uint8>(text.color.b), static_cast<Uint8>(text.color.a) });
 	if (tmpSurf == nullptr) throw "Unable to create the SDL text surface";
 	SDL_Texture *texture{ SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
 	m_textureData[text.id] = texture;

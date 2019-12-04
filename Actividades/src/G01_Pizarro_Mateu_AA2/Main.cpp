@@ -14,6 +14,10 @@
 #include <time.h>
 #include <vector>
 
+//#include "Scene.h"
+//#include "Controller.h"
+//#include "Characters.h"	//Ha de ser el pare dels Enemies i del Player
+
 #include "Types.h"
 #include "Constants.h"
 #include "Utils.h"
@@ -51,6 +55,39 @@ int main(int, char*[])
 	//-->SDL_Image 
 	const Uint8 imgFlags{ IMG_INIT_PNG | IMG_INIT_JPG };
 	if (!(IMG_Init(imgFlags) & imgFlags)) throw "Error: SDL_image init";
+
+
+	// --- TIME ---
+	clock_t lastTime = clock();
+	float timeDown = 60;
+	float deltaTime = 1000.0f;
+	Uint32 frameStart, frameTime;
+
+
+	// --- SPRITES ---
+		//SpriteSheet
+	SDL_Texture* spritesTexture{ IMG_LoadTexture(m_renderer, "../../res/img/PacManSpritesheet.png") };
+	if (spritesTexture == nullptr) throw "Error: bgTexture init";
+	SDL_Rect bgRect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+
+
+	////Cursor
+	////Rect cursorRect{ 0, 0, 100, 50 };
+	//Vector2 cursorTarget(20, 20);
+
+
+	////-->Animated Sprite ---
+	//SDL_Texture *playerTexture{ IMG_LoadTexture(m_renderer, "../../res/img/PacManSpritesheet.png") };
+	//SDL_Rect playerRect, playerPosition;
+	//int textWidth, textHeight, frameWidth, frameHeight;
+	//SDL_QueryTexture(playerTexture, NULL, NULL, &textWidth, &textHeight);
+	//frameWidth = textWidth / 6;
+	//frameHeight = textHeight / 1;
+	//playerPosition.x = playerPosition.y = 0;
+	//playerRect.x = playerRect.y = 0;
+	//playerPosition.h = playerRect.h = frameHeight;
+	//playerPosition.w = playerRect.w = frameWidth;
+	//int frameTimePlayerSprite = 0;
 
 
 	// --- QUIT ---
