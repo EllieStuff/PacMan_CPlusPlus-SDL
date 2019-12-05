@@ -58,7 +58,7 @@ public:
 	char tiles[MAP_WIDTH][MAP_HEIGHT];
 	std::vector<std::vector<Objects*>> objects[MAP_WIDTH][MAP_HEIGHT];
 
-	void Create();
+	void Create(Renderer *);
 
 	void Refresh();
 
