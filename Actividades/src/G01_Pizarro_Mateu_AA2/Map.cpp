@@ -10,13 +10,14 @@ char InterpretateXML(std::string s)
 		return 'Y';
 	}
 }
-void PrintTablero(char c[][20])
+void PrintTablero(char c[][20], Renderer *_renderer, SDL_Rect &playerRect, SDL_Rect &playerPos)
 {
 	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 20; j++)
 		{
 			std::cout << c[j][i];
+			(_renderer->PushSprite("PacmanSheet", playerRect, playerPos));
 		}
 		std::cout << std::endl;
 	}
@@ -31,8 +32,25 @@ void InitTablero(char c[][20])
 		}
 	}
 }
-void Map::Create()
+void Map::Create(Renderer *_renderer)
 {
+	Vector2 *vec2 = new Vector2(0,0);
+	SDL_Rect playerRect, playerPos;
+	int textWidth, textHeight, frameWidth, frameHeight;
+	_renderer->Instance();
+	_renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
+	_renderer->GetTextureSize("PacmanSheet");
+	*vec2 = _renderer->GetTextureSize("PacmanSheet");
+	frameWidth = vec2->x / 8;
+	frameHeight = vec2->y / 8;
+	playerPos.x = playerPos.y = 0;
+	playerRect.x = 4;
+	playerRect.y = 6;
+	playerPos.h = playerRect.h = frameHeight;
+	playerPos.w = playerRect.w = frameWidth;
+	int frameTimeWallSprite = 0;
+	playerRect.x = playerRect.x + frameWidth + 400;
+	playerRect.y = playerRect.y + frameHeight + 600;
 	InitTablero(tiles);
 	std::string numX, numY;
 	int x, y;
@@ -64,5 +82,7 @@ void Map::Create()
 		}
 		std::cout << std::endl;
 	}
-	PrintTablero(tiles);
+	_renderer->Clear();
+	PrintTablero(tiles, _renderer, playerRect, playerPos);
+	_renderer->Render();
 }

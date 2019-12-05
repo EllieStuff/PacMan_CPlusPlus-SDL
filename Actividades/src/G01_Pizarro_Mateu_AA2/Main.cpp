@@ -89,8 +89,12 @@ int main(int, char*[])
 	//playerPosition.h = playerRect.h = frameHeight;
 	//playerPosition.w = playerRect.w = frameWidth;
 	//int frameTimePlayerSprite = 0;
-	Map map;
-	map.Create();
+	while (true)
+	{
+		Map map;
+		Renderer *renderer = renderer->Instance();
+		map.Create(renderer);
+	}
 	
 
 	// --- QUIT ---
