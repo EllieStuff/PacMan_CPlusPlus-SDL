@@ -1,9 +1,22 @@
 #pragma once
 #include <vector>
+#include <iostream>
 #include "Constants.h"
 #include "Types.h"
+<<<<<<< HEAD
 #include "Utils.h"
+=======
+#include "Renderer.h"
+#include <string>
+#include <sstream>
+>>>>>>> master
 
+#include "../XML/rapidxml.hpp"
+#include "../XML/rapidxml_iterators.hpp"
+#include "../XML/rapidxml_print.hpp"
+#include "../XML/rapidxml_utils.hpp"
+
+#include "Utils.h"
 class Objects {
 public:
 	MapTiles tile;

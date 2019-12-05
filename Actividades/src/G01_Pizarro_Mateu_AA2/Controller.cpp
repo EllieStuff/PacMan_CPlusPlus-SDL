@@ -4,6 +4,7 @@ void Controller::SceneControl()
 {
 	// --- GAME LOOP ---
 
+<<<<<<< HEAD
 	//bool isClicked = false;
 	//bool isRunning = true;
 	int pixelsPerFrame = 4;
@@ -115,6 +116,68 @@ void Controller::PollForPlay()
 		default:;
 		}
 	}
+=======
+	////bool isClicked = false;
+	////bool isRunning = true;
+	//int pixelsPerFrame = 4;
+	//while (scene.state != SceneState::EXIT) {
+	//	switch (scene.state) {
+	//	case SceneState::RUNNING_PLAY:
+	//		Poll();
+
+	//		//UPDATE
+
+	//		break;
+
+	//	case SceneState::RUNNING_MENU:	//Provisional
+	//		/*Etc...*/
+
+	//		scene.state = SceneState::GO_TO_PLAY;
+
+	//		break;
+
+	//	case SceneState::RUNNING_RANKING:
+
+	//		break;
+
+	//	case SceneState::RUNNING_SPLASH_SCREEN:	//Provisional
+	//		Sleep(3);
+	//		scene.state = SceneState::GO_TO_MENU;
+
+	//		break;
+
+	//	case SceneState::GO_TO_PLAY:
+	//		/*Etc...*/
+
+	//		scene.state = SceneState::RUNNING_PLAY;
+
+	//		break;
+
+	//	case SceneState::GO_TO_MENU:	//Provisional
+	//		/*Etc...*/
+
+	//		scene.state = SceneState::RUNNING_MENU;
+
+	//		break;
+
+	//	case SceneState::GO_TO_RANKING:
+
+	//		break;
+
+	//	case SceneState::GO_TO_EXIT:
+
+	//		break;
+
+	//		/*case SceneState::EXIT:	//Crec que no fa falta el case tenint el del GO_TO_EXIT
+
+	//			break;*/
+
+	//	default:;
+
+	//	}
+
+	//}
+>>>>>>> master
 
 }
 
