@@ -1,18 +1,20 @@
 #pragma once
-#include <iostream>
+#include "Character.h"
 
-class Enemies
+class Enemies : Character
 {
 private:
-	//Vec2 initialPos;
-	//Rect rect;
-	//EnemyType type;
+	Vector2 initialPos;
+	Rect rect;
+	EnemyType type;
 	char overlapedSquare;
+
 public:
-	//void Move(Direction, Map);
-	//void Hit(Map);
+	virtual void Move(Direction, Map);
+	bool Hit(Map);
 	void ReinitPos();
 	void Reinit();
-	//void Update(Direction, Map);
+	void Update(Direction, Map);
 	void Draw();
+
 };

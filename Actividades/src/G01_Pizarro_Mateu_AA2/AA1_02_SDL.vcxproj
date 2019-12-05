@@ -162,6 +162,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <ClCompile Include="Blinky.cpp" />
+    <ClCompile Include="Character.cpp" />
+=======
+>>>>>>> master
     <ClCompile Include="Clyde.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Enemies.cpp" />
@@ -174,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Blinky.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="Clyde.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Controller.h" />
