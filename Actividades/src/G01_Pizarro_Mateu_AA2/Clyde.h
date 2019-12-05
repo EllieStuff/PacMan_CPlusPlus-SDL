@@ -4,6 +4,5 @@
 
 class Clyde : Enemies
 {
-	void Move(Direction, Map);
-
+	//public Move(Direction, Map);
 };

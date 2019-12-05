@@ -3,13 +3,9 @@
 #include <iostream>
 #include "Constants.h"
 #include "Types.h"
-<<<<<<< HEAD
-#include "Utils.h"
-=======
 #include "Renderer.h"
 #include <string>
 #include <sstream>
->>>>>>> master
 
 #include "../XML/rapidxml.hpp"
 #include "../XML/rapidxml_iterators.hpp"
