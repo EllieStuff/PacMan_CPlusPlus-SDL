@@ -1,13 +1,30 @@
 #include "Map.h"
-char InterpretateXML(std::string s)
+Rect SDLRect_Rect(SDL_Rect rect) {
+	Rect r(rect.x, rect.y, rect.w, rect.h);
+
+	return r;
+}
+void Objects::Equalize(Objects *o)
 {
+	tile = o->tile;
+	rect.x = o->rect.x;
+	rect.y = o->rect.y;
+	rect.w = o->rect.w;
+	rect.h = o->rect.h;
+	rectPos.x = o->rectPos.x;
+	rectPos.y = o->rectPos.y;
+	rectPos.w = o->rectPos.w;
+	rectPos.h = o->rectPos.h;
+}
+Objects* Map::InterpretateXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_objectPos)
+{
+	Objects* object = new Objects;
 	if (s == "Wall")
 	{
-		return 'X';
-	}
-	else
-	{
-		return 'Y';
+		object->tile = MapTiles::WALL;
+		object->rect = SDLRect_Rect(_objectRect);
+		object->rectPos = SDLRect_Rect(_objectPos);
+		return object;
 	}
 }
 void PrintTablero(char c[][20], Renderer *_renderer, SDL_Rect &playerRect, SDL_Rect &playerPos)
@@ -32,25 +49,28 @@ void InitTablero(char c[][20])
 		}
 	}
 }
+
+//int frameWidth, frameHeight;
 void Map::Create(Renderer *_renderer)
 {
+#pragma region RENDERER
 	Vector2 *vec2 = new Vector2(0,0);
-	SDL_Rect playerRect, playerPos;
+	SDL_Rect objectRect, objectPos;
 	int textWidth, textHeight, frameWidth, frameHeight;
 	_renderer->Instance();
 	_renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
-	_renderer->GetTextureSize("PacmanSheet");
 	*vec2 = _renderer->GetTextureSize("PacmanSheet");
 	frameWidth = vec2->x / 8;
 	frameHeight = vec2->y / 8;
-	playerPos.x = playerPos.y = 0;
-	playerRect.x = 4;
-	playerRect.y = 6;
-	playerPos.h = playerRect.h = frameHeight;
-	playerPos.w = playerRect.w = frameWidth;
-	int frameTimeWallSprite = 0;
-	playerRect.x = playerRect.x + frameWidth + 400;
-	playerRect.y = playerRect.y + frameHeight + 600;
+	objectPos.x = objectPos.y = 50;
+	objectRect.x = 4 * frameWidth;
+	objectRect.y = 6 * frameHeight;
+	objectPos.h = frameHeight / 2;
+	objectRect.h = frameHeight ;
+	objectPos.w = frameHeight / 2;
+	objectRect.w = frameWidth ;
+	//int frameTimeWallSprite = 0;
+#pragma endregion
 	InitTablero(tiles);
 	std::string numX, numY;
 	int x, y;
@@ -78,11 +98,27 @@ void Map::Create(Renderer *_renderer)
 			numY = pAttr->value();
 			x = std::stoi(numX);
 			y = std::stoi(numY);
-			tiles[x - 1][y - 1] = InterpretateXML(pNodeI->name());
+			objects[2][2] = (InterpretateXML(pNodeI->name(),objectRect, objectPos));
 		}
 		std::cout << std::endl;
 	}
 	_renderer->Clear();
-	PrintTablero(tiles, _renderer, playerRect, playerPos);
+	PrintTablero(tiles, _renderer, objectRect, objectPos);
 	_renderer->Render();
 }
+
+void Objects::InteractWithPlayer()
+{
+
+}
+
+void Objects::TouchingPlayer()
+{
+
+}
+
+void Objects::Draw()
+{
+
+}
+

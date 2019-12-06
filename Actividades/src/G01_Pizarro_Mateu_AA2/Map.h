@@ -16,14 +16,16 @@
 class Objects {
 public:
 	MapTiles tile;
-	Rect rect;
-
+	Rect rect, rectPos;
+	void Equalize(Objects*);
 	virtual void InteractWithPlayer();
 
 	virtual void TouchingPlayer();
 
 	void Draw();
 
+	
+	
 private:
 
 };
@@ -57,6 +59,7 @@ class Map {
 public:
 	char tiles[MAP_WIDTH][MAP_HEIGHT];
 	std::vector<std::vector<Objects*>> objects[MAP_WIDTH][MAP_HEIGHT];
+	Objects* InterpretateXML(std::string, SDL_Rect&, SDL_Rect &);
 
 	void Create(Renderer *);
 

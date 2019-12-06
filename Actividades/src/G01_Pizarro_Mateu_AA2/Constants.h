@@ -10,9 +10,10 @@ const int SCREEN_HEIGHT = 600;
 const int FPS = 60;
 const float DELAY_TIME = 1000.0f / FPS;
 
+
 enum class SceneState { GO_TO_PLAY = 0, GO_TO_MENU, GO_TO_RANKING, GO_TO_EXIT, RUNNING_PLAY, RUNNING_MENU, RUNNING_RANKING, RUNNING_SPLASH_SCREEN, EXIT };
 
-enum class MapTiles { WALL = 0, EMPTY, FRUIT, POWER_UP, POINTS };
+enum class MapTiles { WALL = 'X', EMPTY, FRUIT, POWER_UP, POINTS };
 
 enum class Direction { UP = 0, DOWN, RIGHT, LEFT };
 
