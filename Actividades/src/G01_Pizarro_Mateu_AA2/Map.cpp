@@ -23,7 +23,7 @@ void Objects::Equalize(Objects *o)
 	rectPos.w = o->rectPos.w;
 	rectPos.h = o->rectPos.h;
 }
-Objects* Map::InterpretateXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_objectPos)
+Objects* Map::InterpretateXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_objectPos, SDL_Rect &_playerRect,)
 {
 	Objects* object = new Objects;
 	if (s == "Wall")
@@ -36,7 +36,7 @@ Objects* Map::InterpretateXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_o
 	}
 	if (s == "Player")
 	{
-
+		 
 	}
 	if (s == "Inky")
 	{
