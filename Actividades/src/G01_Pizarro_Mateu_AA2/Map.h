@@ -7,6 +7,9 @@
 #include <string>
 #include <sstream>
 
+#include "Player.h"
+#include "Enemies.h"
+
 #include "../XML/rapidxml.hpp"
 #include "../XML/rapidxml_iterators.hpp"
 #include "../XML/rapidxml_print.hpp"
@@ -65,18 +68,8 @@ public:
 
 	void Refresh();
 
-	void Draw();
+	void Draw(Renderer*, std::vector<std::vector<Objects*>>);
 
-	//Map(std::vector<std::vector<Objects*>> _objects)
-	//{
-	//	_objects[1][1].e
-	//	// Displaying the 2D vector 
-	//	for (int i = 0; i < _objects.size(); i++) {
-	//		for (int j = 0; j < _objects[i].size(); j++)
-	//			//std::cout << _objects[i][j]. << " ";
-	//		//std::cout << std::endl;
-	//	}
-	//}
 private:
 
 };

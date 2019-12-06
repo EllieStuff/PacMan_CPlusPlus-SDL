@@ -34,6 +34,18 @@ Objects* Map::InterpretateXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_o
 		//object = reinterpret_cast<Wall*>(object);
 		return object;
 	}
+	if (s == "Player")
+	{
+
+	}
+	if (s == "Inky")
+	{
+
+	}
+	if (s == "Clyke")
+	{
+
+	}
 	return object;
 }
 void PrintTablero(std::vector<std::vector<Objects*>> _o, Renderer *_renderer)
@@ -47,18 +59,25 @@ void PrintTablero(std::vector<std::vector<Objects*>> _o, Renderer *_renderer)
 		std::cout << std::endl;
 	}
 }
-void InitTablero(char c[][20])
+
+void InitTablero(std::vector<std::vector<Objects*>> _objects, int &_frameWidth, int &_frameHeight)
 {
+	Rect r (5 * _frameWidth,6 * _frameHeight, _frameWidth, _frameHeight);
+	Rect r2;
 	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 20; j++)
 		{
-			c[i][j] = ' ';
+			if (_objects[i][j]->tile == MapTiles::POINTS)
+			{
+				_objects[i][j]->rect = r;
+				r2 = {(i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
+				_objects[i][j]->rectPos = r2;
+			}
 		}
 	}
 }
 
-//int frameWidth, frameHeight;
 void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> _objects)
 {
 #pragma region RENDERER
@@ -78,7 +97,7 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> _object
 	objectPos.w = TILES_PIXEL;
 	objectRect.w = frameWidth ;
 #pragma endregion
-	InitTablero(tiles);
+	
 	std::string numX, numY;
 	int x, y;
 	rapidxml::xml_document<> doc;
@@ -112,9 +131,15 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> _object
 		}
 		std::cout << std::endl;
 	}
+	InitTablero(_objects, frameWidth, frameHeight);
 	_renderer->Clear();
 	PrintTablero(_objects, _renderer);
 	_renderer->Render();
+}
+
+void Map::Draw(Renderer* _renderer, std::vector<std::vector<Objects*>> _objects)
+{
+	
 }
 
 void Objects::InteractWithPlayer()

@@ -48,7 +48,7 @@ int main(int, char*[])
 		for (int j = 0; j < MAP_HEIGHT; j++)
 		{
 			o[i].push_back({ new Objects });
-			o[i][j] = reinterpret_cast<Points*>(o[i][j]);
+			o[i][j]->tile = MapTiles::POINTS;
 		}
 	}
 	Renderer *renderer = renderer->Instance();
@@ -56,6 +56,7 @@ int main(int, char*[])
 	{
 		Map map;
 		map.Create(renderer, o);
+		//map.Draw(renderer, o);
 	}
 	
 
