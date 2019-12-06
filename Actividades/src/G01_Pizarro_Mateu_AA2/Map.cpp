@@ -4,6 +4,13 @@ Rect SDLRect_Rect(SDL_Rect rect) {
 
 	return r;
 }
+SDL_Rect RectToSDL_Rect(Rect rect)
+{
+	SDL_Rect r;
+	r.x = rect.x; r.y = rect.y;
+	r.w = rect.w; r.h = rect.h;
+	return r;
+}
 void Objects::Equalize(Objects *o)
 {
 	tile = o->tile;
@@ -26,15 +33,15 @@ Objects* Map::InterpretateXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_o
 		object->rectPos = SDLRect_Rect(_objectPos);
 		return object;
 	}
+	return object;
 }
-void PrintTablero(char c[][20], Renderer *_renderer, SDL_Rect &playerRect, SDL_Rect &playerPos)
+void PrintTablero(std::vector<std::vector<Objects*>> _o, Renderer *_renderer)
 {
 	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 20; j++)
 		{
-			std::cout << c[j][i];
-			(_renderer->PushSprite("PacmanSheet", playerRect, playerPos));
+			(_renderer->PushSprite("PacmanSheet", RectToSDL_Rect(_o[i][j]->rect), RectToSDL_Rect(_o[i][j]->rectPos)));
 		}
 		std::cout << std::endl;
 	}
@@ -51,7 +58,7 @@ void InitTablero(char c[][20])
 }
 
 //int frameWidth, frameHeight;
-void Map::Create(Renderer *_renderer)
+void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> _objects)
 {
 #pragma region RENDERER
 	Vector2 *vec2 = new Vector2(0,0);
@@ -62,12 +69,12 @@ void Map::Create(Renderer *_renderer)
 	*vec2 = _renderer->GetTextureSize("PacmanSheet");
 	frameWidth = vec2->x / 8;
 	frameHeight = vec2->y / 8;
-	objectPos.x = objectPos.y = 50;
+	objectPos.x = objectPos.y = 0;
 	objectRect.x = 4 * frameWidth;
 	objectRect.y = 6 * frameHeight;
-	objectPos.h = frameHeight / 2;
+	objectPos.h = frameHeight / 4;
 	objectRect.h = frameHeight ;
-	objectPos.w = frameHeight / 2;
+	objectPos.w = frameHeight / 4;
 	objectRect.w = frameWidth ;
 	//int frameTimeWallSprite = 0;
 #pragma endregion
@@ -98,12 +105,14 @@ void Map::Create(Renderer *_renderer)
 			numY = pAttr->value();
 			x = std::stoi(numX);
 			y = std::stoi(numY);
-			objects[2][2] = (InterpretateXML(pNodeI->name(),objectRect, objectPos));
+			objectPos.x = x  * (frameWidth / 4);
+			objectPos.y = y  * (frameHeight / 4);
+			_objects[x - 1][y - 1] = (InterpretateXML(pNodeI->name(),objectRect, objectPos));
 		}
 		std::cout << std::endl;
 	}
 	_renderer->Clear();
-	PrintTablero(tiles, _renderer, objectRect, objectPos);
+	PrintTablero(_objects, _renderer);
 	_renderer->Render();
 }
 

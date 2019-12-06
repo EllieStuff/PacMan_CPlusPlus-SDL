@@ -89,11 +89,20 @@ int main(int, char*[])
 	//playerPosition.h = playerRect.h = frameHeight;
 	//playerPosition.w = playerRect.w = frameWidth;
 	//int frameTimePlayerSprite = 0;
+	std::vector<std::vector<Objects*>> o;
+	for (int i = 0; i < MAP_WIDTH; i++)
+	{
+		o.push_back({ new Objects });
+		for (int j = 0; j < MAP_HEIGHT; j++)
+		{
+			o[i].push_back({ new Objects });
+		}
+	}
+	Renderer *renderer = renderer->Instance();
 	while (true)
 	{
 		Map map;
-		Renderer *renderer = renderer->Instance();
-		map.Create(renderer);
+		map.Create(renderer, o);
 	}
 	
 
