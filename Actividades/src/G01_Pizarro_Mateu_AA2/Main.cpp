@@ -31,32 +31,7 @@
 int main(int, char*[])
 {
 
-	// --- INIT SDL ---
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
-		throw "No es pot inicialitzar SDL subsystems";
-
-	// --- INIT SDL_ttf ---
-	if (TTF_Init()) throw "No es pot inicialitzar SDL_ttf";
-
-	// --- INIT SDL_mixer ---
-	const Uint8 mixFlags{ MIX_INIT_MP3 | MIX_INIT_OGG };
-	if (!(Mix_Init(mixFlags)&mixFlags)) throw "No es pot inicialitzar SDL_mixer";
-
-
-	// --- WINDOW ---
-	SDL_Window *m_window{ SDL_CreateWindow("SDL...", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN) };
-	if (m_window == nullptr)
-		throw "No es pot inicialitzar SDL_Window";
-
-	// --- RENDERER ---
-	SDL_Renderer *m_renderer{ SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) };
-	if (m_renderer == nullptr)
-		throw "No es pot inicialitzar SDL_Renderer";
-
-	//-->SDL_Image 
-	const Uint8 imgFlags{ IMG_INIT_PNG | IMG_INIT_JPG };
-	if (!(IMG_Init(imgFlags) & imgFlags)) throw "Error: SDL_image init";
-
+	
 
 	// --- TIME ---
 	clock_t lastTime = clock();
@@ -65,30 +40,7 @@ int main(int, char*[])
 	Uint32 frameStart, frameTime;
 
 
-	// --- SPRITES ---
-		//SpriteSheet
-	SDL_Texture* spritesTexture{ IMG_LoadTexture(m_renderer, "../../res/img/PacManSpritesheet.png") };
-	if (spritesTexture == nullptr) throw "Error: bgTexture init";
-	SDL_Rect bgRect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
-
-	////Cursor
-	////Rect cursorRect{ 0, 0, 100, 50 };
-	//Vector2 cursorTarget(20, 20);
-
-
-	////-->Animated Sprite ---
-	//SDL_Texture *playerTexture{ IMG_LoadTexture(m_renderer, "../../res/img/PacManSpritesheet.png") };
-	//SDL_Rect playerRect, playerPosition;
-	//int textWidth, textHeight, frameWidth, frameHeight;
-	//SDL_QueryTexture(playerTexture, NULL, NULL, &textWidth, &textHeight);
-	//frameWidth = textWidth / 6;
-	//frameHeight = textHeight / 1;
-	//playerPosition.x = playerPosition.y = 0;
-	//playerRect.x = playerRect.y = 0;
-	//playerPosition.h = playerRect.h = frameHeight;
-	//playerPosition.w = playerRect.w = frameWidth;
-	//int frameTimePlayerSprite = 0;
 	std::vector<std::vector<Objects*>> o;
 	for (int i = 0; i < MAP_WIDTH; i++)
 	{
@@ -96,6 +48,7 @@ int main(int, char*[])
 		for (int j = 0; j < MAP_HEIGHT; j++)
 		{
 			o[i].push_back({ new Objects });
+			o[i][j] = reinterpret_cast<Points*>(o[i][j]);
 		}
 	}
 	Renderer *renderer = renderer->Instance();

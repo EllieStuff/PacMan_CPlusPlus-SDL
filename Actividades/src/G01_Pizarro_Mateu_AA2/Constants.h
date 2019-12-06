@@ -4,8 +4,10 @@ const int MAP_WIDTH = 20;
 const int MAP_HEIGHT = 20;
 const int NUM_OF_TILES = 400;
 
-const int SCREEN_WIDTH = 1500;
-const int SCREEN_HEIGHT = 800;
+const int SCREEN_WIDTH = 900;
+const int SCREEN_HEIGHT = 700;
+
+const int TILES_PIXEL = 35;
 
 const int FPS = 60;
 const float DELAY_TIME = 1000.0f / FPS;

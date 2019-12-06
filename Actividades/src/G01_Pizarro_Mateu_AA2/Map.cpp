@@ -31,6 +31,7 @@ Objects* Map::InterpretateXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_o
 		object->tile = MapTiles::WALL;
 		object->rect = SDLRect_Rect(_objectRect);
 		object->rectPos = SDLRect_Rect(_objectPos);
+		//object = reinterpret_cast<Wall*>(object);
 		return object;
 	}
 	return object;
@@ -72,11 +73,10 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> _object
 	objectPos.x = objectPos.y = 0;
 	objectRect.x = 4 * frameWidth;
 	objectRect.y = 6 * frameHeight;
-	objectPos.h = frameHeight / 4;
+	objectPos.h = TILES_PIXEL;
 	objectRect.h = frameHeight ;
-	objectPos.w = frameHeight / 4;
+	objectPos.w = TILES_PIXEL;
 	objectRect.w = frameWidth ;
-	//int frameTimeWallSprite = 0;
 #pragma endregion
 	InitTablero(tiles);
 	std::string numX, numY;
@@ -103,11 +103,12 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> _object
 			numX = pAttr->value();
 			pAttr = pAttr->next_attribute();
 			numY = pAttr->value();
-			x = std::stoi(numX);
-			y = std::stoi(numY);
-			objectPos.x = x  * (frameWidth / 4);
-			objectPos.y = y  * (frameHeight / 4);
-			_objects[x - 1][y - 1] = (InterpretateXML(pNodeI->name(),objectRect, objectPos));
+			x = std::stoi(numX) - 1;
+			y = std::stoi(numY) - 1;
+			objectPos.x = x  * TILES_PIXEL;
+			objectPos.y = y  * TILES_PIXEL;
+			//if (pNodeI->name() == "Wall")
+			_objects[x][y] = (InterpretateXML(pNodeI->name(), objectRect, objectPos));
 		}
 		std::cout << std::endl;
 	}
