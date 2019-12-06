@@ -92,6 +92,8 @@ int main(int, char*[])
 	///GameLoop
 	Controller controller;
 
+	std::vector<std::vector<Objects*>> o{ {new Objects, new Objects}, {new Objects, new Objects, new Objects}, {new Objects, new Objects} };
+
 	while (controller.scene->state != SceneState::EXIT) {
 		controller.SceneControl();
 

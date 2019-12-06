@@ -7,13 +7,19 @@
 class Character {
 private:
 	Vector2 initialPos;
+
+protected:
+	Rect pos;
 	Rect rect;
-	char overlapedSquare;
+	//char overlapedSquare;
 
 public:
+
 	virtual void Move() = 0;
 
-	virtual bool Hit(Map) = 0;
+	virtual bool HitsWall(std::vector<std::vector<Objects*>>) = 0;
+
+	virtual bool OnEdge() = 0;
 
 	void ReinitPos();
 

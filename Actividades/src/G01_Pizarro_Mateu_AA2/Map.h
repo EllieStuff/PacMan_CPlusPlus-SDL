@@ -8,6 +8,9 @@ class Objects {
 public:
 	MapTiles tile;
 	Rect rect;
+	Rect pos;
+	
+	void Initialize();
 
 	virtual void InteractWithPlayer();
 

@@ -4,6 +4,6 @@
 
 class Blinky : Enemies
 {
-	void Move(Direction, Map);
+	void Move(Direction, std::vector<std::vector<Objects*>>);
 
 };

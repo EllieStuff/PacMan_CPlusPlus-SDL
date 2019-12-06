@@ -4,13 +4,13 @@
 #include <vector>
 #include <string>
 
-namespace Utils {
-	//bool SquareCollidingMouse(Vector2 mouse, Rect square) {
+//namespace Utils {
+	/*bool SquareCollidingMouse(Vector2 mouse, Rect square) {
 
-	//	return mouse.x > square.x && mouse.x < square.x + square.w
-	//		&& mouse.y > square.y && mouse.y < square.y + square.h;
+		return mouse.x > square.x && mouse.x < square.x + square.w
+			&& mouse.y > square.y && mouse.y < square.y + square.h;
 
-	//}
+	}*/
 
 	//Rect SDLRect_Rect(SDL_Rect rect) {
 	//	Rect r(rect.x, rect.y, rect.w, rect.h);
@@ -64,4 +64,4 @@ namespace Utils {
 
 	//}
 
-}
+//}

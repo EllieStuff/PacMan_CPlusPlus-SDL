@@ -2,8 +2,8 @@
 #include <iostream>
 #include "Enemies.h"
 
-class Inky : Enemies
+class Inky : public Enemies
 {
-	void Move(Direction, Map);
+	void Move(Direction, std::vector<std::vector<Objects*>>);
 
 };

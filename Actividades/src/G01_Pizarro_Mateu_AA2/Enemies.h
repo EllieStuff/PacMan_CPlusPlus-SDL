@@ -1,18 +1,15 @@
 #pragma once
 #include "Character.h"
 
-class Enemies : Character
+class Enemies : public Character
 {
 private:
-	Vector2 initialPos;
-	Rect rect;
 	EnemyType type;
-	char overlapedSquare;
 
 public:
-	virtual void Move(Direction, Map);
-	bool Hit(Map);
-	void ReinitPos();
+	virtual void Move(Direction, std::vector<std::vector<Objects*>>) = 0;
+	bool HitsWall(Direction playerDir, std::vector<std::vector<Objects*>>);
+	bool OnEdge();
 	void Reinit();
 	void Update(Direction, Map);
 	void Draw();
