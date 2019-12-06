@@ -102,12 +102,14 @@ int main(int, char*[])
 			o[i][j]->tile = MapTiles::POINTS;
 		}
 	}
+
 	Renderer *renderer = renderer->Instance();
+	Map map;
+	map.Create(renderer, o);
 	while (true)
 	{
-		Map map;
-		map.Create(renderer, o);
-		//map.Draw(renderer, o);
+		
+		map.Draw(renderer, o);
 	}
 
 	while (controller.scene->state != SceneState::EXIT) {

@@ -38,7 +38,7 @@ SDL_Rect RectToSDL_Rect(Rect rect)
 //	}
 //
 //}
-Objects* Map::SavesWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_objectPos)
+Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_objectPos)
 {
 	Objects* object = new Objects;
 	if (s == "Wall")
@@ -51,37 +51,49 @@ Objects* Map::SavesWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_obj
 	}
 	return object;
 }
-void PrintTablero(std::vector<std::vector<Objects*>> _o, Renderer *_renderer)
+void PrintTablero(std::vector<std::vector<Objects*>> &_o, Renderer *_renderer)
 {
 	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 20; j++)
 		{
+			//if(_o[j][i]->tile == MapTiles::WALL) std::cout << "X";
+			//else if (_o[j][i]->tile == MapTiles::POINTS)std::cout << ".";
 			(_renderer->PushSprite("PacmanSheet", RectToSDL_Rect(_o[i][j]->rect), RectToSDL_Rect(_o[i][j]->rectPos)));
 		}
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	}
+	//system("cls");
 }
 
-void InitTablero(std::vector<std::vector<Objects*>> _objects, int &_frameWidth, int &_frameHeight)
+void InitTablero(std::vector<std::vector<Objects*>> &_objects, int &_frameWidth, int &_frameHeight)
 {
-	Rect r (5 * _frameWidth,6 * _frameHeight, _frameWidth, _frameHeight);
-	Rect r2;
+	Rect tmpRect;
+	Rect tmpPos;
 	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 20; j++)
 		{
 			if (_objects[i][j]->tile == MapTiles::POINTS)
 			{
-				_objects[i][j]->rect = r;
-				r2 = {(i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
-				_objects[i][j]->rectPos = r2;
+				tmpRect = { 5 * _frameWidth, 6 * _frameHeight, _frameWidth, _frameHeight };
+				_objects[i][j]->rect = tmpRect;
+				tmpPos = {(i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
+				_objects[i][j]->rectPos = tmpPos;
 			}
+			else if (_objects[i][j]->tile == MapTiles::WALL)
+			{
+				tmpRect = { 4 * _frameWidth, 6 * _frameHeight, _frameWidth, _frameHeight };
+				_objects[i][j]->rect = tmpRect;
+				tmpPos = { (i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
+				_objects[i][j]->rectPos = tmpPos;
+			}
+
 		}
 	}
 }
 
-void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> _objects)
+void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objects)
 {
 #pragma region RENDERER
 	Vector2 *vec2 = new Vector2(0,0);
@@ -130,19 +142,26 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> _object
 			objectPos.x = x  * TILES_PIXEL;
 			objectPos.y = y  * TILES_PIXEL;
 			//if (pNodeI->name() == "Wall")
-			_objects[x][y] = (InterpretateXML(pNodeI->name(), objectRect, objectPos));
+			_objects[x][y] = (SaveWallsXML(pNodeI->name(), objectRect, objectPos));
 		}
 		std::cout << std::endl;
 	}
 	InitTablero(_objects, frameWidth, frameHeight);
+
+}
+
+void Map::Refresh()
+{
+
+
+}
+
+void Map::Draw(Renderer* _renderer, std::vector<std::vector<Objects*>> &_objects)
+{
 	_renderer->Clear();
 	PrintTablero(_objects, _renderer);
 	_renderer->Render();
-}
 
-void Map::Draw(Renderer* _renderer, std::vector<std::vector<Objects*>> _objects)
-{
-	
 }
 
 

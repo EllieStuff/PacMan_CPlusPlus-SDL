@@ -63,13 +63,13 @@ class Map {
 public:
 	char tiles[MAP_WIDTH][MAP_HEIGHT];
 	std::vector<std::vector<Objects*>> objects[MAP_WIDTH][MAP_HEIGHT];
-	Objects* SavesWallsXML(std::string, SDL_Rect&, SDL_Rect &);
+	Objects* SaveWallsXML(std::string, SDL_Rect&, SDL_Rect &);
 
-	void Create(Renderer *, std::vector<std::vector<Objects*>>);
+	void Create(Renderer *, std::vector<std::vector<Objects*>> &);
 
 	void Refresh();
 
-	void Draw(Renderer*, std::vector<std::vector<Objects*>>);
+	void Draw(Renderer*, std::vector<std::vector<Objects*>> &);
 
 private:
 
