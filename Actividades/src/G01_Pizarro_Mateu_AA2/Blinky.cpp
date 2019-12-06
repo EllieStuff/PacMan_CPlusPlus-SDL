@@ -12,7 +12,7 @@ void Blinky::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObj
 		switch (playerDir) {
 		case Direction::UP:
 			pos.y -= PIXELS_PER_FRAME;	//5 pixels
-			if (pos.y < 0) pos.y = SCREEN_HEIGHT - TILE_SIZE;
+			if (pos.y < 0) pos.y = SCREEN_HEIGHT - TILES_PIXEL;
 
 			break;
 
@@ -24,7 +24,7 @@ void Blinky::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObj
 
 		case Direction::LEFT:
 			pos.x -= PIXELS_PER_FRAME;
-			if (pos.x < 0) pos.x = SCREEN_WIDTH - HUD_WIDTH - TILE_SIZE;
+			if (pos.x < 0) pos.x = SCREEN_WIDTH - HUD_WIDTH - TILES_PIXEL;
 
 			break;
 

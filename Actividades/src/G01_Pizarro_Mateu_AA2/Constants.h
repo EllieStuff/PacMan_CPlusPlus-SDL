@@ -11,7 +11,7 @@ const int HUD_WIDTH = 200;
 const int FPS = 60;
 const float DELAY_TIME = 1000.0f / FPS;
 const int PIXELS_PER_FRAME = 5;
-const int TILE_SIZE = 35;
+const int TILES_PIXEL = 35;
 
 enum class SceneState { GO_TO_PLAY = 0, GO_TO_MENU, GO_TO_RANKING, GO_TO_EXIT, RUNNING_PLAY, RUNNING_MENU, RUNNING_RANKING, RUNNING_SPLASH_SCREEN, EXIT };
 

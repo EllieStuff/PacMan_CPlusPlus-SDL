@@ -17,7 +17,7 @@ public:
 
 	virtual void Move() = 0;
 
-	virtual bool HitsWall(std::vector<std::vector<Objects*>>) = 0;
+	//virtual bool HitsWall(Direction, std::vector<std::vector<Objects*>>);
 
 	virtual bool OnEdge() = 0;
 

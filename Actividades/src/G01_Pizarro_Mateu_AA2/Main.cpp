@@ -92,7 +92,23 @@ int main(int, char*[])
 	///GameLoop
 	Controller controller;
 
-	std::vector<std::vector<Objects*>> o{ {new Objects, new Objects}, {new Objects, new Objects, new Objects}, {new Objects, new Objects} };
+	std::vector<std::vector<Objects*>> o;
+	for (int i = 0; i < MAP_WIDTH; i++)
+	{
+		o.push_back({ new Objects });
+		for (int j = 0; j < MAP_HEIGHT; j++)
+		{
+			o[i].push_back({ new Objects });
+			o[i][j]->tile = MapTiles::POINTS;
+		}
+	}
+	Renderer *renderer = renderer->Instance();
+	while (true)
+	{
+		Map map;
+		map.Create(renderer, o);
+		//map.Draw(renderer, o);
+	}
 
 	while (controller.scene->state != SceneState::EXIT) {
 		controller.SceneControl();

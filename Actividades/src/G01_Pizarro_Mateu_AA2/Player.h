@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Character.h"
 
-class Player : Character
+class Player : public Character
 {
 private:
 	bool hasPowerUp = false;
@@ -14,7 +14,8 @@ public:
 	int fruits = 0;
 
 	//METHODS
-	void Move(Map);
+	void Move(std::vector<bool> keys);
+	bool HitsWall(Direction, std::vector<std::vector<Objects*>>);
 	bool Hit(Map);
 	bool GetHasPowerUp();
 	void ReinitPos();
