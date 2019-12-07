@@ -1,16 +1,16 @@
 #include "Scene.h"
 
-void Scene::Update(){}
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>> &){}
 
-void Scene::Load(){}
+void Scene::Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &){}
 
-void Scene::Draw(){}
+void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &){}
 
 void SplashScreen::Update()	//Nota: Es provisional, currar-s'ho una miqueta plis xD
 {
-	Sleep(3);
+	//Sleep(4);
 
-	state = SceneState::GO_TO_MENU;
+	//state = SceneState::GO_TO_MENU;
 }
 
 void SplashScreen::Draw()
@@ -39,7 +39,7 @@ void Menu::Draw()
 
 }
 
-void Play::Update()
+void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o)
 {
 	/*Whatever that goes here*/
 	//Moure Player
@@ -48,15 +48,18 @@ void Play::Update()
 
 }
 
-void Play::Load()
+void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map)
 {
+	map.Create(renderer, o);
 
+	//Posar enemies i player
 
 }
 
-void Play::Draw()
+void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map)
 {
-
+	//map.PrintTablero(renderer, o);
+	map.Draw(renderer, o);
 
 }
 

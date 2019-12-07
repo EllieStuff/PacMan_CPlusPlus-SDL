@@ -51,7 +51,7 @@ Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_obje
 	}
 	return object;
 }
-void PrintTablero(std::vector<std::vector<Objects*>> &_o, Renderer *_renderer)
+void Map::PrintTablero(Renderer *_renderer, std::vector<std::vector<Objects*>> &_o)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -66,7 +66,7 @@ void PrintTablero(std::vector<std::vector<Objects*>> &_o, Renderer *_renderer)
 	//system("cls");
 }
 
-void InitTablero(std::vector<std::vector<Objects*>> &_objects, int &_frameWidth, int &_frameHeight)
+void Map::InitTablero(std::vector<std::vector<Objects*>> &_objects, int &_frameWidth, int &_frameHeight)
 {
 	Rect tmpRect;
 	Rect tmpPos;
@@ -159,9 +159,9 @@ void Map::Refresh()
 void Map::Draw(Renderer* _renderer, std::vector<std::vector<Objects*>> &_objects)
 {
 	_renderer->Clear();
-	PrintTablero(_objects, _renderer);
-	_renderer->Render();
+	PrintTablero(_renderer, _objects);
 
+	_renderer->Render();
 }
 
 

@@ -3,19 +3,21 @@
 #include "Types.h"
 #include "Utils.h"
 #include "Scene.h"
+#include "Map.h"
 
 class Controller {
 public:
 	Rect cursor;
 	Scene *scene = new Scene;
+	SceneState state;
 	SceneState quitSceneTarget = SceneState::GO_TO_EXIT;
 
 	Controller() {
-		scene = reinterpret_cast<SplashScreen*>(scene); //TODO: Fer els cast en els GO_TO del Controller
+		state = SceneState::RUNNING_SPLASH_SCREEN;
 
 	}
 
-	void SceneControl();
+	void SceneControl(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
 
 private:
 	void PollForPlay();

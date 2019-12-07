@@ -1,82 +1,90 @@
 #include "Controller.h"
 
-void Controller::SceneControl()
+void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map)
 {
 	// --- GAME LOOP ---
 
 	//bool isClicked = false;
 	//bool isRunning = true;
 	int pixelsPerFrame = 4;
-	switch (scene->state) {
+	Play play;
+	SplashScreen ss;
+	Exit exit;
+	Menu menu;
+	Ranking rank;
+	switch (state) {
 	case SceneState::RUNNING_PLAY:
 		PollForPlay();
-		scene = reinterpret_cast<Play*>(scene);
-		scene->Update();
-		scene->Draw();
+		scene = &play;
+		//scene = reinterpret_cast<Play*>(scene);
+		scene->Load(renderer, o, map);
+		scene->Update(renderer, o);
+		scene->Draw(renderer, o, map);
 
 		break;
 
 	case SceneState::RUNNING_MENU:	//Provisional
 		GeneralPoll();
-		scene = reinterpret_cast<Menu*>(scene);
-		scene->Update();
-		scene->Draw();
+		scene = &menu;
+		//scene->Update();
+		//scene->Draw();
 
 		//Això al scene->Update()
-		//scene->state = SceneState::GO_TO_PLAY;
+		state = SceneState::GO_TO_PLAY;
 
 		break;
 
 	case SceneState::RUNNING_RANKING:
 		GeneralPoll();
-		scene = reinterpret_cast<Ranking*>(scene);
-		scene->Update();
-		scene->Draw();
+		scene = &rank;
+		/*scene->Update();
+		scene->Draw();*/
 
 		break;
 
 	case SceneState::RUNNING_SPLASH_SCREEN:
-		scene = reinterpret_cast<SplashScreen*>(scene);
-		scene->Update();
-		scene->Draw();
+		scene = &ss;
+		/*scene->Update();
+		scene->Draw();*/
 
 		//Això al scene->Update()
-		//scene->state = SceneState::GO_TO_MENU;
+		state = SceneState::GO_TO_MENU;
 
 		break;
 
 	case SceneState::GO_TO_PLAY:
 		quitSceneTarget = SceneState::GO_TO_MENU;
-		scene = reinterpret_cast<Play*>(scene);
-		scene->Load();
+		scene = &play;
+		//scene = reinterpret_cast<Play*>(scene);
+		scene->Load(renderer, o, map);
 
-		scene->state = SceneState::RUNNING_PLAY;
+		state = SceneState::RUNNING_PLAY;
 
 		break;
 
 	case SceneState::GO_TO_MENU:
 		quitSceneTarget = SceneState::GO_TO_EXIT;
-		scene = reinterpret_cast<Menu*>(scene);
-		scene->Load();
+		scene = &menu;
+		//scene->Load();
 
-		scene->state = SceneState::RUNNING_MENU;
+		state = SceneState::RUNNING_MENU;
 
 		break;
 
 	case SceneState::GO_TO_RANKING:
 		quitSceneTarget = SceneState::GO_TO_MENU;
-		scene = reinterpret_cast<Ranking*>(scene);
-		scene->Load();
+		scene = &rank;
+		//scene->Load();
 
-		scene->state = SceneState::RUNNING_RANKING;
+		state = SceneState::RUNNING_RANKING;
 
 		break;
 
 	case SceneState::GO_TO_EXIT:
-		scene = reinterpret_cast<Exit*>(scene);
-		scene->Load();
+		scene = &exit;
+		//scene->Load();
 
-		scene->state = SceneState::EXIT;
+		state = SceneState::EXIT;
 
 		break;
 
@@ -98,7 +106,7 @@ void Controller::PollForPlay()
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_QUIT:
-			scene->state = quitSceneTarget;
+			state = quitSceneTarget;
 			break;
 		case SDL_KEYDOWN:
 			keys[event.key.keysym.sym] = true;
@@ -125,7 +133,7 @@ void Controller::GeneralPoll()
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_QUIT:
-			scene->state = quitSceneTarget;
+			state = quitSceneTarget;
 			break;
 		case SDL_MOUSEMOTION:
 			cursor.x = event.motion.x;

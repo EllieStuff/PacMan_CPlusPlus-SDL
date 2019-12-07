@@ -15,7 +15,8 @@
 #include <vector>
 
 #include "Controller.h"
-#include "Character.h"
+#include "Player.h"
+#include "Enemies.h"
 
 #include "Types.h"
 #include "Constants.h"
@@ -91,6 +92,8 @@ int main(int, char*[])
 
 	///GameLoop
 	Controller controller;
+	Renderer *renderer = renderer->Instance();
+	Map map;
 
 	std::vector<std::vector<Objects*>> o;
 	for (int i = 0; i < MAP_WIDTH; i++)
@@ -102,18 +105,19 @@ int main(int, char*[])
 			o[i][j]->tile = MapTiles::POINTS;
 		}
 	}
+	//map.Create(renderer, o);
+	//while (true)
+	//{
+	//	
+	//	map.Draw(renderer, o);
+	//}
 
-	Renderer *renderer = renderer->Instance();
-	Map map;
-	map.Create(renderer, o);
-	while (true)
-	{
-		
-		map.Draw(renderer, o);
-	}
+	while (controller.state != SceneState::EXIT) {
+		//renderer->Clear();
 
-	while (controller.scene->state != SceneState::EXIT) {
-		controller.SceneControl();
+		controller.SceneControl(renderer, o, map);
+
+		//renderer->Render();
 
 	}
 
