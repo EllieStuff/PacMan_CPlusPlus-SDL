@@ -158,10 +158,10 @@ void Map::Refresh()
 
 void Map::Draw(Renderer* _renderer, std::vector<std::vector<Objects*>> &_objects)
 {
-	_renderer->Clear();
+	//_renderer->Clear();
 	PrintTablero(_renderer, _objects);
 
-	_renderer->Render();
+	//_renderer->Render();
 }
 
 

@@ -1,21 +1,21 @@
 #include "Scene.h"
 
-void Scene::Update(Renderer *, std::vector<std::vector<Objects*>> &){}
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>> &) {}
 
-void Scene::Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &){}
+void Scene::Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &) {}
 
-void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &){}
+void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &) {}
 
 void SplashScreen::Update()	//Nota: Es provisional, currar-s'ho una miqueta plis xD
 {
-	//Sleep(4);
+	Sleep(3);
 
 	//state = SceneState::GO_TO_MENU;
 }
 
-void SplashScreen::Draw()
+void SplashScreen::Draw(Renderer *renderer)
 {
-
+	//renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(_o[i][j]->rect), RectToSDL_Rect(_o[i][j]->rectPos));
 
 }
 
@@ -27,13 +27,13 @@ void Menu::Update()
 
 }
 
-void Menu::Load()
+void Menu::Load(Renderer *renderer)
 {
 
 
 }
 
-void Menu::Draw()
+void Menu::Draw(Renderer *renderer)
 {
 
 
@@ -69,19 +69,19 @@ void Ranking::Update()
 
 }
 
-void Ranking::Load()
+void Ranking::Load(Renderer *renderer)
 {
 
 
 }
 
-void Ranking::Draw()
+void Ranking::Draw(Renderer *renderer)
 {
 
 
 }
 
-void Exit::Load()
+void Exit::Load(Renderer *renderer)
 {
 
 

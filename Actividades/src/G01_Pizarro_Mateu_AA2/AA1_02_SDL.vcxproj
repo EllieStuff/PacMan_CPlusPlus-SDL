@@ -167,12 +167,14 @@
     <ClCompile Include="Clyde.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Enemies.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Inky.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Blinky.h" />
@@ -181,6 +183,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Enemies.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Inky.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />

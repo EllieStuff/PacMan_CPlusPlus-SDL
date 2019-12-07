@@ -33,28 +33,28 @@ public:
 class Menu : public Scene {
 public:
 	void Update();
-	void Load();
-	void Draw();
+	void Load(Renderer *);
+	void Draw(Renderer *);
 
 };
 
 class Ranking : public Scene {
 public:
 	void Update();
-	void Load();
-	void Draw();
+	void Load(Renderer *);
+	void Draw(Renderer *);
 
 };
 
 class SplashScreen : public Scene {
 public:
 	void Update();
-	void Draw();
+	void Draw(Renderer *);
 
 };
 
 class Exit : public Scene {
 public:
-	void Load();
+	void Load(Renderer *);
 
 };

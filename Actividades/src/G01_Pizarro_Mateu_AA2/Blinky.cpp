@@ -8,8 +8,8 @@ void Blinky::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObj
 	else if (playerDir == Direction::LEFT) enemyDir = Direction::RIGHT;
 	else enemyDir = Direction::LEFT;
 
-	if (!HitsWall(playerDir, mapObjects)) {
-		switch (playerDir) {
+	if (!HitsWall(enemyDir, mapObjects)) {
+		switch (enemyDir) {
 		case Direction::UP:
 			pos.y -= PIXELS_PER_FRAME;	//5 pixels
 			if (pos.y < 0) pos.y = SCREEN_HEIGHT - TILES_PIXEL;

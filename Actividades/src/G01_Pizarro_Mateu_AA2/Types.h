@@ -36,6 +36,11 @@ struct Font {
 	std::string id;
 	std::string path;
 	int size;
+
+	Font() {};
+	Font(std::string _id, std::string _path, int _size) : id(_id), path(_path), size(_size) {};
+
+	void Init(std::string _id, std::string _path, int _size) { id = _id; path = _path;  size = _size; };
 };
 
 struct Text {
