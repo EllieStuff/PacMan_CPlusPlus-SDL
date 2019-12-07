@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <SDL.h>	
 
 struct Vector2 {
 	int x, y;

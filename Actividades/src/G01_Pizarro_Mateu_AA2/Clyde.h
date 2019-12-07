@@ -2,8 +2,8 @@
 #include <iostream>
 #include "Enemies.h"
 
-class Clyde : Enemies
+class Clyde : public Enemies
 {
 	void Move(Direction, Map);
-
+	void LecturaXMLEnemy();
 };

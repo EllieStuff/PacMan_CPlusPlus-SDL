@@ -14,13 +14,31 @@
 
 #include "Utils.h"
 #include "Character.h"
+//#include "Player.h"
+//#include "Enemies.h"
+
+
+//
+//
+//Rect SDLRect_Rect(SDL_Rect rect) {
+//	Rect r(rect.x, rect.y, rect.w, rect.h);
+//
+//	return r;
+//}
+//
+//SDL_Rect RectToSDL_Rect(Rect rect)
+//{
+//	SDL_Rect r;
+//	r.x = rect.x; r.y = rect.y;
+//	r.w = rect.w; r.h = rect.h;
+//	return r;
+//}
 
 class Objects {
 public:
 	MapTiles tile;
 	Rect rect, rectPos;
 	
-	//void Equalize(Objects*);
 
 	//virtual void InteractWithPlayer();
 

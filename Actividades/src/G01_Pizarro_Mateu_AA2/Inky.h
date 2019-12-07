@@ -5,5 +5,5 @@
 class Inky : public Enemies
 {
 	void Move(Direction, std::vector<std::vector<Objects*>>);
-
+	void LecturaXMLEnemy();
 };

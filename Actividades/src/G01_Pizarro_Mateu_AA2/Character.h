@@ -14,19 +14,18 @@ protected:
 	//char overlapedSquare;
 
 public:
-
-	virtual void Move() = 0;
-
+	//Character();
+	virtual void Move();
 	//virtual bool HitsWall(Direction, std::vector<std::vector<Objects*>>);
 
-	virtual bool OnEdge() = 0;
+	virtual bool OnEdge();
 
 	void ReinitPos();
 
-	virtual void Reinit() = 0;
+	virtual void Reinit();
 
-	virtual void Update() = 0;
+	virtual void Update();
 
-	virtual void Draw() = 0;
+	virtual void Draw(Renderer*);
 
 };

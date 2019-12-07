@@ -1,56 +1,21 @@
 #include "Map.h"
-Rect SDLRect_Rect(SDL_Rect rect) {
-	Rect r(rect.x, rect.y, rect.w, rect.h);
 
-	return r;
-}
-SDL_Rect RectToSDL_Rect(Rect rect)
-{
-	SDL_Rect r;
-	r.x = rect.x; r.y = rect.y;
-	r.w = rect.w; r.h = rect.h;
-	return r;
-}
-//void Objects::Equalize(Objects *o)
-//{
-//	tile = o->tile;
-//	rect.x = o->rect.x;
-//	rect.y = o->rect.y;
-//	rect.w = o->rect.w;
-//	rect.h = o->rect.h;
-//	rectPos.x = o->rectPos.x;
-//	rectPos.y = o->rectPos.y;
-//	rectPos.w = o->rectPos.w;
-//	rectPos.h = o->rectPos.h;
-//}
-//void Map::InitPositions() {
-//	if (s == "Player")
-//	{
-//
-//	}
-//	if (s == "Inky")
-//	{
-//
-//	}
-//	if (s == "Clyke")
-//	{
-//
-//	}
-//
-//}
+
+
 Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_objectPos)
 {
 	Objects* object = new Objects;
 	if (s == "Wall")
 	{
 		object->tile = MapTiles::WALL;
-		object->rect = SDLRect_Rect(_objectRect);
-		object->rectPos = SDLRect_Rect(_objectPos);
+		object->rect = Utils::SDLRect_Rect(_objectRect);
+		object->rectPos = Utils::SDLRect_Rect(_objectPos);
 		//object = reinterpret_cast<Wall*>(object);
 		return object;
 	}
 	return object;
 }
+
 void PrintTablero(std::vector<std::vector<Objects*>> &_o, Renderer *_renderer)
 {
 	for (int i = 0; i < 20; i++)
@@ -81,14 +46,6 @@ void InitTablero(std::vector<std::vector<Objects*>> &_objects, int &_frameWidth,
 				tmpPos = {(i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
 				_objects[i][j]->rectPos = tmpPos;
 			}
-			else if (_objects[i][j]->tile == MapTiles::WALL)
-			{
-				tmpRect = { 4 * _frameWidth, 6 * _frameHeight, _frameWidth, _frameHeight };
-				_objects[i][j]->rect = tmpRect;
-				tmpPos = { (i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
-				_objects[i][j]->rectPos = tmpPos;
-			}
-
 		}
 	}
 }
@@ -98,7 +55,7 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 #pragma region RENDERER
 	Vector2 *vec2 = new Vector2(0,0);
 	SDL_Rect objectRect, objectPos;
-	int textWidth, textHeight, frameWidth, frameHeight;
+	int  frameWidth, frameHeight;
 	_renderer->Instance();
 	_renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	*vec2 = _renderer->GetTextureSize("PacmanSheet");
@@ -147,7 +104,6 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 		std::cout << std::endl;
 	}
 	InitTablero(_objects, frameWidth, frameHeight);
-
 }
 
 void Map::Refresh()

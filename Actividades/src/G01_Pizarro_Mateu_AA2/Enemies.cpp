@@ -13,6 +13,8 @@ bool Enemies::OnEdge() {
 }
 
 
+
+
 bool Enemies::HitsWall(Direction playerDir, std::vector<std::vector<Objects*>> o)
 {
 	for (int i = 0; i < MAP_WIDTH; i++) {
