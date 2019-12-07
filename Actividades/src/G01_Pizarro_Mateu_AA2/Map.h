@@ -84,10 +84,12 @@ public:
 	Objects* SaveWallsXML(std::string, SDL_Rect&, SDL_Rect &);
 
 	void Create(Renderer *, std::vector<std::vector<Objects*>> &);
+	void InitTablero(std::vector<std::vector<Objects*>> &, int &, int &);
 
 	void Refresh();
 
 	void Draw(Renderer*, std::vector<std::vector<Objects*>> &);
+	void PrintTablero(Renderer*, std::vector<std::vector<Objects*>> &);
 
 private:
 

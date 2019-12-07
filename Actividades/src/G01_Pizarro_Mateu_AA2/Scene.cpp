@@ -1,21 +1,21 @@
 #include "Scene.h"
 
-void Scene::Update(){}
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>> &) {}
 
-void Scene::Load(){}
+void Scene::Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &) {}
 
-void Scene::Draw(){}
+void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &) {}
 
 void SplashScreen::Update()	//Nota: Es provisional, currar-s'ho una miqueta plis xD
 {
 	Sleep(3);
 
-	state = SceneState::GO_TO_MENU;
+	//state = SceneState::GO_TO_MENU;
 }
 
-void SplashScreen::Draw()
+void SplashScreen::Draw(Renderer *renderer)
 {
-
+	//renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(_o[i][j]->rect), RectToSDL_Rect(_o[i][j]->rectPos));
 
 }
 
@@ -27,19 +27,19 @@ void Menu::Update()
 
 }
 
-void Menu::Load()
+void Menu::Load(Renderer *renderer)
 {
 
 
 }
 
-void Menu::Draw()
+void Menu::Draw(Renderer *renderer)
 {
 
 
 }
 
-void Play::Update()
+void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o)
 {
 	/*Whatever that goes here*/
 	//Moure Player
@@ -48,15 +48,18 @@ void Play::Update()
 
 }
 
-void Play::Load()
+void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map)
 {
+	map.Create(renderer, o);
 
+	//Posar enemies i player
 
 }
 
-void Play::Draw()
+void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map)
 {
-
+	//map.PrintTablero(renderer, o);
+	map.Draw(renderer, o);
 
 }
 
@@ -66,19 +69,19 @@ void Ranking::Update()
 
 }
 
-void Ranking::Load()
+void Ranking::Load(Renderer *renderer)
 {
 
 
 }
 
-void Ranking::Draw()
+void Ranking::Draw(Renderer *renderer)
 {
 
 
 }
 
-void Exit::Load()
+void Exit::Load(Renderer *renderer)
 {
 
 

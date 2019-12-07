@@ -66,7 +66,7 @@ char* Utils::int_char(const int &num) {
 		text[i] = numCopy + 48;
 
 	}
-	//Prq collons surten aquelles Ý si l'array només té dos espais??!!
+	//Prq collons surten aquelles ï¿½ si l'array nomï¿½s tï¿½ dos espais??!!
 	//Arreglo provisional
 	for (int i = 2; i < 6; i++) text[i] = ' ';
 

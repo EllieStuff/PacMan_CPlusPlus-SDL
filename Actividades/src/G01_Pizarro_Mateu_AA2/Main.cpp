@@ -28,7 +28,8 @@
 
 //Game general information
 
-//TODO: 4, 7, 8, 9, 10 i 11 (2n personatge, col·lisions, elements aleatoris que surtin pel mapa i puntuacions) i arreglar bug de int_char(int num)
+//TODO: 4, 7, 8, 9, 10 i 11 (2n personatge, colï¿½lisions, elements aleatoris que surtin pel mapa i puntuacions) i arreglar bug de int_char(int num)
+
 
 
 int main(int, char*[])
@@ -36,9 +37,11 @@ int main(int, char*[])
 
 	///GameLoop
 	Controller controller;
+	Renderer *renderer = renderer->Instance();
+	Map map;
 
 	std::vector<std::vector<Objects*>> o;
-	for (int i = 0; i < MAP_WIDTH; i++)
+	for (int i = 0; i < MAP_WIDTH + HUD_TILES; i++)
 	{
 		o.push_back({ new Objects });
 		for (int j = 0; j < MAP_HEIGHT; j++)
@@ -47,6 +50,12 @@ int main(int, char*[])
 			o[i][j]->tile = MapTiles::POINTS;
 		}
 	}
+	//map.Create(renderer, o);
+	//while (true)
+	//{
+	//	
+	//	map.Draw(renderer, o);
+	//}
 
 	Renderer *renderer = renderer->Instance();
 	Map map;
@@ -57,19 +66,15 @@ int main(int, char*[])
 	player->LecturaXMLPlayer(renderer);
 	clyde->LecturaXMLEnemy(renderer);
 	inky->LecturaXMLEnemy(renderer);
-	while (true)
-	{
-
+	while (controller.state != SceneState::EXIT) {
 		renderer->Clear();
-		map.Draw(renderer, o);
 		player->Draw(renderer);
 		clyde->Draw(renderer);
 		inky->Draw(renderer);
-		renderer->Render();
-	}
 
-	while (controller.scene->state != SceneState::EXIT) {
-		controller.SceneControl();
+		controller.SceneControl(renderer, o, map);
+
+		renderer->Render();
 
 	}
 

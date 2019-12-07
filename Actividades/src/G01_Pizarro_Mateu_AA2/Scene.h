@@ -4,17 +4,18 @@
 #include "Constants.h"
 #include "Types.h"
 #include "Utils.h"
+#include "Map.h"
+#include "Renderer.h"
 
 
 class Scene {
 public:
-	SceneState state = SceneState::RUNNING_SPLASH_SCREEN;
 
-	virtual void Update();
+	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &);
 
-	virtual void Load();
+	virtual void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
 
-	virtual void Draw();
+	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
 
 private:
 
@@ -23,37 +24,37 @@ private:
 
 class Play : public Scene {
 public:
-	void Update();
-	void Load();
-	void Draw();
+	void Update(Renderer *, std::vector<std::vector<Objects*>> &);
+	void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
+	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
 
 };
 
 class Menu : public Scene {
 public:
 	void Update();
-	void Load();
-	void Draw();
+	void Load(Renderer *);
+	void Draw(Renderer *);
 
 };
 
 class Ranking : public Scene {
 public:
 	void Update();
-	void Load();
-	void Draw();
+	void Load(Renderer *);
+	void Draw(Renderer *);
 
 };
 
 class SplashScreen : public Scene {
 public:
 	void Update();
-	void Draw();
+	void Draw(Renderer *);
 
 };
 
 class Exit : public Scene {
 public:
-	void Load();
+	void Load(Renderer *);
 
 };

@@ -66,6 +66,9 @@ void Renderer::LoadTextureText(const std::string &fontId, Text text) {
 
 };
 
+//
+//GetTextureSize
+
 Vector2 Renderer::GetTextureSize(const std::string &id) {
 	int w; int h;
 	SDL_QueryTexture(m_textureData[id], NULL, NULL, &w, &h);
