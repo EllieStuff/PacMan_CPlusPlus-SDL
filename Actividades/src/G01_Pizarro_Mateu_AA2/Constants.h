@@ -2,13 +2,12 @@
 
 const int MAP_WIDTH = 20;
 const int MAP_HEIGHT = 20;
-const int HUD_TILES = 6;
 const int NUM_OF_TILES = 400;
 
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 700;
 const int HUD_WIDTH = 200;
-const int HUD_EDGES = 20;
+const int HUD_EDGES = 15;
 
 const int FPS = 60;
 const float DELAY_TIME = 1000.0f / FPS;

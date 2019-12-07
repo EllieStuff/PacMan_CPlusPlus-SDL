@@ -14,10 +14,10 @@ bool Player::OnEdge() {
 
 void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &_inkyPos)
 {
-	if (keys[SDLK_w] && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) dir = Direction::UP;
-	if (keys[SDLK_s] && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) dir = Direction::DOWN;
-	if (keys[SDLK_a] && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) dir = Direction::LEFT;
-	if (keys[SDLK_d] && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) dir = Direction::RIGHT;
+	if (keys[SDLK_w] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::DOWN)) dir = Direction::UP;
+	if (keys[SDLK_s] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::UP)) dir = Direction::DOWN;
+	if (keys[SDLK_a] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::RIGHT)) dir = Direction::LEFT;
+	if (keys[SDLK_d] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::LEFT)) dir = Direction::RIGHT;
 
 
 	lastPos = Utils::Rect_Vec2(pos);

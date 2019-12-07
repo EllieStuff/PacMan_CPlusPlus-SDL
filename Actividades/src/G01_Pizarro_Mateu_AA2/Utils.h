@@ -19,6 +19,8 @@ namespace Utils {
 
 	Vector2 Rect_Vec2(Rect rect);
 
+	std::string AddZerosInFrontOfStr(int num, int maxZeros);
+
 	void Resize(char *text, int size);
 
 	char* int_char(const int &num);

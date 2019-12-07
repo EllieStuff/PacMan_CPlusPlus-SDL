@@ -12,8 +12,6 @@ void Clyde::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObje
 		dir = Direction::RIGHT;
 	else if (playerDir == Direction::RIGHT && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) 
 		dir = Direction::LEFT;
-	else 
-		dir = Direction::NONE;
 
 	lastPos = Utils::Rect_Vec2(pos);
 	switch (dir) {

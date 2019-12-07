@@ -6,14 +6,12 @@
 
 class Player : public Character
 {
-private:
-	bool hasPowerUp = false;
-	int livesLeft = 3;
-
 public:
 	Direction dir = Direction::NONE;
 	int score = 0;
 	int fruits = 0;
+	bool hasPowerUp = false;
+	int livesLeft = 3;
 
 	//METHODS
 	Player();

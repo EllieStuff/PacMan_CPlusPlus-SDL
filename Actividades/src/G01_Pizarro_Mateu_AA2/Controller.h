@@ -11,6 +11,7 @@ public:
 	Scene *scene = new Scene;
 	SceneState state;
 	SceneState quitSceneTarget = SceneState::GO_TO_EXIT;
+	bool paused = false;
 
 	Controller() {
 		state = SceneState::RUNNING_SPLASH_SCREEN;

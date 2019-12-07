@@ -58,6 +58,25 @@ Vector2 Utils::Rect_Vec2(Rect rect)
 	return v;
 }
 
+std::string Utils::AddZerosInFrontOfStr(int num, int maxZeros) {
+	if (num <= 0) return "0000";
+
+	std::string numStr = std::to_string(num);
+	std::string result = "";
+	int count = 0;
+	while (num > 0) {
+		num /= 10;
+		count++;
+	}
+
+	for (int i = count; i < maxZeros; i++) {
+		result += "0";
+	}
+
+	result += numStr;
+
+	return result;
+}
 
 void Utils::Resize(char *text, int size) {
 	char *newText = new char[size];

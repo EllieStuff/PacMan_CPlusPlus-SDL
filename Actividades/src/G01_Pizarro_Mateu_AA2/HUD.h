@@ -4,11 +4,13 @@
 #include"Utils.h"
 #include "Constants.h"
 #include"Types.h"
+#include "Player.h"
 
 
 class HUD {
 private:
 	enum TypeOfRect { RECT = 0, SPRITE, TEXT, COUNT };
+	Color textColor;
 
 public:
 	Font font;
@@ -25,10 +27,10 @@ public:
 	Text oranText;
 
 	//Functions
-	HUD(Renderer *renderer);
+	HUD(Renderer *, Player *);
 
-	void Update();
+	void Update(Renderer *, Player *);
 
-	void Draw(Renderer *renderer);
+	void Draw(Renderer *, Player *);
 
 };

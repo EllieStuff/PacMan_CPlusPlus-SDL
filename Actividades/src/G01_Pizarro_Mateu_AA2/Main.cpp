@@ -59,10 +59,10 @@ int main(int, char*[])
 	//}
 
 	int frameTimePlayerSprite = 0;
-	HUD hud(renderer);
 	Player *player = new Player;
 	Clyde *clyde = new Clyde;
 	Inky *inky = new Inky;
+	HUD hud(renderer, player);
 	map.Create(renderer, o);
 	player->LecturaXMLPlayer(renderer);
 	clyde->LecturaXMLEnemy(renderer);
@@ -73,7 +73,8 @@ int main(int, char*[])
 			renderer->Clear();
 			frameTimePlayerSprite = 0;
 			controller.SceneControl(renderer, o, map, player, clyde, inky);
-			hud.Draw(renderer);
+			hud.Update(renderer, player);
+			hud.Draw(renderer, player);
 
 			renderer->Render();
 
