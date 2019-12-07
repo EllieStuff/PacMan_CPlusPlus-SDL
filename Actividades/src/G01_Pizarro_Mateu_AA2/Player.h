@@ -11,7 +11,7 @@ private:
 	int livesLeft = 3;
 
 public:
-	//Direction dir;
+	Direction dir;
 	int score = 0;
 	int fruits = 0;
 

@@ -57,8 +57,6 @@ int main(int, char*[])
 	//	map.Draw(renderer, o);
 	//}
 
-	Renderer *renderer = renderer->Instance();
-	Map map;
 	Player *player = new Player;
 	Clyde *clyde = new Clyde;
 	Inky *inky = new Inky;
@@ -68,11 +66,8 @@ int main(int, char*[])
 	inky->LecturaXMLEnemy(renderer);
 	while (controller.state != SceneState::EXIT) {
 		renderer->Clear();
-		player->Draw(renderer);
-		clyde->Draw(renderer);
-		inky->Draw(renderer);
-
-		controller.SceneControl(renderer, o, map);
+		
+		controller.SceneControl(renderer, o, map, player, clyde, inky);
 
 		renderer->Render();
 

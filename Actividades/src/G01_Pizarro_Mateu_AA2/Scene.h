@@ -6,6 +6,11 @@
 #include "Utils.h"
 #include "Map.h"
 #include "Renderer.h"
+#include "Character.h"
+#include "Player.h"
+#include "Enemies.h"
+#include "Inky.h"
+#include "Clyde.h"
 
 
 class Scene {
@@ -17,6 +22,10 @@ public:
 
 	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
 
+	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &);
+
+	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *);
+
 private:
 
 
@@ -24,9 +33,9 @@ private:
 
 class Play : public Scene {
 public:
-	void Update(Renderer *, std::vector<std::vector<Objects*>> &);
+	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &);
 	void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
-	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
+	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*);
 
 };
 

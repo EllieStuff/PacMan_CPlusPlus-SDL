@@ -6,6 +6,15 @@ void Scene::Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &) {}
 
 void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &) {}
 
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&)
+{
+}
+
+
+void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *)
+{
+}
+
 void SplashScreen::Update()	//Nota: Es provisional, currar-s'ho una miqueta plis xD
 {
 	Sleep(3);
@@ -39,11 +48,15 @@ void Menu::Draw(Renderer *renderer)
 
 }
 
-void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o)
+void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys)
 {
 	/*Whatever that goes here*/
 	//Moure Player
+	player->Move(keys);
+
 	//Moure Enemics
+	clyde->Move(player->dir, o);
+	inky->Move(player->dir, o);
 	//Recollir power ups i punts
 
 }
@@ -56,10 +69,12 @@ void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 
 }
 
-void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map)
+void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky)
 {
-	//map.PrintTablero(renderer, o);
 	map.Draw(renderer, o);
+	player->Draw(renderer);
+	clyde->Draw(renderer);
+	inky->Draw(renderer);
 
 }
 

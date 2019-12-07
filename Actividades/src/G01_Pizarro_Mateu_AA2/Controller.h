@@ -17,10 +17,10 @@ public:
 
 	}
 
-	void SceneControl(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
+	void SceneControl(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*);
 
 private:
-	void PollForPlay();
+	void PollForPlay(std::vector<bool> &);
 
 	void GeneralPoll();
 

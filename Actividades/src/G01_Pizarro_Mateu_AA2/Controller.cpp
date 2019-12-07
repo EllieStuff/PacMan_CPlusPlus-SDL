@@ -1,6 +1,6 @@
 #include "Controller.h"
 
-void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map)
+void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player* player, Clyde* clyde, Inky* inky)
 {
 	// --- GAME LOOP ---
 
@@ -12,14 +12,15 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 	Exit exit;
 	Menu menu;
 	Ranking rank;
+	std::vector<bool> keys(255);
 	switch (state) {
 	case SceneState::RUNNING_PLAY:
-		PollForPlay();
+		PollForPlay(keys);
 		scene = &play;
 		//scene = reinterpret_cast<Play*>(scene);
 		scene->Load(renderer, o, map);
-		scene->Update(renderer, o);
-		scene->Draw(renderer, o, map);
+		scene->Update(renderer, o, player, clyde, inky, keys);
+		scene->Draw(renderer, o, map, player, clyde, inky);
 
 		break;
 
@@ -98,10 +99,10 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 
 }
 
-void Controller::PollForPlay()
+void Controller::PollForPlay(std::vector<bool> &keys)
 {
 	SDL_Event event;
-	std::vector<bool> keys(255);
+
 	// HANDLE EVENTS
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {

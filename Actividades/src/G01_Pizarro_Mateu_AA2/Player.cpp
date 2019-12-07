@@ -14,10 +14,10 @@ bool Player::OnEdge() {
 
 void Player::Move(std::vector<bool> keys)
 {
-	if (keys[SDLK_w]) pos.y -= PIXELS_PER_FRAME;
-	if (keys[SDLK_s]) pos.y += PIXELS_PER_FRAME;
-	if (keys[SDLK_a]) pos.x -= PIXELS_PER_FRAME;
-	if (keys[SDLK_d]) pos.x += PIXELS_PER_FRAME;
+	if (keys[SDLK_w]) { pos.y -= PIXELS_PER_FRAME; dir = Direction::UP; }
+	if (keys[SDLK_s]) { pos.y += PIXELS_PER_FRAME; dir = Direction::DOWN; }
+	if (keys[SDLK_a]) { pos.x -= PIXELS_PER_FRAME; dir = Direction::LEFT; }
+	if (keys[SDLK_d]) { pos.x += PIXELS_PER_FRAME; dir = Direction::RIGHT; }
 
 }
 
@@ -136,7 +136,7 @@ void Player::LecturaXMLPlayer(Renderer *_renderer)
 	pos.x = x * TILES_PIXEL;
 	pos.y = y * TILES_PIXEL;
 	initialPos.x = pos.x;
-	initialPos.y = pos.y
+	initialPos.y = pos.y;
 }
 
 
