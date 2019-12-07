@@ -1,10 +1,5 @@
 #include "Enemies.h"
 
-bool OnSquareCollision(const Rect &avatar, const Rect &square) {
-
-	return avatar.x > square.x && avatar.x < square.x + square.w
-		&& avatar.y > square.y && avatar.y < square.y + square.h;
-}
 
 bool Enemies::OnEdge() {
 
@@ -12,15 +7,32 @@ bool Enemies::OnEdge() {
 		|| pos.y <= 0 || pos.y >= SCREEN_HEIGHT - TILES_PIXEL;
 }
 
+void Enemies::Reinit()
+{
+}
+
+void Enemies::Update(Direction, Map)
+{
+}
 
 
+
+
+Enemies::Enemies()
+{
+
+}
+
+void Enemies::Move(Direction, std::vector<std::vector<Objects*>>)
+{
+}
 
 bool Enemies::HitsWall(Direction playerDir, std::vector<std::vector<Objects*>> o)
 {
 	for (int i = 0; i < MAP_WIDTH; i++) {
 		for (int j = 0; j < MAP_HEIGHT; j++) {
 			if (o[i][j]->tile == MapTiles::WALL) {
-				if (OnSquareCollision(pos, o[i][j]->rectPos))
+				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos))
 					return true;
 				else if (OnEdge()) {
 					if (playerDir == Direction::UP && pos.y + SCREEN_HEIGHT - TILES_PIXEL == o[i][j]->rectPos.y
@@ -37,4 +49,13 @@ bool Enemies::HitsWall(Direction playerDir, std::vector<std::vector<Objects*>> o
 	}
 
 	return false;
+}
+
+void Enemies::Draw(Renderer* _renderer)
+{
+	_renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(rect), Utils::RectToSDL_Rect(pos));
+}
+
+void Enemies::LecturaXMLEnemy(Renderer *)
+{
 }

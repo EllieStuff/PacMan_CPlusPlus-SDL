@@ -19,4 +19,4 @@ enum class MapTiles { WALL = 0, EMPTY, FRUIT, POWER_UP, POINTS };
 
 enum class Direction { UP = 0, DOWN, RIGHT, LEFT };
 
-enum EnemyType { Clyde = 0, Inky, Blinky };
+enum EnemyType { ClYDE = 0, INKY, BLINKY };

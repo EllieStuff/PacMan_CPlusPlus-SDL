@@ -6,7 +6,7 @@
 
 struct Vector2 {
 	int x, y;
-
+	Vector2() {};
 	Vector2(int _x, int _y) : x(_x), y(_y) {};
 
 };
@@ -24,6 +24,10 @@ struct Rect {
 	Rect() {};
 	Rect(int _x, int _y, int _w, int _h) : x(_x), y(_y), w(_w), h(_h) {};
 	//void SetPosition(Vector2 pos) { x = pos.x; y = pos.y; };
+
+	inline bool operator==(Rect a) {
+		return  ((a.x == x && a.y == y) && (a.w == w && a.h == h));
+	}
 };
 
 struct Color {

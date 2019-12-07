@@ -24,7 +24,7 @@ void PrintTablero(std::vector<std::vector<Objects*>> &_o, Renderer *_renderer)
 		{
 			//if(_o[j][i]->tile == MapTiles::WALL) std::cout << "X";
 			//else if (_o[j][i]->tile == MapTiles::POINTS)std::cout << ".";
-			(_renderer->PushSprite("PacmanSheet", RectToSDL_Rect(_o[i][j]->rect), RectToSDL_Rect(_o[i][j]->rectPos)));
+			(_renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(_o[i][j]->rect), Utils::RectToSDL_Rect(_o[i][j]->rectPos)));
 		}
 		//std::cout << std::endl;
 	}
@@ -114,9 +114,9 @@ void Map::Refresh()
 
 void Map::Draw(Renderer* _renderer, std::vector<std::vector<Objects*>> &_objects)
 {
-	_renderer->Clear();
+	//_renderer->Clear();
 	PrintTablero(_objects, _renderer);
-	_renderer->Render();
+	//_renderer->Render();
 
 }
 

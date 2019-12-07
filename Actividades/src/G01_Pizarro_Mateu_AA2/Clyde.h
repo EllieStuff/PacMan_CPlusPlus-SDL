@@ -4,6 +4,8 @@
 
 class Clyde : public Enemies
 {
-	void Move(Direction, Map);
-	void LecturaXMLEnemy();
+public:
+	Clyde() {};
+	void Move(Direction, std::vector<std::vector<Objects*>>);
+	void LecturaXMLEnemy(Renderer*);
 };

@@ -18,6 +18,9 @@
 #include "Controller.h"
 #include "Character.h"
 #include "Player.h"
+#include "Enemies.h"
+#include "Clyde.h"
+#include "Inky.h"
 
 #include "Types.h"
 #include "Constants.h"
@@ -48,13 +51,21 @@ int main(int, char*[])
 	Renderer *renderer = renderer->Instance();
 	Map map;
 	Player *player = new Player;
+	Clyde *clyde = new Clyde;
+	Inky *inky = new Inky;
 	map.Create(renderer, o);
 	player->LecturaXMLPlayer(renderer);
+	clyde->LecturaXMLEnemy(renderer);
+	inky->LecturaXMLEnemy(renderer);
 	while (true)
 	{
-		
+
+		renderer->Clear();
 		map.Draw(renderer, o);
-		//player->Draw(renderer);
+		player->Draw(renderer);
+		clyde->Draw(renderer);
+		inky->Draw(renderer);
+		renderer->Render();
 	}
 
 	while (controller.scene->state != SceneState::EXIT) {

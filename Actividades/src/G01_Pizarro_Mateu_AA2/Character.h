@@ -5,16 +5,14 @@
 #include "Map.h"
 
 class Character {
-private:
-	Vector2 initialPos;
-
 protected:
+	Vector2 initialPos;
 	Rect pos;
 	Rect rect;
 	//char overlapedSquare;
 
 public:
-	//Character();
+	Character();
 	virtual void Move();
 	//virtual bool HitsWall(Direction, std::vector<std::vector<Objects*>>);
 

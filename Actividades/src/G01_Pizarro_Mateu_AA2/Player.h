@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Character.h"
 #include "Map.h"
+#include "Enemies.h"
 
 class Player : public Character
 {
@@ -16,9 +17,9 @@ public:
 
 	//METHODS
 	Player();
+	bool OnEdge();
 	void Move(std::vector<bool> keys);
-	bool HitsWall(Direction, std::vector<std::vector<Objects*>>);
-	//bool Hit(Map);
+	bool Hits(Direction, std::vector<std::vector<Objects*>>, Rect&, Rect&);
 	bool GetHasPowerUp();
 	void ReinitPos();
 	void Reinit();

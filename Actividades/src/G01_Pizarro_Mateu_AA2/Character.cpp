@@ -2,6 +2,11 @@
 
 
 
+Character::Character()
+{
+
+}
+
 void Character::Move()
 {
 }
