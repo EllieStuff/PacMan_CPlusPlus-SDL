@@ -8,12 +8,12 @@ class Character {
 protected:
 	Vector2 initialPos;
 	Vector2 lastPos; 
-	Rect rect;
+
 	//char overlapedSquare;
 
 public:
 	Rect pos;
-
+	Rect rect;
 	Character();
 	virtual void Move();
 	//virtual bool HitsWall(Direction, std::vector<std::vector<Objects*>>);

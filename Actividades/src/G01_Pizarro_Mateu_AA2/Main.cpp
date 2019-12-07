@@ -40,7 +40,7 @@ int main(int, char*[])
 	Controller controller;
 	Renderer *renderer = renderer->Instance();
 	Map map;
-
+	Uint32 frameStart, frameTime;
 	std::vector<std::vector<Objects*>> o;
 	for (int i = 0; i < MAP_WIDTH; i++)
 	{
@@ -57,7 +57,9 @@ int main(int, char*[])
 	//	
 	//	map.Draw(renderer, o);
 	//}
-
+	renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
+	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
+	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
 	int frameTimePlayerSprite = 0;
 	HUD hud(renderer);
 	Player *player = new Player;
@@ -67,9 +69,72 @@ int main(int, char*[])
 	player->LecturaXMLPlayer(renderer);
 	clyde->LecturaXMLEnemy(renderer);
 	inky->LecturaXMLEnemy(renderer);
+
+
+
+
+	frameStart = SDL_GetTicks();
 	while (controller.state != SceneState::EXIT) {
+
+		frameTime = SDL_GetTicks() - frameStart;
+		if (frameTime < DELAY_TIME)
+			SDL_Delay((int)(DELAY_TIME - frameTime));
+		#pragma region ANIMACIONES
 		frameTimePlayerSprite++;
-		//if (FPS / frameTimePlayerSprite <= 9) {
+		if (FPS / frameTimePlayerSprite <= 9) {
+			if (player->dir == Direction::NONE ||player->dir == Direction::RIGHT)
+			{
+				player->rect.x += frameWidth;
+				clyde->rect.x += frameWidth;
+				inky->rect.x += frameWidth;
+				if ((player->rect.x >= frameWidth * 6) || (clyde->rect.x >= frameWidth * 8) 
+					|| (inky->rect.x >= frameWidth * 6))
+				{
+					player->rect.x = 4 * frameWidth;
+					clyde->rect.x = 6 * frameWidth;
+					inky->rect.x = 4 * frameWidth;
+				}
+			}
+			if (player->dir == Direction::LEFT)
+			{
+				player->rect.x += frameWidth;
+				clyde->rect.x += frameWidth;
+				inky->rect.x += frameWidth;
+				if (player->rect.x >= frameWidth * 8 || (clyde->rect.x >= frameWidth * 6)
+					|| (inky->rect.x >= frameWidth * 8))
+				{
+					player->rect.x = 6 * frameWidth;
+					clyde->rect.x = 4 * frameWidth;
+					inky->rect.x = 6 * frameWidth;
+				}
+			}
+			if (player->dir == Direction::UP)
+			{
+				player->rect.x += frameWidth;
+				clyde->rect.x += frameWidth;
+				inky->rect.x += frameWidth;
+				if (player->rect.x >= frameWidth * 2 || (clyde->rect.x >= frameWidth * 4)
+					|| (inky->rect.x >= frameWidth * 2))
+				{
+					player->rect.x = 0;
+					clyde->rect.x = 2 * frameWidth;
+					inky->rect.x = 0;
+				}
+			}
+			if (player->dir == Direction::DOWN)
+			{
+				player->rect.x += frameWidth;
+				clyde->rect.x += frameWidth;
+				inky->rect.x += frameWidth;
+				if (player->rect.x >= frameWidth * 4 || (clyde->rect.x >= frameWidth * 2)
+					|| (inky->rect.x >= frameWidth * 4))
+				{
+					player->rect.x = 2 * frameWidth;
+					clyde->rect.x = 0;
+					inky->rect.x = 2 * frameWidth;
+				}
+			}
+		#pragma endregion
 			renderer->Clear();
 			frameTimePlayerSprite = 0;
 			controller.SceneControl(renderer, o, map, player, clyde, inky);
@@ -80,9 +145,9 @@ int main(int, char*[])
 			/*if (playerRect.x >= textWidth)
 				playerRect.x = 0;*/
 
-		//}
+		}
 		//controller.SceneControl(renderer, o, map, player, clyde, inky);
-
+		frameStart = SDL_GetTicks();
 	}
 
 

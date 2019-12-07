@@ -11,7 +11,7 @@ const int HUD_WIDTH = 200;
 const int HUD_EDGES = 20;
 
 const int FPS = 60;
-const float DELAY_TIME = 1000.0f / FPS;
+const float DELAY_TIME = 500.0f / FPS;
 const int PIXELS_PER_FRAME = 7;
 const int TILES_PIXEL = 35;
 
