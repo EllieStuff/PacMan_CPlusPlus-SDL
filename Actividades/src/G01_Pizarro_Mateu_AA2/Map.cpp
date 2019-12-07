@@ -17,9 +17,9 @@ Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_obje
 }
 void Map::PrintTablero(Renderer *_renderer, std::vector<std::vector<Objects*>> &_o)
 {
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < MAP_WIDTH; i++)
 	{
-		for (int j = 0; j < 20; j++)
+		for (int j = 0; j < MAP_HEIGHT; j++)
 		{
 			//if(_o[j][i]->tile == MapTiles::WALL) std::cout << "X";
 			//else if (_o[j][i]->tile == MapTiles::POINTS)std::cout << ".";
@@ -30,13 +30,13 @@ void Map::PrintTablero(Renderer *_renderer, std::vector<std::vector<Objects*>> &
 	//system("cls");
 }
 
-void Map::InitTablero(std::vector<std::vector<Objects*>> &_objects, int &_frameWidth, int &_frameHeight)
+void Map::InitRemainingTiles(std::vector<std::vector<Objects*>> &_objects, int &_frameWidth, int &_frameHeight)
 {
 	Rect tmpRect;
 	Rect tmpPos;
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < MAP_WIDTH; i++)
 	{
-		for (int j = 0; j < 20; j++)
+		for (int j = 0; j < MAP_HEIGHT; j++)
 		{
 			if (_objects[i][j]->tile == MapTiles::POINTS)
 			{
@@ -102,7 +102,7 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 		}
 		std::cout << std::endl;
 	}
-	InitTablero(_objects, frameWidth, frameHeight);
+	InitRemainingTiles(_objects, frameWidth, frameHeight);
 }
 
 void Map::Refresh()

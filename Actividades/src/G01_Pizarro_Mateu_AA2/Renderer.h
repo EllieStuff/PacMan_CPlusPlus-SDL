@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include "Types.h"
 #include "Constants.h"
+#include <stdint.h>
 
 
 class Renderer {

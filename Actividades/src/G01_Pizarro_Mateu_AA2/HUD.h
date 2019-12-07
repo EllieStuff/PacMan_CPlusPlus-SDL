@@ -12,6 +12,8 @@ private:
 
 public:
 	Font font;
+	Rect bgRect;
+	Rect bgPos;
 	Rect score;
 	Text scoreText;
 	Rect lives[3][static_cast<int>(COUNT)];
@@ -27,6 +29,6 @@ public:
 
 	void Update();
 
-	void Draw();
+	void Draw(Renderer *renderer);
 
 };

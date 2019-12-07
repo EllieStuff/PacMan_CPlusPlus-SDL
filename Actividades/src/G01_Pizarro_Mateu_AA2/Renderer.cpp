@@ -48,6 +48,8 @@ void Renderer::Render() { SDL_RenderPresent(m_renderer); };
 void Renderer::LoadFont(Font font) {
 	TTF_Font *ttfFont{ TTF_OpenFont(font.path.c_str(), font.size) };
 	if (ttfFont == nullptr) throw"No espot inicialitzar TTF_Font";
+
+
 	m_fontData[font.id] = ttfFont;
 };
 
@@ -61,6 +63,7 @@ void Renderer::LoadTextureText(const std::string &fontId, Text text) {
 	SDL_Surface	*tmpSurf = TTF_RenderText_Blended(m_fontData[fontId], text.text.c_str(), SDL_Color{ static_cast<Uint8>(text.color.r), 
 		static_cast<Uint8>(text.color.g), static_cast<Uint8>(text.color.b), static_cast<Uint8>(text.color.a) });
 	if (tmpSurf == nullptr) throw "Unable to create the SDL text surface";
+
 	SDL_Texture *texture{ SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
 	m_textureData[text.id] = texture;
 

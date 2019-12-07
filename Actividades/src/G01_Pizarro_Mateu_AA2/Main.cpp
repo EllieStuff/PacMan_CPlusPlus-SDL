@@ -21,6 +21,7 @@
 #include "Enemies.h"
 #include "Clyde.h"
 #include "Inky.h"
+#include "HUD.h"
 
 #include "Types.h"
 #include "Constants.h"
@@ -41,7 +42,7 @@ int main(int, char*[])
 	Map map;
 
 	std::vector<std::vector<Objects*>> o;
-	for (int i = 0; i < MAP_WIDTH + HUD_TILES; i++)
+	for (int i = 0; i < MAP_WIDTH; i++)
 	{
 		o.push_back({ new Objects });
 		for (int j = 0; j < MAP_HEIGHT; j++)
@@ -58,6 +59,7 @@ int main(int, char*[])
 	//}
 
 	int frameTimePlayerSprite = 0;
+	HUD hud(renderer);
 	Player *player = new Player;
 	Clyde *clyde = new Clyde;
 	Inky *inky = new Inky;
@@ -67,17 +69,18 @@ int main(int, char*[])
 	inky->LecturaXMLEnemy(renderer);
 	while (controller.state != SceneState::EXIT) {
 		frameTimePlayerSprite++;
-		if (FPS / frameTimePlayerSprite <= 9) {
+		//if (FPS / frameTimePlayerSprite <= 9) {
 			renderer->Clear();
 			frameTimePlayerSprite = 0;
 			controller.SceneControl(renderer, o, map, player, clyde, inky);
+			hud.Draw(renderer);
 
 			renderer->Render();
 
 			/*if (playerRect.x >= textWidth)
 				playerRect.x = 0;*/
 
-		}
+		//}
 		//controller.SceneControl(renderer, o, map, player, clyde, inky);
 
 	}

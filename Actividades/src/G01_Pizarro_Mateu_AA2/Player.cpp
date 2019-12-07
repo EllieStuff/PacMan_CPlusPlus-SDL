@@ -76,13 +76,13 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &
 			}
 			if (o[i][j]->tile == MapTiles::POINTS)
 			{
-				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos))
+				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos) && Utils::PointsDistance(pos, o[i][j]->rectPos) < TILES_PIXEL / 3)
 				{
 					score++;
-					o[i][j]->tile == MapTiles::EMPTY;
-					o[i][j]->rect.w == 0;
-					o[i][j]->rect.h == 0;
-					//return true;
+					o[i][j]->tile = MapTiles::EMPTY;
+					o[i][j]->rect.w = 0;
+					o[i][j]->rect.h = 0;
+					////return true;
 				}
 			}
 			/*if (o[i][j]->tile == MapTiles::FRUIT)

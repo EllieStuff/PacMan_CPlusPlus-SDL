@@ -30,6 +30,8 @@ struct Rect {
 	Rect(int _x, int _y, int _w, int _h) : x(_x), y(_y), w(_w), h(_h) {};
 	void SetVec2Pos(Vector2 pos) { x = pos.x; y = pos.y; };
 
+	void Init(int _x, int _y, int _w, int _h) { x = _x; y = _y; w = _w; h = _h; }
+
 	inline bool operator==(Rect a) {
 		return  ((a.x == x && a.y == y) && (a.w == w && a.h == h));
 	}
@@ -59,4 +61,7 @@ struct Text {
 	Color color;
 	int w;
 	int h;
+
+	void Init(std::string _id, std::string _text, Color _color) { id = _id; text = _text; color = _color; }
+
 };
