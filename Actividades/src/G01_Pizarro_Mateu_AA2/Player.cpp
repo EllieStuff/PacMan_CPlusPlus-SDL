@@ -14,41 +14,43 @@ bool Player::OnEdge() {
 
 void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &_inkyPos)
 {
+	if (keys[SDLK_w] && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) dir = Direction::UP;
+	if (keys[SDLK_s] && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) dir = Direction::DOWN;
+	if (keys[SDLK_a] && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) dir = Direction::LEFT;
+	if (keys[SDLK_d] && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) dir = Direction::RIGHT;
+
+
 	lastPos = Utils::Rect_Vec2(pos);
-	if (keys[SDLK_w]) { 
+	if (dir == Direction::UP) {
 		pos.y -= PIXELS_PER_FRAME;
 		if (pos.y < 0) pos.y = SCREEN_HEIGHT - TILES_PIXEL;
-		dir = Direction::UP;
 		if (Hits(o, _clydePos, _inkyPos)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
 		}
 	}
-	if (keys[SDLK_s]) { 
+	if (dir == Direction::DOWN) {
 		pos.y += PIXELS_PER_FRAME;
 		if (pos.y >= SCREEN_HEIGHT) pos.y = 0;
-		dir = Direction::DOWN;
 		if (Hits(o, _clydePos, _inkyPos)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
 		}
 	}
-	if (keys[SDLK_a]) { 
+	if (dir == Direction::LEFT) {
 		pos.x -= PIXELS_PER_FRAME;
 		if (pos.x < 0) pos.x = SCREEN_WIDTH - HUD_WIDTH - TILES_PIXEL;
-		dir = Direction::LEFT;
 		if (Hits(o, _clydePos, _inkyPos)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
 		}
 	}
-	if (keys[SDLK_d]) {
+	if (dir == Direction::RIGHT) {
 		pos.x += PIXELS_PER_FRAME;
 		if (pos.x >= SCREEN_WIDTH - HUD_WIDTH) pos.x = 0;
-		dir = Direction::RIGHT;
 		if (Hits(o, _clydePos, _inkyPos)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;

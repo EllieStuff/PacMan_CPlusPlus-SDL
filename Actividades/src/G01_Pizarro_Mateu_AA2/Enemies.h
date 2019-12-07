@@ -3,8 +3,9 @@
 
 class Enemies : public Character
 {
-private:
+protected:
 	EnemyType type;
+	Direction dir = Direction::NONE;
 
 public:
 	Enemies();
