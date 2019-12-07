@@ -52,7 +52,7 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 {
 	/*Whatever that goes here*/
 	//Moure Player
-	player->Move(keys);
+	player->Move(keys, o, clyde->pos, inky->pos);
 
 	//Moure Enemics
 	clyde->Move(player->dir, o);

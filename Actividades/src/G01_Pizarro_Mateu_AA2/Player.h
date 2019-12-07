@@ -11,15 +11,15 @@ private:
 	int livesLeft = 3;
 
 public:
-	Direction dir;
+	Direction dir = Direction::NONE;
 	int score = 0;
 	int fruits = 0;
 
 	//METHODS
 	Player();
 	bool OnEdge();
-	void Move(std::vector<bool> keys);
-	bool Hits(Direction, std::vector<std::vector<Objects*>>, Rect&, Rect&);
+	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &_inkyPos);
+	bool Hits(std::vector<std::vector<Objects*>> &, Rect&, Rect&);
 	bool GetHasPowerUp();
 	void ReinitPos();
 	void Reinit();

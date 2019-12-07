@@ -57,6 +57,7 @@ int main(int, char*[])
 	//	map.Draw(renderer, o);
 	//}
 
+	int frameTimePlayerSprite = 0;
 	Player *player = new Player;
 	Clyde *clyde = new Clyde;
 	Inky *inky = new Inky;
@@ -65,11 +66,19 @@ int main(int, char*[])
 	clyde->LecturaXMLEnemy(renderer);
 	inky->LecturaXMLEnemy(renderer);
 	while (controller.state != SceneState::EXIT) {
-		renderer->Clear();
-		
-		controller.SceneControl(renderer, o, map, player, clyde, inky);
+		frameTimePlayerSprite++;
+		if (FPS / frameTimePlayerSprite <= 9) {
+			renderer->Clear();
+			frameTimePlayerSprite = 0;
+			controller.SceneControl(renderer, o, map, player, clyde, inky);
 
-		renderer->Render();
+			renderer->Render();
+
+			/*if (playerRect.x >= textWidth)
+				playerRect.x = 0;*/
+
+		}
+		//controller.SceneControl(renderer, o, map, player, clyde, inky);
 
 	}
 

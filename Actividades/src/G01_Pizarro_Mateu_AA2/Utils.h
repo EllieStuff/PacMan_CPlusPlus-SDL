@@ -4,8 +4,11 @@
 #include <vector>
 #include <string>
 #include "Types.h"
+#include "Constants.h"
 
 namespace Utils {
+	int PointsDistance(const Rect &point1, const Rect &point2);
+
 	bool SquareCollidingMouse(Vector2 mouse, Rect square);
 
 	bool OnSquareCollision(const Rect &, const Rect &);
@@ -13,6 +16,8 @@ namespace Utils {
 	Rect SDLRect_Rect(SDL_Rect rect);
 
 	SDL_Rect RectToSDL_Rect(Rect rect);
+
+	Vector2 Rect_Vec2(Rect rect);
 
 	void Resize(char *text, int size);
 
