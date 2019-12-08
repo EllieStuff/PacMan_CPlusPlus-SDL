@@ -123,14 +123,14 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 		//Animacions
 		int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
 		int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
-		if (player->rect.y == 0 && player->hasHittedEnemy) {
+		if (player->rect.y == 0 && player->hasHitEnemy) {
 			player->rect.x = 4 * frameWidth;
 			player->rect.y = 4 * frameHeight;
 
 		}
 		player->frameTimeSprite++;
 		if (FPS / player->frameTimeSprite <= 9) {
-			if (player->hasHittedEnemy)
+			if (player->hasHitEnemy)
 			{
 				player->rect.x += frameWidth;
 				if (player->rect.x >= frameWidth * 7 && player->rect.y == frameHeight * 4)

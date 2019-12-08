@@ -18,7 +18,7 @@ public:
 	int livesLeft = 3;
 	bool dead = false;
 	int frameTimeSprite = 0;
-	bool hasHittedEnemy = false;
+	bool hasHitEnemy = false;
 	//Constructor
 	Player();
 	//Functions
