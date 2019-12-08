@@ -20,6 +20,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		if (keys[SDLK_p]) paused = true;
 		if (keys[SDLK_SPACE]) paused = false;
 		scene = &play;
+		sound.Play();
 		//scene = reinterpret_cast<Play*>(scene);
 		//scene->Load(renderer, o, map, player);
 		scene->Update(renderer, o, player, clyde, inky, keys, paused, cursor, isClicked, soundB);

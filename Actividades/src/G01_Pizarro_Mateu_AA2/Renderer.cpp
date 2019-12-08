@@ -23,6 +23,13 @@ Renderer::Renderer()
 	// ---- TTF ----
 	if (TTF_Init() != 0) throw"No es pot inicialitzar SDL_ttf";
 
+	// ---- AUDIO ----
+	const Uint8 mixFlags{ MIX_INIT_MP3 | MIX_INIT_OGG };
+	if (!(Mix_Init(mixFlags)&mixFlags)) throw "No es pot inicialitzar SDL_mixer";
+
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1) { //Freqüència, format, canals, chunksize
+		throw "Unable to initialize SDL_mixer audio systems";
+	}
 };
 
 

@@ -4,6 +4,7 @@
 #include "Utils.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Sound.h"
 
 class Controller {
 public:
@@ -11,6 +12,7 @@ public:
 	Scene *scene = new Scene;
 	SceneState state;
 	SceneState quitSceneTarget = SceneState::GO_TO_EXIT;
+	Sound sound;
 	bool paused = false;
 
 	Controller() {
