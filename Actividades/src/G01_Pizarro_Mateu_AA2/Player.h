@@ -3,6 +3,8 @@
 #include "Character.h"
 #include "Map.h"
 #include "Enemies.h"
+#include "Inky.h"
+#include "Clyde.h"
 
 class Player : public Character
 {
@@ -16,12 +18,14 @@ public:
 	int livesLeft = 3;
 	bool dead = false;
 	int frameTimeSprite = 0;
+	bool hasHittedEnemy = false;
 
 	//METHODS
 	Player();
 	bool OnEdge();
-	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &_inkyPos);
-	bool Hits(std::vector<std::vector<Objects*>> &, Rect&, Rect&);
+	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *);
+	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *);
+	//bool HitsEnemy(Rect _clydePos, Rect _inkyPos);
 	bool GetHasPowerUp();
 	//void ReinitPos();
 	void Reinit(Renderer *);

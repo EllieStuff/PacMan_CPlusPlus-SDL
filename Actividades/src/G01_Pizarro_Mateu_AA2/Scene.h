@@ -19,10 +19,9 @@
 class Scene {
 protected:
 	Color textColor;
-	Rect pausedFontStopRect, pausedFontRect1, pausedFontRect2;
-	Text pausedFontStopText, pausedFontText1, pausedFontText2;
-	Font pausedFontStop, pausedFont1, pausedFont2;
-	
+	Rect notRunningRect1, notRunningRect2, pausedFontStopRect, pausedFontRect1, pausedFontRect2;
+	Text notRunningText1, notRunningText2, pausedFontStopText, pausedFontText1, pausedFontText2;
+	Font notRunningFont1, notRunningFont2, pausedFontStop, pausedFont1, pausedFont2;
 
 public:
 	Button *buttons = new Button[(int)ButtonPosition::COUNT];
@@ -35,11 +34,11 @@ public:
 
 	virtual void Draw(Renderer *);
 
-	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &);
+	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, bool, Rect &, bool &);
 
 	virtual void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *);
 
-	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player *, Clyde *, Inky *, bool, Rect &);
+	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player *, Clyde *, Inky *, bool, bool, Rect &);
 
 	virtual void Update(Renderer *, Rect &);
 
@@ -50,9 +49,9 @@ private:
 
 class Play : public Scene {
 public:
-	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &);
+	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, bool, Rect &, bool &);
 	void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *);
-	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player*, Clyde*, Inky*, bool, Rect &);
+	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player*, Clyde*, Inky*, bool, bool, Rect &);
 
 };
 
