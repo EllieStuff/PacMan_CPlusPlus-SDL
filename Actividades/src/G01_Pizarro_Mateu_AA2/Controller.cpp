@@ -38,7 +38,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 			state = SceneState::GO_TO_MENU;
 
 		//GoToMenu
-		if (paused && keys[SDLK_ESCAPE]) state = SceneState::GO_TO_MENU;
+		if (paused && keys[SDLK_ESCAPE] || !running && keys[SDLK_ESCAPE]) state = SceneState::GO_TO_MENU;
 
 		break;
 
