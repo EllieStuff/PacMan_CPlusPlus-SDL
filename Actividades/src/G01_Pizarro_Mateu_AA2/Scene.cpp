@@ -1,10 +1,10 @@
 #include "Scene.h"
 
-void Scene::Update(Renderer *, std::vector<std::vector<Objects*>> &) {}
+void Scene::Update(Renderer *) {}
 
-void Scene::Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &) {}
+void Scene::Load(Renderer *) {}
 
-void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &) {}
+void Scene::Draw(Renderer *) {}
 
 void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&)
 {
@@ -15,9 +15,13 @@ void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player 
 {
 }
 
-void SplashScreen::Update()	//Nota: Es provisional, currar-s'ho una miqueta plis xD
+void Scene::Load(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player *)
 {
-	Sleep(3);
+}
+
+void SplashScreen::Update(Renderer *renderer)	//Nota: Es provisional, currar-s'ho una miqueta plis xD
+{
+	//Sleep(3);
 
 	//state = SceneState::GO_TO_MENU;
 }
@@ -28,7 +32,7 @@ void SplashScreen::Draw(Renderer *renderer)
 
 }
 
-void Menu::Update()
+void Menu::Update(Renderer *renderer)
 {
 	/*if () state = SceneState::GO_TO_PLAY;
 	else if () state = SceneState::GO_TO_MENU;
@@ -62,9 +66,11 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 
 }
 
-void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map)
+void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player)
 {
 	map.Create(renderer, o);
+	player->Reinit();
+	map.Reinit(renderer, o);
 
 	//Posar enemies i player
 
@@ -79,7 +85,7 @@ void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 
 }
 
-void Ranking::Update()
+void Ranking::Update(Renderer *renderer)
 {
 	//Necessitem un Update del ranking?
 

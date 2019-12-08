@@ -4,10 +4,11 @@
 class Enemies : public Character
 {
 protected:
-	EnemyType type;
 	Direction dir = Direction::NONE;
 
 public:
+	int extraScore;
+
 	Enemies();
 	virtual void Move(Direction, std::vector<std::vector<Objects*>>);
 	bool HitsWall(Direction, std::vector<std::vector<Objects*>>);

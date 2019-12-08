@@ -14,10 +14,35 @@ bool Player::OnEdge() {
 
 void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &_inkyPos)
 {
-	if (keys[SDLK_w] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::DOWN)) dir = Direction::UP;
-	if (keys[SDLK_s] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::UP)) dir = Direction::DOWN;
-	if (keys[SDLK_a] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::RIGHT)) dir = Direction::LEFT;
-	if (keys[SDLK_d] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::LEFT)) dir = Direction::RIGHT;
+	if (keys[SDLK_w] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::DOWN)
+		|| (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 && goingToMove == Direction::UP)) {
+		dir = Direction::UP;
+		goingToMove = Direction::NONE;
+
+	}
+	if (keys[SDLK_s] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::UP)
+		|| (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 && goingToMove == Direction::DOWN)) {
+		dir = Direction::DOWN;
+		goingToMove = Direction::NONE;
+
+	}
+	if (keys[SDLK_a] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::RIGHT)
+		|| (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 && goingToMove == Direction::LEFT)) {
+		dir = Direction::LEFT;
+		goingToMove = Direction::NONE;
+
+	}
+	if (keys[SDLK_d] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::LEFT)
+		|| (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 && goingToMove == Direction::RIGHT)) {
+		dir = Direction::RIGHT;
+		goingToMove = Direction::NONE;
+
+	}
+
+	if (keys[SDLK_w]) goingToMove = Direction::UP;
+	else if (keys[SDLK_s]) goingToMove = Direction::DOWN;
+	else if (keys[SDLK_a]) goingToMove = Direction::LEFT;
+	else if (keys[SDLK_d]) goingToMove = Direction::RIGHT;
 
 
 	lastPos = Utils::Rect_Vec2(pos);
@@ -103,23 +128,17 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &
 					return true;
 				}
 			}*/
-			if (pos == _clydePos)
+			if (Utils::OnSquareCollision(pos, _clydePos))
 			{
-				if (Utils::OnSquareCollision(pos, _clydePos))
-				{
-					livesLeft--;
-					ReinitPos();
-					//if (livesLeft <= 0)
-				}
+				livesLeft--;
+				ReinitPos();
+
 			}
-			if (pos == _inkyPos)
+			if (Utils::OnSquareCollision(pos, _inkyPos))
 			{
-				if (Utils::OnSquareCollision(pos, _inkyPos))
-				{
-					livesLeft--;
-					ReinitPos();
-					//if (livesLeft <= 0)
-				}
+				livesLeft--;
+				ReinitPos();
+
 			}
 		}
 
@@ -132,12 +151,15 @@ bool Player::GetHasPowerUp()
 	return false;
 }
 
-void Player::ReinitPos()
-{
-}
 
 void Player::Reinit()
 {
+	dir = Direction::NONE;
+	score = 0;
+	fruits = 0;
+	hasPowerUp = false;
+	livesLeft = MAX_LIVES;
+
 }
 
 void Player::LecturaXMLPlayer(Renderer *_renderer)

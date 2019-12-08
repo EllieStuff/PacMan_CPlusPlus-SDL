@@ -1,5 +1,11 @@
 #include "Blinky.h"
 
+Blinky::Blinky()
+{
+	extraScore = 25;
+
+}
+
 void Blinky::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObjects)
 {
 	

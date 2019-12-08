@@ -6,6 +6,9 @@
 
 class Player : public Character
 {
+private:
+	Direction goingToMove = Direction::NONE;
+
 public:
 	Direction dir = Direction::NONE;
 	int score = 0;
@@ -19,7 +22,6 @@ public:
 	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &_inkyPos);
 	bool Hits(std::vector<std::vector<Objects*>> &, Rect&, Rect&);
 	bool GetHasPowerUp();
-	void ReinitPos();
 	void Reinit();
 	//void Update(Map);
 	void Draw(Renderer*);

@@ -19,9 +19,11 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		if (keys[SDLK_p]) paused = true;
 		scene = &play;
 		//scene = reinterpret_cast<Play*>(scene);
-		scene->Load(renderer, o, map);
 		scene->Update(renderer, o, player, clyde, inky, keys);
 		scene->Draw(renderer, o, map, player, clyde, inky);
+
+		//GameOver
+		if (player->livesLeft <= 0 || player->score >= map.maxScore) state = SceneState::GO_TO_MENU;
 
 		break;
 
@@ -58,7 +60,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		quitSceneTarget = SceneState::GO_TO_MENU;
 		scene = &play;
 		//scene = reinterpret_cast<Play*>(scene);
-		scene->Load(renderer, o, map);
+		scene->Load(renderer, o, map, player);
 
 		state = SceneState::RUNNING_PLAY;
 

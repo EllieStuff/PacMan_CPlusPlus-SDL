@@ -44,9 +44,31 @@ void Map::InitRemainingTiles(std::vector<std::vector<Objects*>> &_objects, int &
 				_objects[i][j]->rect = tmpRect;
 				tmpPos = {(i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
 				_objects[i][j]->rectPos = tmpPos;
+				maxScore++;
 			}
 		}
 	}
+}
+
+void Map::Reinit(Renderer *renderer, std::vector<std::vector<Objects*>>&o)
+{
+	renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
+	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
+	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
+	for (int i = 0; i < MAP_WIDTH; i++)
+	{
+		for (int j = 0; j < MAP_HEIGHT; j++)
+		{
+			if (o[i][j]->tile == MapTiles::EMPTY)
+			{
+				o[i][j]->tile = MapTiles::POINTS;
+				o[i][j]->rect.w = frameWidth;
+				o[i][j]->rect.h = frameHeight;
+
+			}
+		}
+	}
+
 }
 
 void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objects)

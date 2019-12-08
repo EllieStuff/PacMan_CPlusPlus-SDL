@@ -1,5 +1,11 @@
 #include "Inky.h"
 
+Inky::Inky()
+{
+	extraScore = 10;
+
+}
+
 void Inky::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObjects)
 {
 	if(pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) dir = playerDir;

@@ -9,10 +9,12 @@ const int SCREEN_HEIGHT = 700;
 const int HUD_WIDTH = 200;
 const int HUD_EDGES = 15;
 
-const int FPS = 60;
+const int FPS = 120;
 const float DELAY_TIME = 500.0f / FPS;
 const int PIXELS_PER_FRAME = 7;
 const int TILES_PIXEL = 35;
+
+const int MAX_LIVES = 3;
 
 enum class SceneState { GO_TO_PLAY = 0, GO_TO_MENU, GO_TO_RANKING, GO_TO_EXIT, RUNNING_PLAY, RUNNING_MENU, RUNNING_RANKING, RUNNING_SPLASH_SCREEN, EXIT };
 

@@ -2,6 +2,12 @@
 
 
 
+Clyde::Clyde()
+{
+	extraScore = 15;
+
+}
+
 void Clyde::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObjects)
 {
 	if (playerDir == Direction::UP && pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) 
