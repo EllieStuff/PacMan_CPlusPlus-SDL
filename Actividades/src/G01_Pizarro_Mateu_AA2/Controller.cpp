@@ -16,6 +16,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 	Exit exit;
 	Menu menu;
 	Ranking rank;
+	SplashScreen ss;
 	HUD hud(renderer, player);
 	std::vector<bool> keys(255);
 	switch (state) {
@@ -69,11 +70,9 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		break;
 
 	case SceneState::RUNNING_SPLASH_SCREEN:
-		if (scene->elapsed_secs >= 3)
-		{
-			scene->Draw(renderer);
-			state = SceneState::GO_TO_MENU;
-		}
+		scene = &ss;
+		scene->Draw(renderer);
+		state = SceneState::GO_TO_MENU;
 
 		break;
 

@@ -55,30 +55,38 @@ void SplashScreen::Update(Renderer *renderer)	//Nota: Es provisional, currar-s'h
 
 void SplashScreen::Draw(Renderer *renderer)
 {
-	begin = clock();
-
-	Rect screenShotPacManRect, screenShotPacManRectPos;
+	Uint32 frameStart, frameTime;
+	Rect splashScreenPacManRect, splashScreenPacManRectPos;
 	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
 	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
 	int frameTimeSprite = 0;
 
-	screenShotPacManRect.x = 4 * frameWidth; screenShotPacManRect.y = 0;
-	screenShotPacManRect.w = frameWidth; screenShotPacManRect.h = frameHeight;
-	screenShotPacManRectPos.x = 0; screenShotPacManRectPos.y = SCREEN_HEIGHT / 2;
-	screenShotPacManRectPos.w = SCREEN_WIDTH / 2; screenShotPacManRectPos.h = SCREEN_HEIGHT / 2;
+	splashScreenPacManRect.x = 4 * frameWidth; splashScreenPacManRect.y = 0;
+	splashScreenPacManRect.w = frameWidth; splashScreenPacManRect.h = frameHeight;
+	splashScreenPacManRectPos.x = 0; splashScreenPacManRectPos.y =  SCREEN_HEIGHT / 15;
+	splashScreenPacManRectPos.w = SCREEN_WIDTH ; splashScreenPacManRectPos.h =  SCREEN_HEIGHT;
 
-	frameTimeSprite++;
-	if (FPS / frameTimeSprite <= 9) 
+	time_t start = clock() + SPLASH_SCREEN_TIME;
+	while (clock() < start)
 	{
-		screenShotPacManRect.x += frameWidth;
-		screenShotPacManRectPos.x += frameWidth * 4;
-		if (screenShotPacManRect.x >= frameWidth * 5)
+		frameTimeSprite++;
+		frameStart = SDL_GetTicks();
+		frameTime = SDL_GetTicks() - frameStart;
+		if (frameTime < DELAY_TIME)
+			SDL_Delay((int)(DELAY_TIME - frameTime));
+		splashScreenPacManRectPos.x += 20;
+		if (FPS / frameTimeSprite <= 9)
 		{
-			screenShotPacManRect.x = 4 * frameWidth;
+			splashScreenPacManRect.x += frameWidth;
+			if (splashScreenPacManRect.x >= frameWidth * 6)
+			{
+				splashScreenPacManRect.x = 4 * frameWidth;
+			}
 		}
+		renderer->Clear();
+		renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(splashScreenPacManRect), Utils::RectToSDL_Rect(splashScreenPacManRectPos));
+		renderer->Render();
 	}
-	end = clock();
-	elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 }
 
 void Menu::Update(Renderer *renderer, Rect &mouse)

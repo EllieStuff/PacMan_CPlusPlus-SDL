@@ -1,6 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include <ctime>
+#include <time.h>
 
 #include "Constants.h"
 #include "Types.h"
@@ -22,7 +22,6 @@ protected:
 	Rect pausedFontStopRect, pausedFontRect1, pausedFontRect2;
 	Text pausedFontStopText, pausedFontText1, pausedFontText2;
 	Font pausedFontStop, pausedFont1, pausedFont2;
-	clock_t begin, end;
 	
 
 public:
