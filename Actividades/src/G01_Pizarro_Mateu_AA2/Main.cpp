@@ -83,9 +83,6 @@ int main(int, char*[])
 		renderer->Clear();
 		frameTimePlayerSprite = 0;
 		controller.SceneControl(renderer, o, map, player, clyde, inky);
-		hud.Update(renderer, player);
-		hud.Draw(renderer, player);
-
 		renderer->Render();
 
 		/*if (playerRect.x >= textWidth)

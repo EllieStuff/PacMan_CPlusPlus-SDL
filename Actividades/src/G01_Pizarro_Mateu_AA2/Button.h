@@ -10,11 +10,12 @@ public:
 	Font font;
 	Rect rect;
 	Text text;
+	std::string t, hoverT;
 
 	Button() {};
-	Button(Color _c, Color _h, Font _font, Rect _rect, Text _text) : c(_c), h(_h), font(_font), rect(_rect), text(_text) {};
+	Button(Color _c, Color _h, std::string _t, std::string _hoverT, Font _font, Rect _rect, Text _text) : c(_c), h(_h), t(_t), hoverT(_hoverT), font(_font), rect(_rect), text(_text) {};
 
-	void Init(Color _c, Color _h, Font _font, Rect _rect, Text _text);
+	void Init(Color _c, Color _h, std::string _t, std::string _hoverT, Font _font, Rect _rect);
 
 	void ChangeHover(Rect mouse);
 

@@ -11,7 +11,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 	Exit exit;
 	Menu menu;
 	Ranking rank;
-	Button soundB;
+	Button buttons[(int)ButtonPosition::COUNT];
 	HUD hud(renderer, player);
 	std::vector<bool> keys(255);
 	switch (state) {
@@ -22,11 +22,11 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		scene = &play;
 		//scene = reinterpret_cast<Play*>(scene);
 		//scene->Load(renderer, o, map, player);
-		scene->Update(renderer, o, player, clyde, inky, keys, paused, cursor, isClicked, soundB);
-		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused, cursor, soundB);
+		scene->Update(renderer, o, player, clyde, inky, keys, paused, cursor, isClicked, buttons[(int)ButtonPosition::SOUND]);
+		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused, cursor, buttons[(int)ButtonPosition::SOUND]);
 
-		if (paused && sound.soundOn && soundB.Used(cursor, isClicked)) sound.Stop();
-		else if (paused && !sound.soundOn && soundB.Used(cursor, isClicked)) sound.Play();
+		if (paused && sound.soundOn && buttons[(int)ButtonPosition::SOUND].Used(cursor, isClicked)) sound.Stop();
+		else if (paused && !sound.soundOn && buttons[(int)ButtonPosition::SOUND].Used(cursor, isClicked)) sound.Play();
 
 		//GameOver Provisional ja que no es te el ranking
 		if (player->dead || player->score >= map.maxScore) 
@@ -44,11 +44,11 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 	case SceneState::RUNNING_MENU:	//Provisional
 		GeneralPoll(isClicked);
 		scene = &menu;
-		//scene->Update();
-		//scene->Draw();
+		scene->Update(renderer, buttons, cursor);
+		scene->Draw(renderer);
 
 		//Aix� al scene->Update()
-		state = SceneState::GO_TO_PLAY;
+		//state = SceneState::GO_TO_PLAY;
 
 		break;
 
@@ -77,13 +77,14 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		scene->Load(renderer, o, map, player, inky, clyde);
 
 		state = SceneState::RUNNING_PLAY;
-
+		if (sound.soundOn)
+			sound.Play();
+		
 		break;
 
 	case SceneState::GO_TO_MENU:
 		quitSceneTarget = SceneState::GO_TO_EXIT;
 		scene = &menu;
-		sound.Play();
 
 		//scene->Load();
 

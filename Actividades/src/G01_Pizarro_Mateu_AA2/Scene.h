@@ -35,6 +35,9 @@ public:
 
 	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player *, Clyde *, Inky *, bool, Rect &, Button &);
 
+	virtual void Update(Renderer *, Button *buttons, Rect &);
+
+	virtual void Draw(Renderer *, Button *buttons);
 private:
 
 
@@ -50,9 +53,9 @@ public:
 
 class Menu : public Scene {
 public:
-	void Update(Renderer*);
+	void Update(Renderer*, Button *buttons, Rect &);
 	void Load(Renderer *);
-	void Draw(Renderer *);
+	void Draw(Renderer *, Button *buttons);
 
 };
 

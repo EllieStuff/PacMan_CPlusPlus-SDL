@@ -16,12 +16,19 @@ void Scene::Load(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player 
 {
 }
 
-
 void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool, Rect &, bool &, Button &)
 {
 }
 
 void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, HUD &, Player *, Clyde *, Inky *, bool, Rect &, Button &)
+{
+}
+
+void Scene::Update(Renderer *, Button * buttons, Rect &)
+{
+}
+
+void Scene::Draw(Renderer *, Button * buttons)
 {
 }
 
@@ -38,25 +45,31 @@ void SplashScreen::Draw(Renderer *renderer)
 
 }
 
-void Menu::Update(Renderer *renderer)
+void Menu::Update(Renderer *renderer, Button *buttons, Rect &mouse)
 {
-	/*if () state = SceneState::GO_TO_PLAY;
-	else if () state = SceneState::GO_TO_MENU;
-	else if () state = SceneState::GO_TO_RANKING;*/
 
+	buttons[(int)ButtonPosition::MENU_PLAY].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "PLAY", "play",
+		{ "Play", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ SCREEN_WIDTH / 3, SCREEN_HEIGHT / 5, 200, 30 });
+	buttons[(int)ButtonPosition::MENU_PLAY].ChangeHover(mouse);
+
+		
 }
 
 void Menu::Load(Renderer *renderer)
 {
 
-
 }
 
-void Menu::Draw(Renderer *renderer)
+void Menu::Draw(Renderer *renderer, Button *buttons)
 {
-
-
+	for (int i = 0; i < (int)ButtonPosition::COUNT; i++) {
+		renderer->LoadFont(buttons[i].font);
+		renderer->LoadTextureText(buttons[i].font.id, buttons[i].text);
+		renderer->PushImage(buttons[i].font.id, Utils::RectToSDL_Rect(buttons[i].rect));
+	}
 }
+	
 
 void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, Rect &mouse, bool &isClicked, Button &soundB)
 {
@@ -149,17 +162,15 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 			}
 
 		}
-		else {
-			soundB.Init({ 255, 255, 255, 255 }, { 255, 0, 0, 255 }, { "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
-				{ SCREEN_WIDTH / 3, 3 * SCREEN_HEIGHT / 5, 200, 30 }, { "Sound", "SoUnD oN", { 255, 255, 255, 255 } });
-			soundB.ChangeHover(mouse);
-
-		}
 	}
-		
+
+	else {
+		soundB.Init({ 255, 255, 255, 255 }, { 255, 0, 0, 255 }, "sOuNd On", "SoUnD oN",
+			{ "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
+			{ SCREEN_WIDTH / 3, 3 * SCREEN_HEIGHT / 5, 200, 30 });
+		soundB.ChangeHover(mouse);
+	}
 }
-
-
 
 void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde)
 {
