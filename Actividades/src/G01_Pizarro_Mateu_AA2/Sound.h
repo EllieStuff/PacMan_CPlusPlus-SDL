@@ -5,6 +5,8 @@
 class Sound
 {
 public:
+	bool soundOn = false;
+
 	Mix_Music *soundtrack; 
 	Sound();
 	void Update();

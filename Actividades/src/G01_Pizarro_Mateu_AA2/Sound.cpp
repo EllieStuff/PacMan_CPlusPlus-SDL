@@ -9,11 +9,13 @@ Sound::Sound()
 void Sound::Play()
 {
 	Mix_PlayMusic(soundtrack, -1);
+	soundOn = true;
 }
 
 void Sound::Stop()
 {
 	Mix_PauseMusic();
+	soundOn = false;
 }
 
 void Sound::Update()

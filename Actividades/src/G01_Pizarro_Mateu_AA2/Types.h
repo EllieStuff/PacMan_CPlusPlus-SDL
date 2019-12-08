@@ -67,11 +67,3 @@ struct Text {
 	void Init(std::string _id, std::string _text, Color _color) { id = _id; text = _text; color = _color; }
 
 };
-
-//class Button{
-	//Color c;
-	//Font font;
-	//Rect rect;
-	//Text text;
-
-	//}

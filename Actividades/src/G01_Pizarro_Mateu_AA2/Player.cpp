@@ -128,23 +128,17 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &
 					return true;
 				}
 			}*/
-			if (pos == _clydePos)
+			if (Utils::OnSquareCollision(pos, _clydePos) && Utils::PointsDistance(pos, _clydePos) < TILES_PIXEL / 2)
 			{
-				if (Utils::OnSquareCollision(pos, _clydePos))
-				{
-					livesLeft--;
-					ReinitPos();
-					//if (livesLeft <= 0)
-				}
+				livesLeft--;
+				ReinitPos();
+				//if (livesLeft <= 0)
 			}
-			if (pos == _inkyPos)
+			if (Utils::OnSquareCollision(pos, _inkyPos) && Utils::PointsDistance(pos, _inkyPos) < TILES_PIXEL / 2)
 			{
-				if (Utils::OnSquareCollision(pos, _inkyPos))
-				{
-					livesLeft--;
-					ReinitPos();
-					//if (livesLeft <= 0)
-				}
+				livesLeft--;
+				ReinitPos();
+				//if (livesLeft <= 0)
 			}
 		}
 
