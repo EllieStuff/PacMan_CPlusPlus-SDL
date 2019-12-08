@@ -23,25 +23,21 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		PollForPlay(keys, isClicked);
 		if (keys[SDLK_p]) paused = true;
 		if (keys[SDLK_SPACE]) paused = false;
+		if (!running && keys[SDLK_SPACE]) running = true;
 		//scene = reinterpret_cast<Play*>(scene);
 		//scene->Load(renderer, o, map, player);
-		scene->Update(renderer, o, player, clyde, inky, keys, paused, cursor, isClicked);
-		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused, cursor);
+		scene->Update(renderer, o, player, clyde, inky, keys, paused, running, cursor, isClicked);
+		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused, running, cursor);
 
 		if (paused && sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(cursor, isClicked)) sound.Stop();
 		else if (paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(cursor, isClicked)) sound.Play();
-		std::cout << "\nScore :" << player->score << "\nMaxScore: " << map.maxScore << std::endl;
 
 		//GameOver Provisional ja que no es te el ranking
-		if (player->dead || player->score >= map.maxScore) 
+		if ((player->dead && player->livesLeft <= 0) || player->score >= map.maxScore) 
 			state = SceneState::GO_TO_MENU;
 
 		//GoToMenu
-		if (paused && keys[SDLK_ESCAPE]) {
-			paused = false;
-			state = SceneState::GO_TO_MENU;
-
-		}
+		if (paused && keys[SDLK_ESCAPE]) state = SceneState::GO_TO_MENU;
 
 		break;
 
@@ -83,6 +79,8 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		scene = &play;
 		//scene = reinterpret_cast<Play*>(scene);
 		scene->Load(renderer, o, map, player, inky, clyde);
+		running = false;
+		paused = false;
 
 		state = SceneState::RUNNING_PLAY;
 		if (sound.soundOn)

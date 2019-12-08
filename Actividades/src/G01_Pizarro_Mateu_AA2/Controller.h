@@ -9,6 +9,8 @@
 class Controller {
 private:
 	bool changeSceneType = true;
+	bool paused = false;
+	bool running = false;
 
 public:
 	Rect cursor;
@@ -16,7 +18,6 @@ public:
 	SceneState state = SceneState::RUNNING_SPLASH_SCREEN;
 	SceneState quitSceneTarget = SceneState::GO_TO_EXIT;
 	Sound sound;
-	bool paused = false;
 
 	Controller();
 

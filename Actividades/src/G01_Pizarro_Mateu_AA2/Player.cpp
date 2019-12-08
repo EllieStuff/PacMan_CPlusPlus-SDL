@@ -130,21 +130,42 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &
 			}*/
 			if (Utils::OnSquareCollision(pos, _clydePos) && Utils::PointsDistance(pos, _clydePos) < TILES_PIXEL / 2)
 			{
-				livesLeft--;
-				ReinitPos();
-				if (livesLeft <= 0) dir = Direction::NONE;
+				if (!hasHittedEnemy) {
+					livesLeft--;
+					hasHittedEnemy = true;
+
+				}
+				//ReinitPos();
+				
 			}
 			if (Utils::OnSquareCollision(pos, _inkyPos) && Utils::PointsDistance(pos, _inkyPos) < TILES_PIXEL / 2)
 			{
-				livesLeft--;
+				if (!hasHittedEnemy) {
+					livesLeft--;
+					hasHittedEnemy = true;
+
+				}
+				//ReinitPos();
+				
+			}
+			if (dead) {
 				ReinitPos();
-				if (livesLeft <= 0) dir = Direction::NONE;
+				dir = Direction::NONE;
+				hasHittedEnemy = false;
+				dead = false;
+
 			}
 		}
 
 	}
 	return false;
 }
+
+//bool Player::HitsEnemy(Rect _clydePos, Rect _inkyPos) {
+//
+//	return (Utils::OnSquareCollision(pos, _clydePos) && Utils::PointsDistance(pos, _clydePos) < TILES_PIXEL / 2)
+//		|| (Utils::OnSquareCollision(pos, _inkyPos) && Utils::PointsDistance(pos, _inkyPos) < TILES_PIXEL / 2);
+//}
 
 bool Player::GetHasPowerUp()
 {
@@ -161,6 +182,7 @@ void Player::Reinit(Renderer *renderer)
 	fruits = 0;
 	hasPowerUp = false;
 	dead = false;
+	hasHittedEnemy = false;
 	livesLeft = MAX_LIVES;
 }
 

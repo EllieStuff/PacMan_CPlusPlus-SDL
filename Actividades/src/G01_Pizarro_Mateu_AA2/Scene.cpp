@@ -36,11 +36,11 @@ void Scene::Load(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player 
 {
 }
 
-void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool, Rect &, bool &)
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool, bool, Rect &, bool &)
 {
 }
 
-void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, HUD &, Player *, Clyde *, Inky *, bool, Rect &)
+void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, HUD &, Player *, Clyde *, Inky *, bool, bool, Rect &)
 {
 }
 
@@ -97,9 +97,9 @@ void Menu::Draw(Renderer *renderer)
 }
 	
 
-void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, Rect &mouse, bool &isClicked)
+void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, bool running, Rect &mouse, bool &isClicked)
 {
-	if (!paused)
+	if (!paused && running)
 	{
 		//Moure Player 
 		player->Move(keys, o, clyde->pos, inky->pos);
@@ -112,14 +112,14 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 		//Animacions
 		int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
 		int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
-		if (player->rect.y == 0 && player->livesLeft <= 0) {
+		if (player->rect.y == 0 && player->hasHittedEnemy) {
 			player->rect.x = 4 * frameWidth;
 			player->rect.y = 4 * frameHeight;
 
 		}
 		player->frameTimeSprite++;
 		if (FPS / player->frameTimeSprite <= 9) {
-			if (player->livesLeft <= 0)
+			if (player->hasHittedEnemy)
 			{
 				player->rect.x += frameWidth;
 				if (player->rect.x >= frameWidth * 7 && player->rect.y == frameHeight * 4)
@@ -129,8 +129,8 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 				}
 				else if (player->rect.x >= frameWidth * 7 && player->rect.y == frameHeight * 5)
 				{
-					player->rect.x = 4 * frameWidth;
-					player->rect.y = 4 * frameHeight;
+					player->rect.x = 6 * frameWidth;
+					player->rect.y = 0 * frameHeight;
 					player->dead = true;
 				}
 			}
@@ -207,7 +207,7 @@ void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 
 }
 
-void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused, Rect &mouse)
+void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused, bool running, Rect &mouse)
 {
 	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(renderer, o);
@@ -225,28 +225,57 @@ void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 	if (paused)
 	{
 		renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(fadedSpriteRect), Utils::RectToSDL_Rect(fadedSpritePos));
+
 		textColor.Init(255, 0, 0, 255);
 		pausedFontStop.Init("STOP", "../../res/ttf/PAC-FONT.TTF", 60);
 		pausedFont1.Init("PressSpace", "../../res/ttf/PAC-FONT.TTF", 36);
 		pausedFont2.Init("PressSpace2", "../../res/ttf/PAC-FONT.TTF", 36);
+
 		pausedFontStopText.Init(pausedFontStop.id, "StOp", textColor);
 		pausedFontText1.Init(pausedFont1.id, "PrEsS SpAcE", textColor);
 		pausedFontText2.Init(pausedFont2.id, "tO rElEaSe", textColor);
+
 		pausedFontStopRect.Init((SCREEN_WIDTH / 2) - HUD_WIDTH, HUD_EDGES * 3, 340, 120);
 		pausedFontRect1.Init((SCREEN_WIDTH / 2) - HUD_WIDTH + TILES_PIXEL / 2, (HUD_EDGES * 3) * 4, 280, 42);
 		pausedFontRect2.Init((SCREEN_WIDTH / 2) - HUD_WIDTH + TILES_PIXEL / 2, (HUD_EDGES * 3) * 5, 280, 42);
+
 		renderer->LoadFont(pausedFontStop);
 		renderer->LoadFont(pausedFont1);
 		renderer->LoadFont(pausedFont2);
 		renderer->LoadFont(buttons[PLAY_SOUND].font);
+
 		renderer->LoadTextureText(pausedFontStop.id, pausedFontStopText);
 		renderer->LoadTextureText(pausedFont1.id, pausedFontText1);
 		renderer->LoadTextureText(pausedFont2.id, pausedFontText2);
 		renderer->LoadTextureText(buttons[PLAY_SOUND].font.id, buttons[PLAY_SOUND].text);
+
 		renderer->PushImage(pausedFontStop.id, Utils::RectToSDL_Rect(pausedFontStopRect));
 		renderer->PushImage(pausedFont1.id, Utils::RectToSDL_Rect(pausedFontRect1));
 		renderer->PushImage(pausedFont2.id, Utils::RectToSDL_Rect(pausedFontRect2));
 		renderer->PushImage(buttons[PLAY_SOUND].font.id, Utils::RectToSDL_Rect(buttons[PLAY_SOUND].rect));
+
+	}
+	else if (!running) {
+		renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(fadedSpriteRect), Utils::RectToSDL_Rect(fadedSpritePos));
+
+		textColor.Init(255, 0, 0, 255);
+		notRunningFont1.Init("Press_Space", "../../res/ttf/PAC-FONT.TTF", 60);
+		notRunningFont2.Init("To_Start", "../../res/ttf/PAC-FONT.TTF", 60);
+
+		notRunningRect1.Init(SCREEN_WIDTH / 5, 2 * SCREEN_HEIGHT / 5, 400, 60);
+		notRunningRect2.Init(SCREEN_WIDTH / 5, 5 * SCREEN_HEIGHT / 10, 400, 60);
+
+		notRunningText1.Init(notRunningFont1.id, "PrEsS SpAcE", textColor);
+		notRunningText2.Init(notRunningFont2.id, "To StArT........", textColor);
+
+		renderer->LoadFont(notRunningFont1);
+		renderer->LoadFont(notRunningFont2);
+
+		renderer->LoadTextureText(notRunningFont1.id, notRunningText1);
+		renderer->LoadTextureText(notRunningFont2.id, notRunningText2);
+
+		renderer->PushImage(notRunningFont1.id, Utils::RectToSDL_Rect(notRunningRect1));
+		renderer->PushImage(notRunningFont2.id, Utils::RectToSDL_Rect(notRunningRect2));
 
 	}
 }

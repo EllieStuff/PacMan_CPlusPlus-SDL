@@ -16,12 +16,14 @@ public:
 	int livesLeft = 3;
 	bool dead = false;
 	int frameTimeSprite = 0;
+	bool hasHittedEnemy = false;
 
 	//METHODS
 	Player();
 	bool OnEdge();
 	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &_inkyPos);
 	bool Hits(std::vector<std::vector<Objects*>> &, Rect&, Rect&);
+	//bool HitsEnemy(Rect _clydePos, Rect _inkyPos);
 	bool GetHasPowerUp();
 	//void ReinitPos();
 	void Reinit(Renderer *);
