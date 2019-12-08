@@ -12,7 +12,7 @@ bool Player::OnEdge() {
 		|| pos.y <= 0 || pos.y >= SCREEN_HEIGHT - TILES_PIXEL;
 }
 
-void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &_inkyPos)
+void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky)
 {
 	if (keys[SDLK_w] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::DOWN)
 		|| (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 && goingToMove == Direction::UP)) {
@@ -49,7 +49,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::UP) {
 		pos.y -= PIXELS_PER_FRAME;
 		if (pos.y < 0) pos.y = SCREEN_HEIGHT - TILES_PIXEL;
-		if (Hits(o, _clydePos, _inkyPos)) {
+		if (Hits(o, clyde, inky)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -58,7 +58,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::DOWN) {
 		pos.y += PIXELS_PER_FRAME;
 		if (pos.y >= SCREEN_HEIGHT) pos.y = 0;
-		if (Hits(o, _clydePos, _inkyPos)) {
+		if (Hits(o, clyde, inky)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -67,7 +67,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::LEFT) {
 		pos.x -= PIXELS_PER_FRAME;
 		if (pos.x < 0) pos.x = SCREEN_WIDTH - HUD_WIDTH - TILES_PIXEL;
-		if (Hits(o, _clydePos, _inkyPos)) {
+		if (Hits(o, clyde, inky)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -76,7 +76,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::RIGHT) {
 		pos.x += PIXELS_PER_FRAME;
 		if (pos.x >= SCREEN_WIDTH - HUD_WIDTH) pos.x = 0;
-		if (Hits(o, _clydePos, _inkyPos)) {
+		if (Hits(o, clyde, inky)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -85,7 +85,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 
 }
 
-bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &_inkyPos)
+bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky)
 {
 	for (int i = 0; i < MAP_WIDTH; i++) {
 		for (int j = 0; j < MAP_HEIGHT; j++) {
@@ -128,7 +128,7 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &
 					return true;
 				}
 			}*/
-			if (Utils::OnSquareCollision(pos, _clydePos) && Utils::PointsDistance(pos, _clydePos) < TILES_PIXEL / 2)
+			if (Utils::OnSquareCollision(pos, clyde->pos) && Utils::PointsDistance(pos, clyde->pos) < TILES_PIXEL / 2)
 			{
 				if (!hasHittedEnemy) {
 					livesLeft--;
@@ -138,7 +138,7 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &
 				//ReinitPos();
 				
 			}
-			if (Utils::OnSquareCollision(pos, _inkyPos) && Utils::PointsDistance(pos, _inkyPos) < TILES_PIXEL / 2)
+			if (Utils::OnSquareCollision(pos, inky->pos) && Utils::PointsDistance(pos, inky->pos) < TILES_PIXEL / 2)
 			{
 				if (!hasHittedEnemy) {
 					livesLeft--;
@@ -150,6 +150,8 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &
 			}
 			if (dead) {
 				ReinitPos();
+				clyde->ReinitPos();
+				inky->ReinitPos();
 				dir = Direction::NONE;
 				hasHittedEnemy = false;
 				dead = false;

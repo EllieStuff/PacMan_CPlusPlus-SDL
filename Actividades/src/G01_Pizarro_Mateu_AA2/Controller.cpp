@@ -21,8 +21,8 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 	switch (state) {
 	case SceneState::RUNNING_PLAY:
 		PollForPlay(keys, isClicked);
-		if (keys[SDLK_p]) paused = true;
-		if (keys[SDLK_SPACE]) paused = false;
+		if (keys[SDLK_p] && running) paused = true;
+		if (keys[SDLK_SPACE] && running) paused = false;
 		if (!running && keys[SDLK_SPACE]) running = true;
 		//scene = reinterpret_cast<Play*>(scene);
 		//scene->Load(renderer, o, map, player);

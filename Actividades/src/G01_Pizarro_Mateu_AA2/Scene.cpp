@@ -102,7 +102,7 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 	if (!paused && running)
 	{
 		//Moure Player 
-		player->Move(keys, o, clyde->pos, inky->pos);
+		player->Move(keys, o, clyde, inky);
 		//Moure Enemics 
 		clyde->Move(player->dir, o);
 		inky->Move(player->dir, o);
