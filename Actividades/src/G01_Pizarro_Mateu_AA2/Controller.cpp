@@ -4,34 +4,41 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 {
 	// --- GAME LOOP ---
 
-	//bool isClicked = false;
-	//bool isRunning = true;
+	bool isClicked = false;
 	int pixelsPerFrame = 4;
 	Play play;
 	SplashScreen ss;
 	Exit exit;
 	Menu menu;
 	Ranking rank;
+	Button soundB;
 	HUD hud(renderer, player);
 	std::vector<bool> keys(255);
 	switch (state) {
 	case SceneState::RUNNING_PLAY:
-		PollForPlay(keys);
+		PollForPlay(keys, isClicked);
 		if (keys[SDLK_p]) paused = true;
 		if (keys[SDLK_SPACE]) paused = false;
 		scene = &play;
 		//scene = reinterpret_cast<Play*>(scene);
 		//scene->Load(renderer, o, map, player);
-		scene->Update(renderer, o, player, clyde, inky, keys, paused);
-		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused);
+		scene->Update(renderer, o, player, clyde, inky, keys, paused, cursor, isClicked, soundB);
+		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused, cursor, soundB);
 
-		//GameOver 
+		//GameOver Provisional ja que no es te el ranking
 		if (player->livesLeft <= 0 || player->score >= map.maxScore) state = SceneState::GO_TO_MENU;
+
+		//GoToMenu
+		if (paused && keys[SDLK_ESCAPE]) {
+			paused = false;
+			state = SceneState::GO_TO_MENU;
+
+		}
 
 		break;
 
 	case SceneState::RUNNING_MENU:	//Provisional
-		GeneralPoll();
+		GeneralPoll(isClicked);
 		scene = &menu;
 		//scene->Update();
 		//scene->Draw();
@@ -42,7 +49,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		break;
 
 	case SceneState::RUNNING_RANKING:
-		GeneralPoll();
+		GeneralPoll(isClicked);
 		scene = &rank;
 		/*scene->Update();
 		scene->Draw();*/
@@ -105,7 +112,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 
 }
 
-void Controller::PollForPlay(std::vector<bool> &keys)
+void Controller::PollForPlay(std::vector<bool> &keys, bool &isClicked)
 {
 	SDL_Event event;
 
@@ -126,14 +133,14 @@ void Controller::PollForPlay(std::vector<bool> &keys)
 			cursor.y = event.motion.y;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			//isClicked = true;
+			isClicked = true;
 		default:;
 		}
 	}
 
 }
 
-void Controller::GeneralPoll()
+void Controller::GeneralPoll(bool &isClicked)
 {
 	SDL_Event event;
 	// HANDLE EVENTS
@@ -147,7 +154,7 @@ void Controller::GeneralPoll()
 			cursor.y = event.motion.y;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			//isClicked = true;
+			isClicked = true;
 		default:;
 		}
 	}

@@ -1,6 +1,14 @@
 #include "Scene.h"
 
-void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&)
+void Scene::Update(Renderer *)
+{
+}
+
+void Scene::Load(Renderer *)
+{
+}
+
+void Scene::Draw(Renderer *)
 {
 }
 
@@ -8,15 +16,12 @@ void Scene::Load(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player 
 {
 }
 
-void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &)
+
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool, Rect &, bool &, Button &)
 {
 }
 
-void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool)
-{
-}
-
-void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, HUD &, Player *, Clyde *, Inky *, bool)
+void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, HUD &, Player *, Clyde *, Inky *, bool, Rect &, Button &)
 {
 }
 
@@ -53,7 +58,7 @@ void Menu::Draw(Renderer *renderer)
 
 }
 
-void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused)
+void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, Rect &mouse, bool &isClicked, Button &soundB)
 {
 	if (!paused)
 	{
@@ -63,7 +68,15 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 		clyde->Move(player->dir, o);
 		inky->Move(player->dir, o);
 		//Recollir power ups i punts 
+
 	}
+	else {
+		soundB.Init({ 255, 255, 255, 255 }, { 255, 0, 0, 255 }, { "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
+			{ SCREEN_WIDTH / 3, 3 * SCREEN_HEIGHT / 5, 200, 30 }, { "Sound", "SoUnD oN", { 255, 255, 255, 255 } });
+		soundB.ChangeHover(mouse);
+
+	}
+		
 }
 
 
@@ -77,7 +90,7 @@ void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 
 }
 
-void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused)
+void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused, Rect &mouse, Button &soundB)
 {
 	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(renderer, o);
@@ -108,12 +121,16 @@ void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 		renderer->LoadFont(pausedFontStop);
 		renderer->LoadFont(pausedFont1);
 		renderer->LoadFont(pausedFont2);
+		renderer->LoadFont(soundB.font);
 		renderer->LoadTextureText(pausedFontStop.id, pausedFontStopText);
 		renderer->LoadTextureText(pausedFont1.id, pausedFontText1);
 		renderer->LoadTextureText(pausedFont2.id, pausedFontText2);
+		renderer->LoadTextureText(soundB.font.id, soundB.text);
 		renderer->PushImage(pausedFontStop.id, Utils::RectToSDL_Rect(pausedFontStopRect));
 		renderer->PushImage(pausedFont1.id, Utils::RectToSDL_Rect(pausedFontRect1));
 		renderer->PushImage(pausedFont2.id, Utils::RectToSDL_Rect(pausedFontRect2));
+		renderer->PushImage(soundB.font.id, Utils::RectToSDL_Rect(soundB.rect));
+
 	}
 }
 

@@ -12,6 +12,7 @@
 #include "Inky.h"
 #include "Clyde.h"
 #include "HUD.h"
+#include "Button.h"
 
 
 class Scene {
@@ -22,15 +23,17 @@ protected:
 	Font pausedFontStop, pausedFont1, pausedFont2;
 public:
 
-	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &);
+	virtual void Update(Renderer *);
 
-	virtual void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &,Player*);
+	virtual void Load(Renderer *);
 
-	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &);
+	virtual void Draw(Renderer *);
 
-	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool);
+	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &, Button &);
 
-	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player *, Clyde *, Inky *, bool);
+	virtual void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*);
+
+	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player *, Clyde *, Inky *, bool, Rect &, Button &);
 
 private:
 
@@ -39,9 +42,9 @@ private:
 
 class Play : public Scene {
 public:
-	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool);
+	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &, Button &);
 	void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &,Player*);
-	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player*, Clyde*, Inky*, bool);
+	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player*, Clyde*, Inky*, bool, Rect &, Button &);
 
 };
 

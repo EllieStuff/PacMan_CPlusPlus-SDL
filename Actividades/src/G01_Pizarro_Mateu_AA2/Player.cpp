@@ -159,6 +159,7 @@ bool Player::GetHasPowerUp()
 
 void Player::Reinit()
 {
+	ReinitPos();
 	dir = Direction::NONE;
 	score = 0;
 	fruits = 0;
