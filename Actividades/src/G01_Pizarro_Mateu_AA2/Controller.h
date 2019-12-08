@@ -7,18 +7,18 @@
 #include "Sound.h"
 
 class Controller {
+private:
+	bool changeSceneType = true;
+
 public:
 	Rect cursor;
 	Scene *scene = new Scene;
-	SceneState state;
+	SceneState state = SceneState::RUNNING_SPLASH_SCREEN;
 	SceneState quitSceneTarget = SceneState::GO_TO_EXIT;
 	Sound sound;
 	bool paused = false;
 
-	Controller() {
-		state = SceneState::RUNNING_SPLASH_SCREEN;
-
-	}
+	Controller();
 
 	void SceneControl(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*);
 

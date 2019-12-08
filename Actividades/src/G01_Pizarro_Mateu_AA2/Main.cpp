@@ -72,7 +72,6 @@ int main(int, char*[])
 
 
 
-
 	//frameStart = SDL_GetTicks();
 	while (controller.state != SceneState::EXIT) {
 		frameStart = SDL_GetTicks();

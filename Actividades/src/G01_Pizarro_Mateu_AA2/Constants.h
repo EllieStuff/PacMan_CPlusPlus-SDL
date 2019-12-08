@@ -16,12 +16,12 @@ const int TILES_PIXEL = 35;
 
 const int MAX_LIVES = 3;
 
-enum class ButtonPosition {SOUND = 0, MENU_PLAY, MENU_RANKING, MENU_EXIT, COUNT};
-
 enum class SceneState { GO_TO_PLAY = 0, GO_TO_MENU, GO_TO_RANKING, GO_TO_EXIT, RUNNING_PLAY, RUNNING_MENU, RUNNING_RANKING, RUNNING_SPLASH_SCREEN, EXIT };
 
 enum class MapTiles { WALL = 0, EMPTY, FRUIT, POWER_UP, POINTS, HUD };
 
 enum class Direction { UP = 0, DOWN, RIGHT, LEFT, NONE };
+
+enum ButtonPosition { PLAY_SOUND = 0, MENU_SOUND, MENU_PLAY, MENU_RANKING, MENU_EXIT, COUNT };
 
 enum EnemyType { ClYDE = 0, INKY, BLINKY };

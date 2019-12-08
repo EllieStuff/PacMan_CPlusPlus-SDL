@@ -1,5 +1,25 @@
 #include "Scene.h"
 
+Scene::Scene()
+{
+	buttons[PLAY_SOUND].Init({ 255, 255, 255, 255 }, { 255, 0, 0, 255 }, "SoUnD oN", "sOuNd On",
+		{ "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ SCREEN_WIDTH / 3, 3 * SCREEN_HEIGHT / 5, 200, 50 });
+	buttons[(int)MENU_PLAY].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "play", "PLAY",
+		{ "Play", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ 2 * SCREEN_WIDTH / 5, (int)(1.8f * SCREEN_HEIGHT / 7), 230, 65 });
+	buttons[(int)MENU_RANKING].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "ranking", "RANKING",
+		{ "Ranking", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ (int)(1.95f * SCREEN_WIDTH / 5) , 3 * SCREEN_HEIGHT / 7, 250, 50 });
+	buttons[(int)MENU_SOUND].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "sound on", "SOUND ON",
+		{ "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ (int)(1.8f * SCREEN_WIDTH / 5), 4 * SCREEN_HEIGHT / 7, 300, 50 });
+	buttons[(int)MENU_EXIT].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "exit", "EXIT",
+		{ "Exit", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ (int)(2.05f * SCREEN_WIDTH / 5), 5 * SCREEN_HEIGHT / 7, 200, 50 });
+
+}
+
 void Scene::Update(Renderer *)
 {
 }
@@ -16,21 +36,18 @@ void Scene::Load(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player 
 {
 }
 
-void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool, Rect &, bool &, Button &)
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool, Rect &, bool &)
 {
 }
 
-void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, HUD &, Player *, Clyde *, Inky *, bool, Rect &, Button &)
+void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, HUD &, Player *, Clyde *, Inky *, bool, Rect &)
 {
 }
 
-void Scene::Update(Renderer *, Button * buttons, Rect &)
+void Scene::Update(Renderer *, Rect &)
 {
 }
 
-void Scene::Draw(Renderer *, Button * buttons)
-{
-}
 
 void SplashScreen::Update(Renderer *renderer)	//Nota: Es provisional, currar-s'ho una miqueta plis xD
 {
@@ -45,25 +62,34 @@ void SplashScreen::Draw(Renderer *renderer)
 
 }
 
-void Menu::Update(Renderer *renderer, Button *buttons, Rect &mouse)
+void Menu::Update(Renderer *renderer, Rect &mouse)
 {
-
-	buttons[(int)ButtonPosition::MENU_PLAY].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "PLAY", "play",
-		{ "Play", "../../res/ttf/PAC-FONT.TTF", 90 },
-		{ SCREEN_WIDTH / 3, SCREEN_HEIGHT / 5, 200, 30 });
-	buttons[(int)ButtonPosition::MENU_PLAY].ChangeHover(mouse);
-
+	for (int i = 1; i < static_cast<int>(COUNT); i++)
+		buttons[i].ChangeHover(mouse);
 		
 }
 
 void Menu::Load(Renderer *renderer)
 {
+	/*buttons[(int)MENU_PLAY].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "PLAY", "play",
+		{ "Play", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5, 200, 300 });
+	buttons[(int)MENU_RANKING].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "RANKING", "ranking",
+		{ "Ranking", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ SCREEN_WIDTH / 2, 2 * SCREEN_HEIGHT / 5, 200, 300 });
+	buttons[(int)MENU_SOUND].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "SOUND ON", "sound on",
+		{ "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ SCREEN_WIDTH / 2, 3 * SCREEN_HEIGHT / 5, 200, 300 });
+	buttons[(int)MENU_EXIT].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "EXIT", "exit",
+		{ "Exit", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ SCREEN_WIDTH / 2, 4 * SCREEN_HEIGHT / 5, 200, 300 });*/
+
 
 }
 
-void Menu::Draw(Renderer *renderer, Button *buttons)
+void Menu::Draw(Renderer *renderer)
 {
-	for (int i = 0; i < (int)ButtonPosition::COUNT; i++) {
+	for (int i = 1; i < static_cast<int>(COUNT); i++) {
 		renderer->LoadFont(buttons[i].font);
 		renderer->LoadTextureText(buttons[i].font.id, buttons[i].text);
 		renderer->PushImage(buttons[i].font.id, Utils::RectToSDL_Rect(buttons[i].rect));
@@ -71,7 +97,7 @@ void Menu::Draw(Renderer *renderer, Button *buttons)
 }
 	
 
-void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, Rect &mouse, bool &isClicked, Button &soundB)
+void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, Rect &mouse, bool &isClicked)
 {
 	if (!paused)
 	{
@@ -165,16 +191,13 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 	}
 
 	else {
-		soundB.Init({ 255, 255, 255, 255 }, { 255, 0, 0, 255 }, "sOuNd On", "SoUnD oN",
-			{ "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
-			{ SCREEN_WIDTH / 3, 3 * SCREEN_HEIGHT / 5, 200, 30 });
-		soundB.ChangeHover(mouse);
+		buttons[PLAY_SOUND].ChangeHover(mouse);
 	}
 }
 
 void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde)
 {
-		map.Create(renderer, o);
+		//map.Create(renderer, o);
 		player->Reinit(renderer);
 		inky->ReinitPos();
 		clyde->ReinitPos();
@@ -184,7 +207,7 @@ void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 
 }
 
-void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused, Rect &mouse, Button &soundB)
+void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused, Rect &mouse)
 {
 	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(renderer, o);
@@ -215,15 +238,15 @@ void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 		renderer->LoadFont(pausedFontStop);
 		renderer->LoadFont(pausedFont1);
 		renderer->LoadFont(pausedFont2);
-		renderer->LoadFont(soundB.font);
+		renderer->LoadFont(buttons[PLAY_SOUND].font);
 		renderer->LoadTextureText(pausedFontStop.id, pausedFontStopText);
 		renderer->LoadTextureText(pausedFont1.id, pausedFontText1);
 		renderer->LoadTextureText(pausedFont2.id, pausedFontText2);
-		renderer->LoadTextureText(soundB.font.id, soundB.text);
+		renderer->LoadTextureText(buttons[PLAY_SOUND].font.id, buttons[PLAY_SOUND].text);
 		renderer->PushImage(pausedFontStop.id, Utils::RectToSDL_Rect(pausedFontStopRect));
 		renderer->PushImage(pausedFont1.id, Utils::RectToSDL_Rect(pausedFontRect1));
 		renderer->PushImage(pausedFont2.id, Utils::RectToSDL_Rect(pausedFontRect2));
-		renderer->PushImage(soundB.font.id, Utils::RectToSDL_Rect(soundB.rect));
+		renderer->PushImage(buttons[PLAY_SOUND].font.id, Utils::RectToSDL_Rect(buttons[PLAY_SOUND].rect));
 
 	}
 }

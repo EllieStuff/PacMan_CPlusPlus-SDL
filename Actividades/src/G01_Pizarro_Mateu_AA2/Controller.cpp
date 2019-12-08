@@ -1,5 +1,11 @@
 ﻿#include "Controller.h"
 
+Controller::Controller()
+{
+	SplashScreen ss;
+	scene = &ss;
+}
+
 void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player* player, Clyde* clyde, Inky* inky)
 {
 	// --- GAME LOOP ---
@@ -7,11 +13,9 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 	bool isClicked = false;
 	int pixelsPerFrame = 4;
 	Play play;
-	SplashScreen ss;
 	Exit exit;
 	Menu menu;
 	Ranking rank;
-	Button buttons[(int)ButtonPosition::COUNT];
 	HUD hud(renderer, player);
 	std::vector<bool> keys(255);
 	switch (state) {
@@ -19,14 +23,14 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		PollForPlay(keys, isClicked);
 		if (keys[SDLK_p]) paused = true;
 		if (keys[SDLK_SPACE]) paused = false;
-		scene = &play;
 		//scene = reinterpret_cast<Play*>(scene);
 		//scene->Load(renderer, o, map, player);
-		scene->Update(renderer, o, player, clyde, inky, keys, paused, cursor, isClicked, buttons[(int)ButtonPosition::SOUND]);
-		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused, cursor, buttons[(int)ButtonPosition::SOUND]);
+		scene->Update(renderer, o, player, clyde, inky, keys, paused, cursor, isClicked);
+		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused, cursor);
 
-		if (paused && sound.soundOn && buttons[(int)ButtonPosition::SOUND].Used(cursor, isClicked)) sound.Stop();
-		else if (paused && !sound.soundOn && buttons[(int)ButtonPosition::SOUND].Used(cursor, isClicked)) sound.Play();
+		if (paused && sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(cursor, isClicked)) sound.Stop();
+		else if (paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(cursor, isClicked)) sound.Play();
+		std::cout << "\nScore :" << player->score << "\nMaxScore: " << map.maxScore << std::endl;
 
 		//GameOver Provisional ja que no es te el ranking
 		if (player->dead || player->score >= map.maxScore) 
@@ -43,9 +47,14 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 
 	case SceneState::RUNNING_MENU:	//Provisional
 		GeneralPoll(isClicked);
-		scene = &menu;
-		scene->Update(renderer, buttons, cursor);
+		scene->Update(renderer, cursor);
 		scene->Draw(renderer);
+
+		if (scene->buttons[MENU_PLAY].Used(cursor, isClicked)) state = SceneState::GO_TO_PLAY;
+		//if (scene->buttons[MENU_RANKING].Used(cursor, isClicked)) state = SceneState::GO_TO_RANKING;	//Silenciat prq el ranking encara no hi es
+		if (scene->buttons[MENU_SOUND].Used(cursor, isClicked) && sound.soundOn) sound.Stop();
+		else if (scene->buttons[MENU_SOUND].Used(cursor, isClicked) && !sound.soundOn) sound.Play();
+		if (scene->buttons[MENU_EXIT].Used(cursor, isClicked)) state = SceneState::GO_TO_EXIT;
 
 		//Aix� al scene->Update()
 		//state = SceneState::GO_TO_PLAY;
@@ -54,14 +63,13 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 
 	case SceneState::RUNNING_RANKING:
 		GeneralPoll(isClicked);
-		scene = &rank;
 		/*scene->Update();
 		scene->Draw();*/
 
 		break;
 
 	case SceneState::RUNNING_SPLASH_SCREEN:
-		scene = &ss;
+		//scene = &ss;
 		/*scene->Update();
 		scene->Draw();*/
 
@@ -86,7 +94,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		quitSceneTarget = SceneState::GO_TO_EXIT;
 		scene = &menu;
 
-		//scene->Load();
+		scene->Load(renderer);
 
 		state = SceneState::RUNNING_MENU;
 

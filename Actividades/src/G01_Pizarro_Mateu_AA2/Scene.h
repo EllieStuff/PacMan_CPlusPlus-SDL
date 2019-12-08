@@ -21,7 +21,11 @@ protected:
 	Rect pausedFontStopRect, pausedFontRect1, pausedFontRect2;
 	Text pausedFontStopText, pausedFontText1, pausedFontText2;
 	Font pausedFontStop, pausedFont1, pausedFont2;
+
 public:
+	Button *buttons = new Button[(int)ButtonPosition::COUNT];
+
+	Scene();
 
 	virtual void Update(Renderer *);
 
@@ -29,15 +33,14 @@ public:
 
 	virtual void Draw(Renderer *);
 
-	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &, Button &);
+	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &);
 
 	virtual void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *);
 
-	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player *, Clyde *, Inky *, bool, Rect &, Button &);
+	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player *, Clyde *, Inky *, bool, Rect &);
 
-	virtual void Update(Renderer *, Button *buttons, Rect &);
+	virtual void Update(Renderer *, Rect &);
 
-	virtual void Draw(Renderer *, Button *buttons);
 private:
 
 
@@ -45,17 +48,17 @@ private:
 
 class Play : public Scene {
 public:
-	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &, Button &);
+	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &);
 	void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *);
-	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player*, Clyde*, Inky*, bool, Rect &, Button &);
+	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player*, Clyde*, Inky*, bool, Rect &);
 
 };
 
 class Menu : public Scene {
 public:
-	void Update(Renderer*, Button *buttons, Rect &);
+	void Update(Renderer*, Rect &);
 	void Load(Renderer *);
-	void Draw(Renderer *, Button *buttons);
+	void Draw(Renderer *);
 
 };
 
