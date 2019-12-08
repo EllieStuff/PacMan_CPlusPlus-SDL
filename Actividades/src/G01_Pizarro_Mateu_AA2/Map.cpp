@@ -1,7 +1,5 @@
 #include "Map.h"
 
-
-
 Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_objectPos)
 {
 	Objects* object = new Objects;
@@ -15,6 +13,7 @@ Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_obje
 	}
 	return object;
 }
+
 void Map::PrintTablero(Renderer *_renderer, std::vector<std::vector<Objects*>> &_o)
 {
 	for (int i = 0; i < MAP_WIDTH; i++)
@@ -40,35 +39,14 @@ void Map::InitRemainingTiles(std::vector<std::vector<Objects*>> &_objects, int &
 		{
 			if (_objects[i][j]->tile == MapTiles::POINTS)
 			{
+				maxScore++;
 				tmpRect = { 5 * _frameWidth, 6 * _frameHeight, _frameWidth, _frameHeight };
 				_objects[i][j]->rect = tmpRect;
 				tmpPos = {(i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
 				_objects[i][j]->rectPos = tmpPos;
-				maxScore++;
 			}
 		}
 	}
-}
-
-void Map::Reinit(Renderer *renderer, std::vector<std::vector<Objects*>>&o)
-{
-	renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
-	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
-	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
-	for (int i = 0; i < MAP_WIDTH; i++)
-	{
-		for (int j = 0; j < MAP_HEIGHT; j++)
-		{
-			if (o[i][j]->tile == MapTiles::EMPTY)
-			{
-				o[i][j]->tile = MapTiles::POINTS;
-				o[i][j]->rect.w = frameWidth;
-				o[i][j]->rect.h = frameHeight;
-
-			}
-		}
-	}
-
 }
 
 void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objects)
@@ -127,9 +105,24 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 	InitRemainingTiles(_objects, frameWidth, frameHeight);
 }
 
-void Map::Refresh()
+void Map::Reinit(Renderer *renderer, std::vector<std::vector<Objects*>>&o)
 {
+	renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
+	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
+	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
+	for (int i = 0; i < MAP_WIDTH; i++)
+	{
+		for (int j = 0; j < MAP_HEIGHT; j++)
+		{
+			if (o[i][j]->tile == MapTiles::EMPTY)
+			{
+				o[i][j]->tile = MapTiles::POINTS;
+				o[i][j]->rect.w = frameWidth;
+				o[i][j]->rect.h = frameHeight;
 
+			}
+		}
+	}
 
 }
 
@@ -140,7 +133,6 @@ void Map::Draw(Renderer* _renderer, std::vector<std::vector<Objects*>> &_objects
 
 	//_renderer->Render();
 }
-
 
 void Objects::Draw()
 {

@@ -1,21 +1,22 @@
 #include "Scene.h"
 
-void Scene::Update(Renderer *) {}
-
-void Scene::Load(Renderer *) {}
-
-void Scene::Draw(Renderer *) {}
-
-void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&)
-{
-}
-
-
-void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *)
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&)
 {
 }
 
 void Scene::Load(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player *)
+{
+}
+
+void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &)
+{
+}
+
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool)
+{
+}
+
+void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, HUD &, Player *, Clyde *, Inky *, bool)
 {
 }
 
@@ -52,19 +53,19 @@ void Menu::Draw(Renderer *renderer)
 
 }
 
-void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys)
+void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused)
 {
-	/*Whatever that goes here*/
-	//Moure Player
-
-	player->Move(keys, o, clyde->pos, inky->pos);
-
-	//Moure Enemics
-	clyde->Move(player->dir, o);
-	inky->Move(player->dir, o);
-	//Recollir power ups i punts
-
+	if (!paused)
+	{
+		//Moure Player 
+		player->Move(keys, o, clyde->pos, inky->pos);
+		//Moure Enemics 
+		clyde->Move(player->dir, o);
+		inky->Move(player->dir, o);
+		//Recollir power ups i punts 
+	}
 }
+
 
 void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player)
 {
@@ -76,13 +77,44 @@ void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 
 }
 
-void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky)
+void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused)
 {
+	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(renderer, o);
 	player->Draw(renderer);
 	clyde->Draw(renderer);
 	inky->Draw(renderer);
-
+	hud.Update(renderer, player);
+	hud.Draw(renderer, player);
+	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
+	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
+	fadedSpriteRect.x = 0; fadedSpriteRect.y = 7 * frameHeight;
+	fadedSpriteRect.w = frameWidth; fadedSpriteRect.h = frameHeight;
+	fadedSpritePos.x = fadedSpritePos.y = 0;
+	fadedSpritePos.w = SCREEN_WIDTH; fadedSpritePos.h = SCREEN_HEIGHT;
+	if (paused)
+	{
+		renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(fadedSpriteRect), Utils::RectToSDL_Rect(fadedSpritePos));
+		textColor.Init(255, 0, 0, 255);
+		pausedFontStop.Init("STOP", "../../res/ttf/PAC-FONT.TTF", 60);
+		pausedFont1.Init("PressSpace", "../../res/ttf/PAC-FONT.TTF", 36);
+		pausedFont2.Init("PressSpace2", "../../res/ttf/PAC-FONT.TTF", 36);
+		pausedFontStopText.Init(pausedFontStop.id, "StOp", textColor);
+		pausedFontText1.Init(pausedFont1.id, "PrEsS SpAcE", textColor);
+		pausedFontText2.Init(pausedFont2.id, "tO rElEaSe", textColor);
+		pausedFontStopRect.Init((SCREEN_WIDTH / 2) - HUD_WIDTH, HUD_EDGES * 3, 340, 120);
+		pausedFontRect1.Init((SCREEN_WIDTH / 2) - HUD_WIDTH + TILES_PIXEL / 2, (HUD_EDGES * 3) * 4, 280, 42);
+		pausedFontRect2.Init((SCREEN_WIDTH / 2) - HUD_WIDTH + TILES_PIXEL / 2, (HUD_EDGES * 3) * 5, 280, 42);
+		renderer->LoadFont(pausedFontStop);
+		renderer->LoadFont(pausedFont1);
+		renderer->LoadFont(pausedFont2);
+		renderer->LoadTextureText(pausedFontStop.id, pausedFontStopText);
+		renderer->LoadTextureText(pausedFont1.id, pausedFontText1);
+		renderer->LoadTextureText(pausedFont2.id, pausedFontText2);
+		renderer->PushImage(pausedFontStop.id, Utils::RectToSDL_Rect(pausedFontStopRect));
+		renderer->PushImage(pausedFont1.id, Utils::RectToSDL_Rect(pausedFontRect1));
+		renderer->PushImage(pausedFont2.id, Utils::RectToSDL_Rect(pausedFontRect2));
+	}
 }
 
 void Ranking::Update(Renderer *renderer)

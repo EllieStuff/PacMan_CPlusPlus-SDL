@@ -47,7 +47,6 @@ public:
 
 	void Reinit(Renderer *, std::vector<std::vector<Objects*>> &);
 
-	void Refresh();
 
 	void Draw(Renderer*, std::vector<std::vector<Objects*>> &);
 	void PrintTablero(Renderer*, std::vector<std::vector<Objects*>> &);

@@ -128,17 +128,23 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &
 					return true;
 				}
 			}*/
-			if (Utils::OnSquareCollision(pos, _clydePos))
+			if (pos == _clydePos)
 			{
-				livesLeft--;
-				ReinitPos();
-
+				if (Utils::OnSquareCollision(pos, _clydePos))
+				{
+					livesLeft--;
+					ReinitPos();
+					//if (livesLeft <= 0)
+				}
 			}
-			if (Utils::OnSquareCollision(pos, _inkyPos))
+			if (pos == _inkyPos)
 			{
-				livesLeft--;
-				ReinitPos();
-
+				if (Utils::OnSquareCollision(pos, _inkyPos))
+				{
+					livesLeft--;
+					ReinitPos();
+					//if (livesLeft <= 0)
+				}
 			}
 		}
 
@@ -151,7 +157,6 @@ bool Player::GetHasPowerUp()
 	return false;
 }
 
-
 void Player::Reinit()
 {
 	dir = Direction::NONE;
@@ -159,7 +164,6 @@ void Player::Reinit()
 	fruits = 0;
 	hasPowerUp = false;
 	livesLeft = MAX_LIVES;
-
 }
 
 void Player::LecturaXMLPlayer(Renderer *_renderer)
@@ -201,8 +205,6 @@ void Player::LecturaXMLPlayer(Renderer *_renderer)
 	initialPos.x = pos.x;
 	initialPos.y = pos.y;
 }
-
-
 
 void Player::Draw(Renderer *_renderer)
 {

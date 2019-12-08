@@ -1,4 +1,4 @@
-#include "Controller.h"
+ï»¿#include "Controller.h"
 
 void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player* player, Clyde* clyde, Inky* inky)
 {
@@ -12,17 +12,20 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 	Exit exit;
 	Menu menu;
 	Ranking rank;
+	HUD hud(renderer, player);
 	std::vector<bool> keys(255);
 	switch (state) {
 	case SceneState::RUNNING_PLAY:
 		PollForPlay(keys);
 		if (keys[SDLK_p]) paused = true;
+		if (keys[SDLK_SPACE]) paused = false;
 		scene = &play;
 		//scene = reinterpret_cast<Play*>(scene);
-		scene->Update(renderer, o, player, clyde, inky, keys);
-		scene->Draw(renderer, o, map, player, clyde, inky);
+		//scene->Load(renderer, o, map, player);
+		scene->Update(renderer, o, player, clyde, inky, keys, paused);
+		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused);
 
-		//GameOver
+		//GameOver 
 		if (player->livesLeft <= 0 || player->score >= map.maxScore) state = SceneState::GO_TO_MENU;
 
 		break;
@@ -33,7 +36,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		//scene->Update();
 		//scene->Draw();
 
-		//Això al scene->Update()
+		//Aixï¿½ al scene->Update()
 		state = SceneState::GO_TO_PLAY;
 
 		break;
@@ -51,7 +54,7 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		/*scene->Update();
 		scene->Draw();*/
 
-		//Això al scene->Update()
+		//Aixï¿½ al scene->Update()
 		state = SceneState::GO_TO_MENU;
 
 		break;
