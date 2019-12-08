@@ -134,6 +134,15 @@ int main(int, char*[])
 					inky->rect.x = 2 * frameWidth;
 				}
 			}
+			if (player->livesLeft <= 0)
+			{
+				player->rect.x += frameWidth;
+				if (player->rect.x >= frameWidth * 8 && player->rect.y >= frameHeight * 6)
+				{
+					player->rect.x = 0;
+					player->rect.y = 5 * frameHeight;
+				}
+			}
 		#pragma endregion
 			renderer->Clear();
 			frameTimePlayerSprite = 0;

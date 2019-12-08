@@ -29,7 +29,10 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		else if (paused && !sound.soundOn && soundB.Used(cursor, isClicked)) sound.Play();
 
 		//GameOver Provisional ja que no es te el ranking
-		if (player->livesLeft <= 0 || player->score >= map.maxScore) state = SceneState::GO_TO_MENU;
+		if (player->livesLeft <= 0 || player->score >= map.maxScore) { 
+
+			state = SceneState::GO_TO_MENU;
+		}
 
 		//GoToMenu
 		if (paused && keys[SDLK_ESCAPE]) {
