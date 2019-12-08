@@ -11,7 +11,6 @@ class HUD {
 private:
 	enum TypeOfRect { RECT = 0, SPRITE, TEXT, COUNT };
 	Color textColor;
-
 public:
 	Font font;
 	Rect bgRect;
@@ -25,12 +24,10 @@ public:
 	Text sbText;
 	Rect orange[static_cast<int>(COUNT)];
 	Text oranText;
-
-	//Functions
+	//Constructor
 	HUD(Renderer *, Player *);
-
+	//Functions
 	void Update(Renderer *, Player *);
-
 	void Draw(Renderer *, Player *);
 
 };

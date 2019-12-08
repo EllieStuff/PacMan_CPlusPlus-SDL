@@ -48,8 +48,7 @@ void Scene::Update(Renderer *, Rect &)
 {
 }
 
-
-void SplashScreen::Update(Renderer *renderer)	//Nota: Es provisional, currar-s'ho una miqueta plis xD
+void SplashScreen::Update(Renderer *renderer)
 {
 }
 
@@ -98,20 +97,6 @@ void Menu::Update(Renderer *renderer, Rect &mouse)
 
 void Menu::Load(Renderer *renderer)
 {
-	/*buttons[(int)MENU_PLAY].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "PLAY", "play",
-		{ "Play", "../../res/ttf/PAC-FONT.TTF", 90 },
-		{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 5, 200, 300 });
-	buttons[(int)MENU_RANKING].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "RANKING", "ranking",
-		{ "Ranking", "../../res/ttf/PAC-FONT.TTF", 90 },
-		{ SCREEN_WIDTH / 2, 2 * SCREEN_HEIGHT / 5, 200, 300 });
-	buttons[(int)MENU_SOUND].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "SOUND ON", "sound on",
-		{ "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
-		{ SCREEN_WIDTH / 2, 3 * SCREEN_HEIGHT / 5, 200, 300 });
-	buttons[(int)MENU_EXIT].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "EXIT", "exit",
-		{ "Exit", "../../res/ttf/PAC-FONT.TTF", 90 },
-		{ SCREEN_WIDTH / 2, 4 * SCREEN_HEIGHT / 5, 200, 300 });*/
-
-
 }
 
 void Menu::Draw(Renderer *renderer)
@@ -122,7 +107,6 @@ void Menu::Draw(Renderer *renderer)
 		renderer->PushImage(buttons[i].font.id, Utils::RectToSDL_Rect(buttons[i].rect));
 	}
 }
-	
 
 void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, bool running, Rect &mouse, bool &isClicked)
 {
@@ -224,14 +208,10 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 
 void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde)
 {
-		//map.Create(renderer, o);
-		player->Reinit(renderer);
-		inky->ReinitPos();
-		clyde->ReinitPos();
-		map.Reinit(renderer, o);
-
-		//Posar enemies i player
-
+	player->Reinit(renderer);
+	inky->ReinitPos();
+	clyde->ReinitPos();
+	map.Reinit(renderer, o);
 }
 
 void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused, bool running, Rect &mouse)
@@ -243,6 +223,7 @@ void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 	player->Draw(renderer);
 	hud.Update(renderer, player);
 	hud.Draw(renderer, player);
+
 	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
 	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
 	fadedSpriteRect.x = 0; fadedSpriteRect.y = 7 * frameHeight;

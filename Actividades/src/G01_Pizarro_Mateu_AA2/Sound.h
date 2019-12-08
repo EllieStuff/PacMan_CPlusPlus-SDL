@@ -6,9 +6,10 @@ class Sound
 {
 public:
 	bool soundOn = false;
-
 	Mix_Music *soundtrack; 
+	//Constructor
 	Sound();
+	//Functions
 	void Update();
 	void Stop();
 	void Play();

@@ -163,11 +163,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 	return false;
 }
 
-//bool Player::HitsEnemy(Rect _clydePos, Rect _inkyPos) {
-//
-//	return (Utils::OnSquareCollision(pos, _clydePos) && Utils::PointsDistance(pos, _clydePos) < TILES_PIXEL / 2)
-//		|| (Utils::OnSquareCollision(pos, _inkyPos) && Utils::PointsDistance(pos, _inkyPos) < TILES_PIXEL / 2);
-//}
 
 bool Player::GetHasPowerUp()
 {
@@ -192,8 +187,6 @@ void Player::LecturaXMLPlayer(Renderer *_renderer)
 {
 	Vector2 *vec2 = new Vector2(0, 0);
 	int frameWidth, frameHeight;
-	/*_renderer->Instance();
-	_renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");*/
 	*vec2 = _renderer->GetTextureSize("PacmanSheet");
 	frameWidth = vec2->x / 8;
 	frameHeight = vec2->y / 8;
@@ -205,6 +198,8 @@ void Player::LecturaXMLPlayer(Renderer *_renderer)
 	rect.w = frameWidth;
 	std::string numX, numY;
 	int x, y;
+
+	//Lectura XML
 	rapidxml::xml_document<> doc;
 	std::ifstream file("../../res/files/config.xml");
 	std::stringstream buffer;
@@ -212,7 +207,6 @@ void Player::LecturaXMLPlayer(Renderer *_renderer)
 	file.close();
 	std::string content(buffer.str());
 	doc.parse<0>(&content[0]);
-	//Lectura XML
 	rapidxml::xml_node<> *pRoot = doc.first_node();
 	rapidxml::xml_node<> *pNode = pRoot->first_node("Positions");
 	rapidxml::xml_node<> *pNodeI = pNode->first_node();

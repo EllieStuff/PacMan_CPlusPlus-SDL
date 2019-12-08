@@ -20,18 +20,8 @@ int Utils::PointsDistance(const Rect &point1, const Rect &point2) {
 }
 
 bool Utils::OnSquareCollision(const Rect &avatar, const Rect &square) {
-	//Vector v1(new Vector2(avatar.h/2))
-	/*Rect point1 = avatar;
-	Rect point2(avatar.x + avatar.w, avatar.y, NULL, NULL);
-	Rect point3(avatar.x, avatar.y + avatar.h, NULL, NULL);
-	Rect point4(avatar.x + avatar.w, avatar.y + avatar.h, NULL, NULL);*/
 	Rect point1(avatar.x + avatar.w / 2, avatar.y + avatar.h, NULL, NULL);
 	Rect point2(square.x + square.w / 2, square.y + square.h, NULL, NULL);
-
-	//return avatar.x >= square.x && avatar.x <= square.x + square.w
-	//	&& avatar.y >= square.y && avatar.y <= square.y + square.h;
-	/*return PointCollidingSquare(point1, square) || PointCollidingSquare(point2, square)
-		|| PointCollidingSquare(point3, square) || PointCollidingSquare(point4, square);*/
 	return PointsDistance(avatar, square) < TILES_PIXEL;
 }
 
@@ -39,7 +29,6 @@ bool Utils::OnSquareCollision(const Rect &avatar, const Rect &square) {
 
 Rect Utils::SDLRect_Rect(SDL_Rect rect) {
 	Rect r(rect.x, rect.y, rect.w, rect.h);
-
 	return r;
 }
 
@@ -92,7 +81,7 @@ char* Utils::int_char(const int &num) {
 	char *text = new char[1];
 	if (num < 10) {
 		text[0] = num + 48;
-		//Arreglo provisional
+
 		for (int i = 1; i < 6; i++) text[i] = ' ';
 
 		return text;
@@ -116,8 +105,7 @@ char* Utils::int_char(const int &num) {
 		text[i] = numCopy + 48;
 
 	}
-	//Prq collons surten aquelles � si l'array nom�s t� dos espais??!!
-	//Arreglo provisional
+
 	for (int i = 2; i < 6; i++) text[i] = ' ';
 
 	return text;

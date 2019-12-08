@@ -8,26 +8,11 @@ Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_obje
 		object->tile = MapTiles::WALL;
 		object->rect = Utils::SDLRect_Rect(_objectRect);
 		object->rectPos = Utils::SDLRect_Rect(_objectPos);
-		//object = reinterpret_cast<Wall*>(object);
 		return object;
 	}
 	return object;
 }
 
-void Map::PrintTablero(Renderer *_renderer, std::vector<std::vector<Objects*>> &_o)
-{
-	for (int i = 0; i < MAP_WIDTH; i++)
-	{
-		for (int j = 0; j < MAP_HEIGHT; j++)
-		{
-			//if(_o[j][i]->tile == MapTiles::WALL) std::cout << "X";
-			//else if (_o[j][i]->tile == MapTiles::POINTS)std::cout << ".";
-			(_renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(_o[i][j]->rect), Utils::RectToSDL_Rect(_o[i][j]->rectPos)));
-		}
-		//std::cout << std::endl;
-	}
-	//system("cls");
-}
 
 void Map::InitRemainingTiles(std::vector<std::vector<Objects*>> &_objects, int &_frameWidth, int &_frameHeight)
 {
@@ -51,7 +36,7 @@ void Map::InitRemainingTiles(std::vector<std::vector<Objects*>> &_objects, int &
 
 void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objects)
 {
-#pragma region RENDERER
+
 	Vector2 *vec2 = new Vector2(0,0);
 	SDL_Rect objectRect, objectPos;
 	int  frameWidth, frameHeight;
@@ -67,10 +52,11 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 	objectRect.h = frameHeight ;
 	objectPos.w = TILES_PIXEL;
 	objectRect.w = frameWidth ;
-#pragma endregion
 	
 	std::string numX, numY;
 	int x, y;
+
+	//Lectura XML
 	rapidxml::xml_document<> doc;
 	std::ifstream file("../../res/files/config.xml");
 	std::stringstream buffer;
@@ -78,7 +64,6 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 	file.close();
 	std::string content(buffer.str());
 	doc.parse<0>(&content[0]);
-	//Lectura XML
 	rapidxml::xml_node<> *pRoot = doc.first_node();
 	for (rapidxml::xml_node<> *pNode = pRoot->first_node("Map"); pNode; pNode = pNode->next_sibling())
 	{
@@ -97,7 +82,6 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 			y = std::stoi(numY) - 1;
 			objectPos.x = x  * TILES_PIXEL;
 			objectPos.y = y  * TILES_PIXEL;
-			//if (pNodeI->name() == "Wall")
 			_objects[x][y] = (SaveWallsXML(pNodeI->name(), objectRect, objectPos));
 		}
 		std::cout << std::endl;
@@ -128,14 +112,16 @@ void Map::Reinit(Renderer *renderer, std::vector<std::vector<Objects*>>&o)
 
 void Map::Draw(Renderer* _renderer, std::vector<std::vector<Objects*>> &_objects)
 {
-	//_renderer->Clear();
-	PrintTablero(_renderer, _objects);
-
-	//_renderer->Render();
+	for (int i = 0; i < MAP_WIDTH; i++)
+	{
+		for (int j = 0; j < MAP_HEIGHT; j++)
+		{
+			(_renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(_objects[i][j]->rect), Utils::RectToSDL_Rect(_objects[i][j]->rectPos)));
+		}
+	}
 }
 
 void Objects::Draw()
 {
-
 }
 

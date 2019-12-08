@@ -3,17 +3,6 @@
 
 HUD::HUD(Renderer *renderer, Player *player)
 {
-	/*Font font;
-	Rect score;
-	Text scoreText;
-	Rect lives[3][static_cast<int>(COUNT)];
-	Rect cherry[static_cast<int>(COUNT)];
-	Text cherText;
-	Rect sb[static_cast<int>(COUNT)];
-	Text sbText;
-	Rect orange[static_cast<int>(COUNT)];
-	Text oranText;*/
-
 	textColor.Init(0, 0, 0, 0);
 	renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
@@ -30,10 +19,8 @@ HUD::HUD(Renderer *renderer, Player *player)
 	for (int i = 0; i < player->livesLeft; i++) {
 		lives[i][SPRITE].Init((SCREEN_WIDTH - HUD_WIDTH - HUD_EDGES / 3 + (i * TILES_PIXEL * 2)), (SCREEN_HEIGHT - HUD_EDGES - (TILES_PIXEL * 2)), TILES_PIXEL * 2, TILES_PIXEL * 2);
 		lives[i][RECT].Init(7 * frameWidth, 0 * frameHeight, frameWidth, frameHeight);
-
 	}
 	
-
 }
 
 void HUD::Update(Renderer *renderer, Player *player)
@@ -50,8 +37,6 @@ void HUD::Draw(Renderer *renderer, Player *player)
 	renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(bgRect), Utils::RectToSDL_Rect(bgPos));
 	for (int i = 0; i < player->livesLeft; i++) {
 		renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(lives[i][RECT]), Utils::RectToSDL_Rect(lives[i][SPRITE]));
-
 	}
 	renderer->PushImage(font.id, Utils::RectToSDL_Rect(score));
-
 }

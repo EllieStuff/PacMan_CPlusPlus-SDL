@@ -20,18 +20,8 @@ class Objects {
 public:
 	MapTiles tile;
 	Rect rect, rectPos;
-	
-
-	//virtual void InteractWithPlayer();
-
-	//virtual void TouchingPlayer();
-
+	//Functions
 	void Draw();
-
-
-
-private:
-
 };
 
 
@@ -40,17 +30,10 @@ class Map {
 public:
 	int maxScore = 0;
 	std::vector<std::vector<Objects*>> objects[MAP_WIDTH][MAP_HEIGHT];
+	//Functions
 	Objects* SaveWallsXML(std::string, SDL_Rect&, SDL_Rect &);
-
 	void Create(Renderer *, std::vector<std::vector<Objects*>> &);
 	void InitRemainingTiles(std::vector<std::vector<Objects*>> &, int &, int &);
-
 	void Reinit(Renderer *, std::vector<std::vector<Objects*>> &);
-
-
 	void Draw(Renderer*, std::vector<std::vector<Objects*>> &);
-	void PrintTablero(Renderer*, std::vector<std::vector<Objects*>> &);
-
-private:
-
 };

@@ -25,8 +25,6 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		if (keys[SDLK_p] && running) paused = true;
 		if (keys[SDLK_SPACE] && running) paused = false;
 		if (!running && keys[SDLK_SPACE]) running = true;
-		//scene = reinterpret_cast<Play*>(scene);
-		//scene->Load(renderer, o, map, player);
 		scene->Update(renderer, o, player, clyde, inky, keys, paused, running, cursor, isClicked);
 		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused, running, cursor);
 
@@ -60,8 +58,6 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 
 	case SceneState::RUNNING_RANKING:
 		GeneralPoll(isClicked);
-		/*scene->Update();
-		scene->Draw();*/
 
 		break;
 
@@ -75,7 +71,6 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 	case SceneState::GO_TO_PLAY:
 		quitSceneTarget = SceneState::GO_TO_MENU;
 		scene = &play;
-		//scene = reinterpret_cast<Play*>(scene);
 		scene->Load(renderer, o, map, player, inky, clyde);
 		running = false;
 		paused = false;
@@ -99,7 +94,6 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 	case SceneState::GO_TO_RANKING:
 		quitSceneTarget = SceneState::GO_TO_MENU;
 		scene = &rank;
-		//scene->Load();
 
 		state = SceneState::RUNNING_RANKING;
 
@@ -107,7 +101,6 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 
 	case SceneState::GO_TO_EXIT:
 		scene = &exit;
-		//scene->Load();
 
 		state = SceneState::EXIT;
 

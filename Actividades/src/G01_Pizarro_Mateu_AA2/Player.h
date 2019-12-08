@@ -19,17 +19,14 @@ public:
 	bool dead = false;
 	int frameTimeSprite = 0;
 	bool hasHittedEnemy = false;
-
-	//METHODS
+	//Constructor
 	Player();
+	//Functions
 	bool OnEdge();
 	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *);
 	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *);
-	//bool HitsEnemy(Rect _clydePos, Rect _inkyPos);
 	bool GetHasPowerUp();
-	//void ReinitPos();
 	void Reinit(Renderer *);
-	//void Update(Map);
 	void Draw(Renderer*);
 	void LecturaXMLPlayer(Renderer *);
 };

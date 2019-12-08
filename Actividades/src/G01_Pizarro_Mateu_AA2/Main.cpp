@@ -29,9 +29,6 @@
 
 //Game general information
 
-//TODO: 4, 7, 8, 9, 10 i 11 (2n personatge, col�lisions, elements aleatoris que surtin pel mapa i puntuacions) i arreglar bug de int_char(int num)
-
-
 
 int main(int, char*[])
 {
@@ -51,12 +48,6 @@ int main(int, char*[])
 			o[i][j]->tile = MapTiles::POINTS;
 		}
 	}
-	//map.Create(renderer, o);
-	//while (true)
-	//{
-	//	
-	//	map.Draw(renderer, o);
-	//}
 	renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
 	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
@@ -71,8 +62,6 @@ int main(int, char*[])
 	inky->LecturaXMLEnemy(renderer);
 
 
-
-	//frameStart = SDL_GetTicks();
 	while (controller.state != SceneState::EXIT) {
 		frameStart = SDL_GetTicks();
 		frameTime = SDL_GetTicks() - frameStart;
@@ -84,10 +73,6 @@ int main(int, char*[])
 		controller.SceneControl(renderer, o, map, player, clyde, inky);
 		renderer->Render();
 
-		/*if (playerRect.x >= textWidth)
-			playerRect.x = 0;*/
-
-			//controller.SceneControl(renderer, o, map, player, clyde, inky);
 	}
 
 
