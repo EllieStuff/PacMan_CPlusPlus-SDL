@@ -51,15 +51,34 @@ void Scene::Update(Renderer *, Rect &)
 
 void SplashScreen::Update(Renderer *renderer)	//Nota: Es provisional, currar-s'ho una miqueta plis xD
 {
-	//Sleep(3);
-
-	//state = SceneState::GO_TO_MENU;
 }
 
 void SplashScreen::Draw(Renderer *renderer)
 {
-	//renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(_o[i][j]->rect), RectToSDL_Rect(_o[i][j]->rectPos));
+	begin = clock();
 
+	Rect screenShotPacManRect, screenShotPacManRectPos;
+	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
+	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
+	int frameTimeSprite = 0;
+
+	screenShotPacManRect.x = 4 * frameWidth; screenShotPacManRect.y = 0;
+	screenShotPacManRect.w = frameWidth; screenShotPacManRect.h = frameHeight;
+	screenShotPacManRectPos.x = 0; screenShotPacManRectPos.y = SCREEN_HEIGHT / 2;
+	screenShotPacManRectPos.w = SCREEN_WIDTH / 2; screenShotPacManRectPos.h = SCREEN_HEIGHT / 2;
+
+	frameTimeSprite++;
+	if (FPS / frameTimeSprite <= 9) 
+	{
+		screenShotPacManRect.x += frameWidth;
+		screenShotPacManRectPos.x += frameWidth * 4;
+		if (screenShotPacManRect.x >= frameWidth * 5)
+		{
+			screenShotPacManRect.x = 4 * frameWidth;
+		}
+	}
+	end = clock();
+	elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 }
 
 void Menu::Update(Renderer *renderer, Rect &mouse)
@@ -96,7 +115,6 @@ void Menu::Draw(Renderer *renderer)
 	}
 }
 	
-
 void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, Rect &mouse, bool &isClicked)
 {
 	if (!paused)

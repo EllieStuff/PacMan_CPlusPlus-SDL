@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <ctime>
 
 #include "Constants.h"
 #include "Types.h"
@@ -21,10 +22,12 @@ protected:
 	Rect pausedFontStopRect, pausedFontRect1, pausedFontRect2;
 	Text pausedFontStopText, pausedFontText1, pausedFontText2;
 	Font pausedFontStop, pausedFont1, pausedFont2;
+	clock_t begin, end;
+	
 
 public:
 	Button *buttons = new Button[(int)ButtonPosition::COUNT];
-
+	double elapsed_secs;
 	Scene();
 
 	virtual void Update(Renderer *);
@@ -72,7 +75,7 @@ public:
 
 class SplashScreen : public Scene {
 public:
-	void Update(Renderer*);
+	void Update(Renderer * renderer);
 	void Draw(Renderer *);
 
 };

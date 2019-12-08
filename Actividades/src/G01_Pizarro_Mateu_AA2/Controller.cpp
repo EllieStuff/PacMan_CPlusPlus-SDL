@@ -69,12 +69,11 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		break;
 
 	case SceneState::RUNNING_SPLASH_SCREEN:
-		//scene = &ss;
-		/*scene->Update();
-		scene->Draw();*/
-
-		//Aix� al scene->Update()
-		state = SceneState::GO_TO_MENU;
+		if (scene->elapsed_secs >= 3)
+		{
+			scene->Draw(renderer);
+			state = SceneState::GO_TO_MENU;
+		}
 
 		break;
 
