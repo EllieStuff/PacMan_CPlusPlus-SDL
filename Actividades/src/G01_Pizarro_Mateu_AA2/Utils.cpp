@@ -1,11 +1,5 @@
 #include "Utils.h"
 
-bool Utils::SquareCollidingMouse(Vector2 mouse, Rect square) {
-
-	return mouse.x > square.x && mouse.x < square.x + square.w
-		&& mouse.y > square.y && mouse.y < square.y + square.h;
-
-}
 
 bool PointCollidingSquare(Rect point, Rect square) {
 
@@ -19,19 +13,10 @@ int Utils::PointsDistance(const Rect &point1, const Rect &point2) {
 	return sqrt(pow(point2.x - point1.x, 2) + pow(point2.y - point1.y, 2));
 }
 
-bool Utils::OnSquareCollision(const Rect &avatar, const Rect &square) {
-	//Vector v1(new Vector2(avatar.h/2))
-	/*Rect point1 = avatar;
-	Rect point2(avatar.x + avatar.w, avatar.y, NULL, NULL);
-	Rect point3(avatar.x, avatar.y + avatar.h, NULL, NULL);
-	Rect point4(avatar.x + avatar.w, avatar.y + avatar.h, NULL, NULL);*/
+bool Utils::OnSquareCollision(const Rect &avatar, const Rect &square) {		//Recordar canviar nom
 	Rect point1(avatar.x + avatar.w / 2, avatar.y + avatar.h, NULL, NULL);
 	Rect point2(square.x + square.w / 2, square.y + square.h, NULL, NULL);
 
-	//return avatar.x >= square.x && avatar.x <= square.x + square.w
-	//	&& avatar.y >= square.y && avatar.y <= square.y + square.h;
-	/*return PointCollidingSquare(point1, square) || PointCollidingSquare(point2, square)
-		|| PointCollidingSquare(point3, square) || PointCollidingSquare(point4, square);*/
 	return PointsDistance(avatar, square) < TILES_PIXEL;
 }
 

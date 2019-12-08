@@ -6,7 +6,7 @@ void Scene::Load(Renderer *) {}
 
 void Scene::Draw(Renderer *) {}
 
-void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&)
+void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool &)
 {
 }
 
@@ -52,7 +52,7 @@ void Menu::Draw(Renderer *renderer)
 
 }
 
-void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys)
+void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool &isClicked)
 {
 	/*Whatever that goes here*/
 	//Moure Player
@@ -63,6 +63,11 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 	clyde->Move(player->dir, o);
 	inky->Move(player->dir, o);
 	//Recollir power ups i punts
+
+
+	//Buttons per quan estigui pausat
+	Button soundB({ 0, 255, 0, 255 }, { 255, 255, 255, 255 }, { "Sound", "../../res/ttf/PAC-FONT.TTF", 80 }, 
+		{SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 200, 100}, { "Sound", "Hola", { 0, 255, 0, 255 } });
 
 }
 

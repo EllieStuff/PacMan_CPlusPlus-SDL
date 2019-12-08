@@ -68,10 +68,3 @@ struct Text {
 
 };
 
-//class Button{
-	//Color c;
-	//Font font;
-	//Rect rect;
-	//Text text;
-
-	//}

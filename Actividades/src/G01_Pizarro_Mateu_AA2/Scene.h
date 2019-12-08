@@ -11,6 +11,7 @@
 #include "Enemies.h"
 #include "Inky.h"
 #include "Clyde.h"
+#include "Button.h"
 
 
 class Scene {
@@ -22,7 +23,7 @@ public:
 
 	virtual void Draw(Renderer *);
 
-	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &);
+	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool &);
 
 	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *);
 
@@ -35,7 +36,7 @@ private:
 
 class Play : public Scene {
 public:
-	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &);
+	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool &);
 	void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player *);
 	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*);
 

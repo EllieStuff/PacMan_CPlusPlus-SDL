@@ -9,8 +9,6 @@
 namespace Utils {
 	int PointsDistance(const Rect &point1, const Rect &point2);
 
-	bool SquareCollidingMouse(Vector2 mouse, Rect square);
-
 	bool OnSquareCollision(const Rect &, const Rect &);
 
 	Rect SDLRect_Rect(SDL_Rect rect);
