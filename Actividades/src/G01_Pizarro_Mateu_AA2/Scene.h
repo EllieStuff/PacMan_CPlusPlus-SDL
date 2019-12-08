@@ -31,7 +31,7 @@ public:
 
 	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &, Button &);
 
-	virtual void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*);
+	virtual void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *);
 
 	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player *, Clyde *, Inky *, bool, Rect &, Button &);
 
@@ -43,7 +43,7 @@ private:
 class Play : public Scene {
 public:
 	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, Rect &, bool &, Button &);
-	void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &,Player*);
+	void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *);
 	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player*, Clyde*, Inky*, bool, Rect &, Button &);
 
 };

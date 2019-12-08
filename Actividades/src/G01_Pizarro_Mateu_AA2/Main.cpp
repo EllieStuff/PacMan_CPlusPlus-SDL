@@ -73,91 +73,25 @@ int main(int, char*[])
 
 
 
-	frameStart = SDL_GetTicks();
+	//frameStart = SDL_GetTicks();
 	while (controller.state != SceneState::EXIT) {
-
+		frameStart = SDL_GetTicks();
 		frameTime = SDL_GetTicks() - frameStart;
 		if (frameTime < DELAY_TIME)
 			SDL_Delay((int)(DELAY_TIME - frameTime));
-		#pragma region ANIMACIONES
-		frameTimePlayerSprite++;
-		if (FPS / frameTimePlayerSprite <= 9) {
-			if (player->dir == Direction::NONE ||player->dir == Direction::RIGHT)
-			{
-				player->rect.x += frameWidth;
-				clyde->rect.x += frameWidth;
-				inky->rect.x += frameWidth;
-				if ((player->rect.x >= frameWidth * 6) || (clyde->rect.x >= frameWidth * 8) 
-					|| (inky->rect.x >= frameWidth * 6))
-				{
-					player->rect.x = 4 * frameWidth;
-					clyde->rect.x = 6 * frameWidth;
-					inky->rect.x = 4 * frameWidth;
-				}
-			}
-			if (player->dir == Direction::LEFT)
-			{
-				player->rect.x += frameWidth;
-				clyde->rect.x += frameWidth;
-				inky->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 8 || (clyde->rect.x >= frameWidth * 6)
-					|| (inky->rect.x >= frameWidth * 8))
-				{
-					player->rect.x = 6 * frameWidth;
-					clyde->rect.x = 4 * frameWidth;
-					inky->rect.x = 6 * frameWidth;
-				}
-			}
-			if (player->dir == Direction::UP)
-			{
-				player->rect.x += frameWidth;
-				clyde->rect.x += frameWidth;
-				inky->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 2 || (clyde->rect.x >= frameWidth * 4)
-					|| (inky->rect.x >= frameWidth * 2))
-				{
-					player->rect.x = 0;
-					clyde->rect.x = 2 * frameWidth;
-					inky->rect.x = 0;
-				}
-			}
-			if (player->dir == Direction::DOWN)
-			{
-				player->rect.x += frameWidth;
-				clyde->rect.x += frameWidth;
-				inky->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 4 || (clyde->rect.x >= frameWidth * 2)
-					|| (inky->rect.x >= frameWidth * 4))
-				{
-					player->rect.x = 2 * frameWidth;
-					clyde->rect.x = 0;
-					inky->rect.x = 2 * frameWidth;
-				}
-			}
-			if (player->livesLeft <= 0)
-			{
-				player->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 8 && player->rect.y >= frameHeight * 6)
-				{
-					player->rect.x = 0;
-					player->rect.y = 5 * frameHeight;
-				}
-			}
-		#pragma endregion
-			renderer->Clear();
-			frameTimePlayerSprite = 0;
-			controller.SceneControl(renderer, o, map, player, clyde, inky);
-			hud.Update(renderer, player);
-			hud.Draw(renderer, player);
 
-			renderer->Render();
+		renderer->Clear();
+		frameTimePlayerSprite = 0;
+		controller.SceneControl(renderer, o, map, player, clyde, inky);
+		hud.Update(renderer, player);
+		hud.Draw(renderer, player);
 
-			/*if (playerRect.x >= textWidth)
-				playerRect.x = 0;*/
+		renderer->Render();
 
-		}
-		//controller.SceneControl(renderer, o, map, player, clyde, inky);
-		frameStart = SDL_GetTicks();
+		/*if (playerRect.x >= textWidth)
+			playerRect.x = 0;*/
+
+			//controller.SceneControl(renderer, o, map, player, clyde, inky);
 	}
 
 

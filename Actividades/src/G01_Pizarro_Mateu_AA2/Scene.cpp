@@ -12,7 +12,7 @@ void Scene::Draw(Renderer *)
 {
 }
 
-void Scene::Load(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player *)
+void Scene::Load(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *inky, Clyde *clyde)
 {
 }
 
@@ -69,24 +69,107 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 		inky->Move(player->dir, o);
 		//Recollir power ups i punts 
 
-	}
-	else {
-		soundB.Init({ 255, 255, 255, 255 }, { 255, 0, 0, 255 }, { "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
-			{ SCREEN_WIDTH / 3, 3 * SCREEN_HEIGHT / 5, 200, 30 }, { "Sound", "SoUnD oN", { 255, 255, 255, 255 } });
-		soundB.ChangeHover(mouse);
 
+		//Animacions
+		int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
+		int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
+		if (player->rect.y == 0 && player->livesLeft <= 0) {
+			player->rect.x = 4 * frameWidth;
+			player->rect.y = 4 * frameHeight;
+
+		}
+		player->frameTimeSprite++;
+		if (FPS / player->frameTimeSprite <= 9) {
+			if (player->livesLeft <= 0)
+			{
+				player->rect.x += frameWidth;
+				if (player->rect.x >= frameWidth * 7 && player->rect.y == frameHeight * 4)
+				{
+					player->rect.x = 0;
+					player->rect.y = 5 * frameHeight;
+				}
+				else if (player->rect.x >= frameWidth * 7 && player->rect.y == frameHeight * 5)
+				{
+					player->rect.x = 4 * frameWidth;
+					player->rect.y = 4 * frameHeight;
+					player->dead = true;
+				}
+			}
+			else if (player->dir == Direction::NONE || player->dir == Direction::RIGHT)
+			{
+				player->rect.x += frameWidth;
+				clyde->rect.x += frameWidth;
+				inky->rect.x += frameWidth;
+				if ((player->rect.x >= frameWidth * 6) || (clyde->rect.x >= frameWidth * 8)
+					|| (inky->rect.x >= frameWidth * 6))
+				{
+					player->rect.x = 4 * frameWidth;
+					clyde->rect.x = 6 * frameWidth;
+					inky->rect.x = 4 * frameWidth;
+				}
+			}
+			else if (player->dir == Direction::LEFT)
+			{
+				player->rect.x += frameWidth;
+				clyde->rect.x += frameWidth;
+				inky->rect.x += frameWidth;
+				if (player->rect.x >= frameWidth * 8 || (clyde->rect.x >= frameWidth * 6)
+					|| (inky->rect.x >= frameWidth * 8))
+				{
+					player->rect.x = 6 * frameWidth;
+					clyde->rect.x = 4 * frameWidth;
+					inky->rect.x = 6 * frameWidth;
+				}
+			}
+			else if (player->dir == Direction::UP)
+			{
+				player->rect.x += frameWidth;
+				clyde->rect.x += frameWidth;
+				inky->rect.x += frameWidth;
+				if (player->rect.x >= frameWidth * 2 || (clyde->rect.x >= frameWidth * 4)
+					|| (inky->rect.x >= frameWidth * 2))
+				{
+					player->rect.x = 0;
+					clyde->rect.x = 2 * frameWidth;
+					inky->rect.x = 0;
+				}
+			}
+			else if (player->dir == Direction::DOWN)
+			{
+				player->rect.x += frameWidth;
+				clyde->rect.x += frameWidth;
+				inky->rect.x += frameWidth;
+				if (player->rect.x >= frameWidth * 4 || (clyde->rect.x >= frameWidth * 2)
+					|| (inky->rect.x >= frameWidth * 4))
+				{
+					player->rect.x = 2 * frameWidth;
+					clyde->rect.x = 0;
+					inky->rect.x = 2 * frameWidth;
+				}
+			}
+
+		}
+		else {
+			soundB.Init({ 255, 255, 255, 255 }, { 255, 0, 0, 255 }, { "Sound", "../../res/ttf/PAC-FONT.TTF", 90 },
+				{ SCREEN_WIDTH / 3, 3 * SCREEN_HEIGHT / 5, 200, 30 }, { "Sound", "SoUnD oN", { 255, 255, 255, 255 } });
+			soundB.ChangeHover(mouse);
+
+		}
 	}
 		
 }
 
 
-void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player)
-{
-	map.Create(renderer, o);
-	player->Reinit();
-	map.Reinit(renderer, o);
 
-	//Posar enemies i player
+void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde)
+{
+		map.Create(renderer, o);
+		player->Reinit(renderer);
+		inky->ReinitPos();
+		clyde->ReinitPos();
+		map.Reinit(renderer, o);
+
+		//Posar enemies i player
 
 }
 
@@ -94,9 +177,9 @@ void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 {
 	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(renderer, o);
-	player->Draw(renderer);
 	clyde->Draw(renderer);
 	inky->Draw(renderer);
+	player->Draw(renderer);
 	hud.Update(renderer, player);
 	hud.Draw(renderer, player);
 	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;

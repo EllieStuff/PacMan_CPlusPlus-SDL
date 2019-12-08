@@ -14,6 +14,8 @@ public:
 	int fruits = 0;
 	bool hasPowerUp = false;
 	int livesLeft = 3;
+	bool dead = false;
+	int frameTimeSprite = 0;
 
 	//METHODS
 	Player();
@@ -22,7 +24,7 @@ public:
 	bool Hits(std::vector<std::vector<Objects*>> &, Rect&, Rect&);
 	bool GetHasPowerUp();
 	//void ReinitPos();
-	void Reinit();
+	void Reinit(Renderer *);
 	//void Update(Map);
 	void Draw(Renderer*);
 	void LecturaXMLPlayer(Renderer *);

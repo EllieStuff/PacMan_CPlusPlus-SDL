@@ -100,4 +100,6 @@ void Inky::LecturaXMLEnemy(Renderer* _renderer)
 	y = std::stoi(numY) - 1;
 	pos.x = x * TILES_PIXEL;
 	pos.y = y * TILES_PIXEL;
+	initialPos = Utils::Rect_Vec2(pos);
+
 }

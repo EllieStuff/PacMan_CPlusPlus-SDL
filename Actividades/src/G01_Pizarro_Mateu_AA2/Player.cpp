@@ -132,13 +132,13 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Rect &_clydePos, Rect &
 			{
 				livesLeft--;
 				ReinitPos();
-				//if (livesLeft <= 0)
+				if (livesLeft <= 0) dir = Direction::NONE;
 			}
 			if (Utils::OnSquareCollision(pos, _inkyPos) && Utils::PointsDistance(pos, _inkyPos) < TILES_PIXEL / 2)
 			{
 				livesLeft--;
 				ReinitPos();
-				//if (livesLeft <= 0)
+				if (livesLeft <= 0) dir = Direction::NONE;
 			}
 		}
 
@@ -151,13 +151,16 @@ bool Player::GetHasPowerUp()
 	return false;
 }
 
-void Player::Reinit()
+void Player::Reinit(Renderer *renderer)
 {
 	ReinitPos();
 	dir = Direction::NONE;
+	rect.x = 4 * (renderer->GetTextureSize("PacmanSheet").x / 8);
+	rect.y = 0;
 	score = 0;
 	fruits = 0;
 	hasPowerUp = false;
+	dead = false;
 	livesLeft = MAX_LIVES;
 }
 
