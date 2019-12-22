@@ -19,5 +19,5 @@ public:
 	void ReinitPos();
 	virtual void Reinit();
 	virtual void Update();
-	virtual void Draw(Renderer*);
+	virtual void Draw();
 };

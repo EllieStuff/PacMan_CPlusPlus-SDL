@@ -31,6 +31,6 @@ void Character::Update()
 {
 }
 
-void Character::Draw(Renderer *)
+void Character::Draw()
 {
 }

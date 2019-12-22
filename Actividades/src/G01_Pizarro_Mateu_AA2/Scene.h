@@ -27,49 +27,49 @@ public:
 	//Constructor
 	Scene();
 	//Functions
-	virtual void Update(Renderer *);
-	virtual void Load(Renderer *);
-	virtual void Draw(Renderer *);
-	virtual void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, bool, Rect &, bool &);
-	virtual void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *);
-	virtual void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player *, Clyde *, Inky *, bool, bool, Rect &);
-	virtual void Update(Renderer *, Rect &);
+	virtual void Update();
+	virtual void Load();
+	virtual void Draw();
+	virtual void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, bool, Rect &, bool &);
+	virtual void Load(std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *);
+	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, bool, bool, Rect &);
+	virtual void Update(Rect &);
 };
 
 class Play : public Scene {
 public:
 	//Functions
-	void Update(Renderer *, std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, bool, Rect &, bool &);
-	void Load(Renderer *, std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *);
-	void Draw(Renderer *, std::vector<std::vector<Objects*>> &, Map &, HUD&,Player*, Clyde*, Inky*, bool, bool, Rect &);
+	void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, bool, Rect &, bool &);
+	void Load(std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *);
+	void Draw(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*, bool, bool, Rect &);
 
 };
 
 class Menu : public Scene {
 public:
 	//Functions
-	void Update(Renderer*, Rect &);
-	void Load(Renderer *);
-	void Draw(Renderer *);
+	void Update(Rect &);
+	void Load();
+	void Draw();
 };
 
 class Ranking : public Scene {
 public:
 	//Functions
-	void Update(Renderer*);
-	void Load(Renderer *);
-	void Draw(Renderer *);
+	void Update();
+	void Load();
+	void Draw();
 };
 
 class SplashScreen : public Scene {
 public:
 	//Functions
-	void Update(Renderer * renderer);
-	void Draw(Renderer *);
+	void Update();
+	void Draw();
 };
 
 class Exit : public Scene {
 public:
 	//Functions
-	void Load(Renderer *);
+	void Load();
 };

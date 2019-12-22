@@ -51,11 +51,11 @@ bool Enemies::HitsWall(Direction playerDir, std::vector<std::vector<Objects*>> o
 	return false;
 }
 
-void Enemies::Draw(Renderer* _renderer)
+void Enemies::Draw()
 {
-	_renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(rect), Utils::RectToSDL_Rect(pos));
+	Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(rect), Utils::RectToSDL_Rect(pos));
 }
 
-void Enemies::LecturaXMLEnemy(Renderer *)
+void Enemies::LecturaXMLEnemy()
 {
 }

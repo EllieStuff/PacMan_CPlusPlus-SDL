@@ -55,11 +55,11 @@ int main(int, char*[])
 	Player *player = new Player;
 	Clyde *clyde = new Clyde;
 	Inky *inky = new Inky;
-	HUD hud(renderer, player);
-	map.Create(renderer, o);
-	player->LecturaXMLPlayer(renderer);
-	clyde->LecturaXMLEnemy(renderer);
-	inky->LecturaXMLEnemy(renderer);
+	//HUD hud(player);
+	map.Create(o);
+	player->LecturaXMLPlayer();
+	clyde->LecturaXMLEnemy();
+	inky->LecturaXMLEnemy();
 
 
 	while (controller.state != SceneState::EXIT) {
@@ -70,7 +70,7 @@ int main(int, char*[])
 
 		renderer->Clear();
 		frameTimePlayerSprite = 0;
-		controller.SceneControl(renderer, o, map, player, clyde, inky);
+		controller.SceneControl(o, map, player, clyde, inky);
 		renderer->Render();
 
 	}

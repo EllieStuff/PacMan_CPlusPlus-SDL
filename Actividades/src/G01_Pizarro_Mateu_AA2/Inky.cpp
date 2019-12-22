@@ -62,13 +62,13 @@ void Inky::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObjec
 
 }
 
-void Inky::LecturaXMLEnemy(Renderer* _renderer)
+void Inky::LecturaXMLEnemy()
 {
 	Vector2 *vec2 = new Vector2(0, 0);
 	int frameWidth, frameHeight;
-	_renderer->Instance();
-	_renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
-	*vec2 = _renderer->GetTextureSize("PacmanSheet");
+	Renderer::Instance()->Instance();
+	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
+	*vec2 = Renderer::Instance()->GetTextureSize("PacmanSheet");
 	frameWidth = vec2->x / 8;
 	frameHeight = vec2->y / 8;
 	rect.x = 4 * frameWidth;

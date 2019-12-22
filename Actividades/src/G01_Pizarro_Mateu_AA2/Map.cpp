@@ -34,15 +34,15 @@ void Map::InitRemainingTiles(std::vector<std::vector<Objects*>> &_objects, int &
 	}
 }
 
-void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objects)
+void Map::Create(std::vector<std::vector<Objects*>> &_objects)
 {
 
 	Vector2 *vec2 = new Vector2(0,0);
 	SDL_Rect objectRect, objectPos;
 	int  frameWidth, frameHeight;
-	_renderer->Instance();
-	_renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
-	*vec2 = _renderer->GetTextureSize("PacmanSheet");
+	Renderer::Instance()->Instance();
+	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
+	*vec2 = Renderer::Instance()->GetTextureSize("PacmanSheet");
 	frameWidth = vec2->x / 8;
 	frameHeight = vec2->y / 8;
 	objectPos.x = objectPos.y = 0;
@@ -89,11 +89,11 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 	InitRemainingTiles(_objects, frameWidth, frameHeight);
 }
 
-void Map::Reinit(Renderer *renderer, std::vector<std::vector<Objects*>>&o)
+void Map::Reinit(std::vector<std::vector<Objects*>>&o)
 {
-	renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
-	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
-	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
+	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
+	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
+	int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
 	for (int i = 0; i < MAP_WIDTH; i++)
 	{
 		for (int j = 0; j < MAP_HEIGHT; j++)
@@ -110,13 +110,13 @@ void Map::Reinit(Renderer *renderer, std::vector<std::vector<Objects*>>&o)
 
 }
 
-void Map::Draw(Renderer* _renderer, std::vector<std::vector<Objects*>> &_objects)
+void Map::Draw(std::vector<std::vector<Objects*>> &_objects)
 {
 	for (int i = 0; i < MAP_WIDTH; i++)
 	{
 		for (int j = 0; j < MAP_HEIGHT; j++)
 		{
-			(_renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(_objects[i][j]->rect), Utils::RectToSDL_Rect(_objects[i][j]->rectPos)));
+			(Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(_objects[i][j]->rect), Utils::RectToSDL_Rect(_objects[i][j]->rectPos)));
 		}
 	}
 }

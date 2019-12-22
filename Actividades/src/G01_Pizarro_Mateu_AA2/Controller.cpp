@@ -2,22 +2,15 @@
 
 Controller::Controller()
 {
-	SplashScreen ss;
-	scene = &ss;
+	scene = new SplashScreen;
 }
 
-void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player* player, Clyde* clyde, Inky* inky)
+void Controller::SceneControl(std::vector<std::vector<Objects*>> &o, Map &map, Player* player, Clyde* clyde, Inky* inky)
 {
 	// --- GAME LOOP ---
 
 	bool isClicked = false;
 	int pixelsPerFrame = 4;
-	Play play;
-	Exit exit;
-	Menu menu;
-	Ranking rank;
-	SplashScreen ss;
-	HUD hud(renderer, player);
 	std::vector<bool> keys(255);
 	switch (state) {
 	case SceneState::RUNNING_PLAY:
@@ -25,8 +18,8 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		if (keys[SDLK_p] && running) paused = true;
 		if (keys[SDLK_SPACE] && running) paused = false;
 		if (!running && keys[SDLK_SPACE]) running = true;
-		scene->Update(renderer, o, player, clyde, inky, keys, paused, running, cursor, isClicked);
-		scene->Draw(renderer, o, map, hud, player, clyde, inky, paused, running, cursor);
+		scene->Update(o, player, clyde, inky, keys, paused, running, cursor, isClicked);
+		scene->Draw(o, map, player, clyde, inky, paused, running, cursor);
 
 		if (paused && sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(cursor, isClicked)) sound.Stop();
 		else if (paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(cursor, isClicked)) sound.Play();
@@ -42,8 +35,8 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 
 	case SceneState::RUNNING_MENU:	//Provisional
 		GeneralPoll(isClicked);
-		scene->Update(renderer, cursor);
-		scene->Draw(renderer);
+		scene->Update(cursor);
+		scene->Draw();
 
 		if (scene->buttons[MENU_PLAY].Used(cursor, isClicked)) state = SceneState::GO_TO_PLAY;
 		//if (scene->buttons[MENU_RANKING].Used(cursor, isClicked)) state = SceneState::GO_TO_RANKING;	//Silenciat prq el ranking encara no hi es
@@ -62,16 +55,16 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 		break;
 
 	case SceneState::RUNNING_SPLASH_SCREEN:
-		scene = &ss;
-		scene->Draw(renderer);
+		//scene = new SplashScreen;
+		scene->Draw();
 		state = SceneState::GO_TO_MENU;
 
 		break;
 
 	case SceneState::GO_TO_PLAY:
 		quitSceneTarget = SceneState::GO_TO_MENU;
-		scene = &play;
-		scene->Load(renderer, o, map, player, inky, clyde);
+		scene = new Play;
+		scene->Load(o, map, player, inky, clyde);
 		running = false;
 		paused = false;
 
@@ -83,9 +76,9 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 
 	case SceneState::GO_TO_MENU:
 		quitSceneTarget = SceneState::GO_TO_EXIT;
-		scene = &menu;
+		scene = new Menu;
 
-		scene->Load(renderer);
+		scene->Load();
 
 		state = SceneState::RUNNING_MENU;
 
@@ -93,14 +86,14 @@ void Controller::SceneControl(Renderer *renderer, std::vector<std::vector<Object
 
 	case SceneState::GO_TO_RANKING:
 		quitSceneTarget = SceneState::GO_TO_MENU;
-		scene = &rank;
+		scene = new Ranking;
 
 		state = SceneState::RUNNING_RANKING;
 
 		break;
 
 	case SceneState::GO_TO_EXIT:
-		scene = &exit;
+		scene = new Exit;
 
 		state = SceneState::EXIT;
 

@@ -15,6 +15,6 @@ public:
 	bool OnEdge();
 	void Reinit();
 	void Update(Direction, Map);
-	void Draw(Renderer*);
-	virtual void LecturaXMLEnemy(Renderer*);
+	void Draw();
+	virtual void LecturaXMLEnemy();
 };

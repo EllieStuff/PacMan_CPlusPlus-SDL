@@ -26,7 +26,7 @@ public:
 	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *);
 	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *);
 	bool GetHasPowerUp();
-	void Reinit(Renderer *);
-	void Draw(Renderer*);
-	void LecturaXMLPlayer(Renderer *);
+	void Reinit();
+	void Draw();
+	void LecturaXMLPlayer();
 };

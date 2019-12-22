@@ -20,44 +20,44 @@ Scene::Scene()
 
 }
 
-void Scene::Update(Renderer *)
+void Scene::Update()
 {
 }
 
-void Scene::Load(Renderer *)
+void Scene::Load()
 {
 }
 
-void Scene::Draw(Renderer *)
+void Scene::Draw()
 {
 }
 
-void Scene::Load(Renderer *, std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *inky, Clyde *clyde)
+void Scene::Load(std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *inky, Clyde *clyde)
 {
 }
 
-void Scene::Update(Renderer *, std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool, bool, Rect &, bool &)
+void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool, bool, Rect &, bool &)
 {
 }
 
-void Scene::Draw(Renderer *, std::vector<std::vector<Objects*>>&, Map &, HUD &, Player *, Clyde *, Inky *, bool, bool, Rect &)
+void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, bool, bool, Rect &)
 {
 }
 
-void Scene::Update(Renderer *, Rect &)
+void Scene::Update(Rect &)
 {
 }
 
-void SplashScreen::Update(Renderer *renderer)
+void SplashScreen::Update()
 {
 }
 
-void SplashScreen::Draw(Renderer *renderer)
+void SplashScreen::Draw()
 {
 	Uint32 frameStart, frameTime;
 	Rect splashScreenPacManRect, splashScreenPacManRectPos;
-	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
-	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
+	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
+	int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
 	int frameTimeSprite = 0;
 
 	splashScreenPacManRect.x = 4 * frameWidth; splashScreenPacManRect.y = 0;
@@ -82,33 +82,33 @@ void SplashScreen::Draw(Renderer *renderer)
 				splashScreenPacManRect.x = 4 * frameWidth;
 			}
 		}
-		renderer->Clear();
-		renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(splashScreenPacManRect), Utils::RectToSDL_Rect(splashScreenPacManRectPos));
-		renderer->Render();
+		Renderer::Instance()->Clear();
+		Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(splashScreenPacManRect), Utils::RectToSDL_Rect(splashScreenPacManRectPos));
+		Renderer::Instance()->Render();
 	}
 }
 
-void Menu::Update(Renderer *renderer, Rect &mouse)
+void Menu::Update(Rect &mouse)
 {
 	for (int i = 1; i < static_cast<int>(COUNT); i++)
 		buttons[i].ChangeHover(mouse);
 		
 }
 
-void Menu::Load(Renderer *renderer)
+void Menu::Load()
 {
 }
 
-void Menu::Draw(Renderer *renderer)
+void Menu::Draw()
 {
 	for (int i = 1; i < static_cast<int>(COUNT); i++) {
-		renderer->LoadFont(buttons[i].font);
-		renderer->LoadTextureText(buttons[i].font.id, buttons[i].text);
-		renderer->PushImage(buttons[i].font.id, Utils::RectToSDL_Rect(buttons[i].rect));
+		Renderer::Instance()->LoadFont(buttons[i].font);
+		Renderer::Instance()->LoadTextureText(buttons[i].font.id, buttons[i].text);
+		Renderer::Instance()->PushImage(buttons[i].font.id, Utils::RectToSDL_Rect(buttons[i].rect));
 	}
 }
 
-void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, bool running, Rect &mouse, bool &isClicked)
+void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, bool running, Rect &mouse, bool &isClicked)
 {
 	if (!paused && running)
 	{
@@ -121,8 +121,8 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 
 
 		//Animacions
-		int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
-		int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
+		int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
+		int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
 		if (player->rect.y == 0 && player->hasHitEnemy) {
 			player->rect.x = 4 * frameWidth;
 			player->rect.y = 4 * frameHeight;
@@ -206,33 +206,34 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 	}
 }
 
-void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde)
+void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde)
 {
-	player->Reinit(renderer);
+	player->Reinit();
 	inky->ReinitPos();
 	clyde->ReinitPos();
-	map.Reinit(renderer, o);
+	map.Reinit(o);
 }
 
-void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused, bool running, Rect &mouse)
+void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, bool paused, bool running, Rect &mouse)
 {
+	HUD hud(player);
 	Rect fadedSpriteRect, fadedSpritePos;
-	map.Draw(renderer, o);
-	clyde->Draw(renderer);
-	inky->Draw(renderer);
-	player->Draw(renderer);
-	hud.Update(renderer, player);
-	hud.Draw(renderer, player);
+	map.Draw(o);
+	clyde->Draw();
+	inky->Draw();
+	player->Draw();
+	hud.Update(player);
+	hud.Draw(player);
 
-	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
-	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
+	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
+	int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
 	fadedSpriteRect.x = 0; fadedSpriteRect.y = 7 * frameHeight;
 	fadedSpriteRect.w = frameWidth; fadedSpriteRect.h = frameHeight;
 	fadedSpritePos.x = fadedSpritePos.y = 0;
 	fadedSpritePos.w = SCREEN_WIDTH; fadedSpritePos.h = SCREEN_HEIGHT;
 	if (paused)
 	{
-		renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(fadedSpriteRect), Utils::RectToSDL_Rect(fadedSpritePos));
+		Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(fadedSpriteRect), Utils::RectToSDL_Rect(fadedSpritePos));
 
 		textColor.Init(255, 0, 0, 255);
 		pausedFontStop.Init("STOP", "../../res/ttf/PAC-FONT.TTF", 60);
@@ -247,24 +248,24 @@ void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 		pausedFontRect1.Init((SCREEN_WIDTH / 2) - HUD_WIDTH + TILES_PIXEL / 2, (HUD_EDGES * 3) * 4, 280, 42);
 		pausedFontRect2.Init((SCREEN_WIDTH / 2) - HUD_WIDTH + TILES_PIXEL / 2, (HUD_EDGES * 3) * 5, 280, 42);
 
-		renderer->LoadFont(pausedFontStop);
-		renderer->LoadFont(pausedFont1);
-		renderer->LoadFont(pausedFont2);
-		renderer->LoadFont(buttons[PLAY_SOUND].font);
+		Renderer::Instance()->LoadFont(pausedFontStop);
+		Renderer::Instance()->LoadFont(pausedFont1);
+		Renderer::Instance()->LoadFont(pausedFont2);
+		Renderer::Instance()->LoadFont(buttons[PLAY_SOUND].font);
 
-		renderer->LoadTextureText(pausedFontStop.id, pausedFontStopText);
-		renderer->LoadTextureText(pausedFont1.id, pausedFontText1);
-		renderer->LoadTextureText(pausedFont2.id, pausedFontText2);
-		renderer->LoadTextureText(buttons[PLAY_SOUND].font.id, buttons[PLAY_SOUND].text);
+		Renderer::Instance()->LoadTextureText(pausedFontStop.id, pausedFontStopText);
+		Renderer::Instance()->LoadTextureText(pausedFont1.id, pausedFontText1);
+		Renderer::Instance()->LoadTextureText(pausedFont2.id, pausedFontText2);
+		Renderer::Instance()->LoadTextureText(buttons[PLAY_SOUND].font.id, buttons[PLAY_SOUND].text);
 
-		renderer->PushImage(pausedFontStop.id, Utils::RectToSDL_Rect(pausedFontStopRect));
-		renderer->PushImage(pausedFont1.id, Utils::RectToSDL_Rect(pausedFontRect1));
-		renderer->PushImage(pausedFont2.id, Utils::RectToSDL_Rect(pausedFontRect2));
-		renderer->PushImage(buttons[PLAY_SOUND].font.id, Utils::RectToSDL_Rect(buttons[PLAY_SOUND].rect));
+		Renderer::Instance()->PushImage(pausedFontStop.id, Utils::RectToSDL_Rect(pausedFontStopRect));
+		Renderer::Instance()->PushImage(pausedFont1.id, Utils::RectToSDL_Rect(pausedFontRect1));
+		Renderer::Instance()->PushImage(pausedFont2.id, Utils::RectToSDL_Rect(pausedFontRect2));
+		Renderer::Instance()->PushImage(buttons[PLAY_SOUND].font.id, Utils::RectToSDL_Rect(buttons[PLAY_SOUND].rect));
 
 	}
 	else if (!running) {
-		renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(fadedSpriteRect), Utils::RectToSDL_Rect(fadedSpritePos));
+		Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(fadedSpriteRect), Utils::RectToSDL_Rect(fadedSpritePos));
 
 		textColor.Init(255, 0, 0, 255);
 		notRunningFont1.Init("Press_Space", "../../res/ttf/PAC-FONT.TTF", 60);
@@ -276,37 +277,37 @@ void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &
 		notRunningText1.Init(notRunningFont1.id, "PrEsS SpAcE", textColor);
 		notRunningText2.Init(notRunningFont2.id, "To StArT........", textColor);
 
-		renderer->LoadFont(notRunningFont1);
-		renderer->LoadFont(notRunningFont2);
+		Renderer::Instance()->LoadFont(notRunningFont1);
+		Renderer::Instance()->LoadFont(notRunningFont2);
 
-		renderer->LoadTextureText(notRunningFont1.id, notRunningText1);
-		renderer->LoadTextureText(notRunningFont2.id, notRunningText2);
+		Renderer::Instance()->LoadTextureText(notRunningFont1.id, notRunningText1);
+		Renderer::Instance()->LoadTextureText(notRunningFont2.id, notRunningText2);
 
-		renderer->PushImage(notRunningFont1.id, Utils::RectToSDL_Rect(notRunningRect1));
-		renderer->PushImage(notRunningFont2.id, Utils::RectToSDL_Rect(notRunningRect2));
+		Renderer::Instance()->PushImage(notRunningFont1.id, Utils::RectToSDL_Rect(notRunningRect1));
+		Renderer::Instance()->PushImage(notRunningFont2.id, Utils::RectToSDL_Rect(notRunningRect2));
 
 	}
 }
 
-void Ranking::Update(Renderer *renderer)
+void Ranking::Update()
 {
 	//Necessitem un Update del ranking?
 
 }
 
-void Ranking::Load(Renderer *renderer)
+void Ranking::Load()
 {
 
 
 }
 
-void Ranking::Draw(Renderer *renderer)
+void Ranking::Draw()
 {
 
 
 }
 
-void Exit::Load(Renderer *renderer)
+void Exit::Load()
 {
 
 

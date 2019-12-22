@@ -169,11 +169,11 @@ bool Player::GetHasPowerUp()
 	return false;
 }
 
-void Player::Reinit(Renderer *renderer)
+void Player::Reinit()
 {
 	ReinitPos();
 	dir = Direction::NONE;
-	rect.x = 4 * (renderer->GetTextureSize("PacmanSheet").x / 8);
+	rect.x = 4 * (Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8);
 	rect.y = 0;
 	score = 0;
 	fruits = 0;
@@ -183,11 +183,11 @@ void Player::Reinit(Renderer *renderer)
 	livesLeft = MAX_LIVES;
 }
 
-void Player::LecturaXMLPlayer(Renderer *_renderer)
+void Player::LecturaXMLPlayer()
 {
 	Vector2 *vec2 = new Vector2(0, 0);
 	int frameWidth, frameHeight;
-	*vec2 = _renderer->GetTextureSize("PacmanSheet");
+	*vec2 = Renderer::Instance()->GetTextureSize("PacmanSheet");
 	frameWidth = vec2->x / 8;
 	frameHeight = vec2->y / 8;
 	rect.x = 4 * frameWidth;
@@ -222,7 +222,7 @@ void Player::LecturaXMLPlayer(Renderer *_renderer)
 	initialPos.y = pos.y;
 }
 
-void Player::Draw(Renderer *_renderer)
+void Player::Draw()
 {
-	_renderer->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(rect), Utils::RectToSDL_Rect(pos));
+	Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(rect), Utils::RectToSDL_Rect(pos));
 }
