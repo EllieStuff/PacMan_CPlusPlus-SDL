@@ -35,43 +35,9 @@ int main(int, char*[])
 
 	///GameLoop
 	Controller controller;
-	Renderer *renderer = renderer->Instance();
-	Map map;
-	Uint32 frameStart, frameTime;
-	std::vector<std::vector<Objects*>> o;
-	for (int i = 0; i < MAP_WIDTH; i++)
-	{
-		o.push_back({ new Objects });
-		for (int j = 0; j < MAP_HEIGHT; j++)
-		{
-			o[i].push_back({ new Objects });
-			o[i][j]->tile = MapTiles::POINTS;
-		}
-	}
-	renderer->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
-	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
-	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
-	int frameTimePlayerSprite = 0;
-	Player *player = new Player;
-	Clyde *clyde = new Clyde;
-	Inky *inky = new Inky;
-	//HUD hud(player);
-	map.Create(o);
-	player->LecturaXMLPlayer();
-	clyde->LecturaXMLEnemy();
-	inky->LecturaXMLEnemy();
-
 
 	while (controller.state != SceneState::EXIT) {
-		frameStart = SDL_GetTicks();
-		frameTime = SDL_GetTicks() - frameStart;
-		if (frameTime < DELAY_TIME)
-			SDL_Delay((int)(DELAY_TIME - frameTime));
-
-		renderer->Clear();
-		frameTimePlayerSprite = 0;
-		controller.SceneControl(o, map, player, clyde, inky);
-		renderer->Render();
+		controller.SceneControl();
 
 	}
 

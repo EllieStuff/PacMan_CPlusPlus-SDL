@@ -3,11 +3,35 @@
 Controller::Controller()
 {
 	scene = new SplashScreen;
+	for (int i = 0; i < MAP_WIDTH; i++)
+	{
+		o.push_back({ new Objects });
+		for (int j = 0; j < MAP_HEIGHT; j++)
+		{
+			o[i].push_back({ new Objects });
+			o[i][j]->tile = MapTiles::POINTS;
+		}
+	}
+	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
+	//int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
+	//int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
+	//HUD hud(player);
+	map.Create(o);
+	player->LecturaXMLPlayer();
+	clyde->LecturaXMLEnemy();
+	inky->LecturaXMLEnemy();
+
 }
 
-void Controller::SceneControl(std::vector<std::vector<Objects*>> &o, Map &map, Player* player, Clyde* clyde, Inky* inky)
+void Controller::SceneControl()
 {
 	// --- GAME LOOP ---
+	frameStart = SDL_GetTicks();
+	frameTime = SDL_GetTicks() - frameStart;
+	if (frameTime < DELAY_TIME)
+		SDL_Delay((int)(DELAY_TIME - frameTime));
+	Renderer::Instance()->Clear();
+	frameTimePlayerSprite = 0;
 
 	bool isClicked = false;
 	int pixelsPerFrame = 4;
@@ -107,6 +131,7 @@ void Controller::SceneControl(std::vector<std::vector<Objects*>> &o, Map &map, P
 
 	}
 
+	Renderer::Instance()->Render();
 }
 
 void Controller::PollForPlay(std::vector<bool> &keys, bool &isClicked)

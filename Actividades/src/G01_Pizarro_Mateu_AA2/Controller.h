@@ -17,10 +17,17 @@ public:
 	SceneState state = SceneState::RUNNING_SPLASH_SCREEN;
 	SceneState quitSceneTarget = SceneState::GO_TO_EXIT;
 	Sound sound;
+	Uint32 frameStart, frameTime;
+	int frameTimePlayerSprite = 0;
+	Map map;
+	std::vector<std::vector<Objects*>> o;
+	Player *player = new Player;
+	Clyde *clyde = new Clyde;
+	Inky *inky = new Inky;
 	//Constructor
 	Controller();
 	//Functions
-	void SceneControl(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*);
+	void SceneControl();
 private:
 	void PollForPlay(std::vector<bool> &, bool &);
 	void GeneralPoll(bool &);
