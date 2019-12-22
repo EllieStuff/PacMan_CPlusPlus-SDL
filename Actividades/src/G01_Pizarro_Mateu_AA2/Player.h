@@ -10,6 +10,7 @@ class Player : public Character
 {
 private: 
 	Direction goingToMove = Direction::NONE;
+	static Player *player;
 public:
 	Direction dir = Direction::NONE;
 	int score = 0;
@@ -22,6 +23,11 @@ public:
 	//Constructor
 	Player();
 	//Functions
+	static Player *Instance()
+	{
+		if (player == nullptr) { player = new Player; }
+		return player;
+	}
 	bool OnEdge();
 	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *);
 	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *);

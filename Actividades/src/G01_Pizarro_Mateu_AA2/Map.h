@@ -14,6 +14,7 @@
 
 #include "Utils.h"
 #include "Character.h"
+#include "Player.h"
 
 
 class Objects {

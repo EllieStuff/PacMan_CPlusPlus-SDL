@@ -10,6 +10,13 @@ Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_obje
 		object->rectPos = Utils::SDLRect_Rect(_objectPos);
 		return object;
 	}
+	if (s == "Power")
+	{
+		object->tile = MapTiles::POWER_UP;
+		object->rect = Utils::SDLRect_Rect(_objectRect);
+		object->rectPos = Utils::SDLRect_Rect(_objectPos);
+		return object;
+	}
 	return object;
 }
 
@@ -65,27 +72,52 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 	std::string content(buffer.str());
 	doc.parse<0>(&content[0]);
 	rapidxml::xml_node<> *pRoot = doc.first_node();
-	for (rapidxml::xml_node<> *pNode = pRoot->first_node("Map"); pNode; pNode = pNode->next_sibling())
-	{
-		std::cout << pNode->name() << ':' << std::endl;
-		for (rapidxml::xml_attribute<> *pAttr = pNode->first_attribute(); pAttr; pAttr->next_attribute())
-		{
-			std::cout << '-' << pAttr->name() << '-' << pAttr->value();
-		}
-		for (rapidxml::xml_node<> *pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
-		{
-			rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
-			numX = pAttr->value();
-			pAttr = pAttr->next_attribute();
-			numY = pAttr->value();
-			x = std::stoi(numX) - 1;
-			y = std::stoi(numY) - 1;
-			objectPos.x = x  * TILES_PIXEL;
-			objectPos.y = y  * TILES_PIXEL;
-			_objects[x][y] = (SaveWallsXML(pNodeI->name(), objectRect, objectPos));
-		}
-		std::cout << std::endl;
-	}
+	rapidxml::xml_node<> *pNode = pRoot->first_node("Positions");
+	//Entramos en hijos Positions
+	rapidxml::xml_node<> *pNodeI = pNode->first_node();
+	rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
+	Player::Instance()->pos.x = std::stoi(pAttr->value()) - 1;
+	pAttr = pAttr->next_attribute();
+	Player::Instance()->pos.y = std::stoi(pAttr->value()) - 1;
+
+	//Acabamos player, empezamos blinky
+	pNodeI = pNodeI->next_sibling();
+	pAttr = pNodeI->first_attribute();
+	Blinky::Instance()->pos.x = std::stoi(pAttr->value()) - 1;
+	pAttr = pAttr->next_attribute();
+	Blinky::Instance()->pos.y = std::stoi(pAttr->value()) - 1;
+
+	//Acabamos blinky, empezamos inky
+	pNodeI = pNodeI->next_sibling();
+	pAttr = pNodeI->first_attribute();
+	Inky::Instance()->pos.x = std::stoi(pAttr->value()) - 1;
+	pAttr = pAttr->next_attribute();
+	Inky::Instance()->pos.y = std::stoi(pAttr->value()) - 1;
+
+	//Acabamos inky, empezamos Clyde
+	pNodeI = pNodeI->next_sibling();
+	pAttr = pNodeI->first_attribute();
+	Clyde::Instance()->pos.x = std::stoi(pAttr->value()) - 1;
+	pAttr = pAttr->next_attribute();
+	Clyde::Instance()->pos.y = std::stoi(pAttr->value()) - 1;
+
+	//Empezamos PowerUps
+	pNodeI = pNodeI->next_sibling();
+
+	//for (rapidxml::xml_node<> *pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
+	//{
+	//	rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
+	//	numX = pAttr->value();
+	//	pAttr = pAttr->next_attribute();
+	//	numY = pAttr->value();
+	//	x = std::stoi(numX) - 1;
+	//	y = std::stoi(numY) - 1;
+	//	objectPos.x = x  * TILES_PIXEL;
+	//	objectPos.y = y  * TILES_PIXEL;
+	//	_objects[x][y] = (SaveWallsXML(pNodeI->name(), objectRect, objectPos));
+	//}
+	//std::cout << std::endl;
+
 	InitRemainingTiles(_objects, frameWidth, frameHeight);
 }
 
