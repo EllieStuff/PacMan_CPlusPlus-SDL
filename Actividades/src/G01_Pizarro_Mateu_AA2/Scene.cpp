@@ -108,91 +108,91 @@ void Menu::Draw(Renderer *renderer)
 	}
 }
 
-void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, bool running, Rect &mouse, bool &isClicked)
+void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o,  Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, bool running, Rect &mouse, bool &isClicked)
 {
 	if (!paused && running)
 	{
 		//Moure Player 
-		player->Move(keys, o, clyde, inky);
+		Player::Instance()->Move(keys, o, clyde, inky);
 		//Moure Enemics 
-		clyde->Move(player->dir, o);
-		inky->Move(player->dir, o);
+		clyde->Move(Player::Instance()->dir, o);
+		inky->Move(Player::Instance()->dir, o);
 		//Recollir power ups i punts 
 
 
 		//Animacions
 		int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
 		int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;
-		if (player->rect.y == 0 && player->hasHitEnemy) {
-			player->rect.x = 4 * frameWidth;
-			player->rect.y = 4 * frameHeight;
+		if (Player::Instance()->rect.y == 0 && Player::Instance()->hasHitEnemy) {
+			Player::Instance()->rect.x = 4 * frameWidth;
+			Player::Instance()->rect.y = 4 * frameHeight;
 
 		}
-		player->frameTimeSprite++;
-		if (FPS / player->frameTimeSprite <= 9) {
-			if (player->hasHitEnemy)
+		Player::Instance()->frameTimeSprite++;
+		if (FPS / Player::Instance()->frameTimeSprite <= 9) {
+			if (Player::Instance()->hasHitEnemy)
 			{
-				player->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 7 && player->rect.y == frameHeight * 4)
+				Player::Instance()->rect.x += frameWidth;
+				if (Player::Instance()->rect.x >= frameWidth * 7 && Player::Instance()->rect.y == frameHeight * 4)
 				{
-					player->rect.x = 0;
-					player->rect.y = 5 * frameHeight;
+					Player::Instance()->rect.x = 0;
+					Player::Instance()->rect.y = 5 * frameHeight;
 				}
-				else if (player->rect.x >= frameWidth * 7 && player->rect.y == frameHeight * 5)
+				else if (Player::Instance()->rect.x >= frameWidth * 7 && Player::Instance()->rect.y == frameHeight * 5)
 				{
-					player->rect.x = 6 * frameWidth;
-					player->rect.y = 0 * frameHeight;
-					player->dead = true;
+					Player::Instance()->rect.x = 6 * frameWidth;
+					Player::Instance()->rect.y = 0 * frameHeight;
+					Player::Instance()->dead = true;
 				}
 			}
-			else if (player->dir == Direction::NONE || player->dir == Direction::RIGHT)
+			else if (Player::Instance()->dir == Direction::NONE || Player::Instance()->dir == Direction::RIGHT)
 			{
-				player->rect.x += frameWidth;
+				Player::Instance()->rect.x += frameWidth;
 				clyde->rect.x += frameWidth;
 				inky->rect.x += frameWidth;
-				if ((player->rect.x >= frameWidth * 6) || (clyde->rect.x >= frameWidth * 8)
+				if ((Player::Instance()->rect.x >= frameWidth * 6) || (clyde->rect.x >= frameWidth * 8)
 					|| (inky->rect.x >= frameWidth * 6))
 				{
-					player->rect.x = 4 * frameWidth;
+					Player::Instance()->rect.x = 4 * frameWidth;
 					clyde->rect.x = 6 * frameWidth;
 					inky->rect.x = 4 * frameWidth;
 				}
 			}
-			else if (player->dir == Direction::LEFT)
+			else if (Player::Instance()->dir == Direction::LEFT)
 			{
-				player->rect.x += frameWidth;
+				Player::Instance()->rect.x += frameWidth;
 				clyde->rect.x += frameWidth;
 				inky->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 8 || (clyde->rect.x >= frameWidth * 6)
+				if (Player::Instance()->rect.x >= frameWidth * 8 || (clyde->rect.x >= frameWidth * 6)
 					|| (inky->rect.x >= frameWidth * 8))
 				{
-					player->rect.x = 6 * frameWidth;
+					Player::Instance()->rect.x = 6 * frameWidth;
 					clyde->rect.x = 4 * frameWidth;
 					inky->rect.x = 6 * frameWidth;
 				}
 			}
-			else if (player->dir == Direction::UP)
+			else if (Player::Instance()->dir == Direction::UP)
 			{
-				player->rect.x += frameWidth;
+				Player::Instance()->rect.x += frameWidth;
 				clyde->rect.x += frameWidth;
 				inky->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 2 || (clyde->rect.x >= frameWidth * 4)
+				if (Player::Instance()->rect.x >= frameWidth * 2 || (clyde->rect.x >= frameWidth * 4)
 					|| (inky->rect.x >= frameWidth * 2))
 				{
-					player->rect.x = 0;
+					Player::Instance()->rect.x = 0;
 					clyde->rect.x = 2 * frameWidth;
 					inky->rect.x = 0;
 				}
 			}
-			else if (player->dir == Direction::DOWN)
+			else if (Player::Instance()->dir == Direction::DOWN)
 			{
-				player->rect.x += frameWidth;
+				Player::Instance()->rect.x += frameWidth;
 				clyde->rect.x += frameWidth;
 				inky->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 4 || (clyde->rect.x >= frameWidth * 2)
+				if (Player::Instance()->rect.x >= frameWidth * 4 || (clyde->rect.x >= frameWidth * 2)
 					|| (inky->rect.x >= frameWidth * 4))
 				{
-					player->rect.x = 2 * frameWidth;
+					Player::Instance()->rect.x = 2 * frameWidth;
 					clyde->rect.x = 0;
 					inky->rect.x = 2 * frameWidth;
 				}
@@ -206,23 +206,23 @@ void Play::Update(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Pla
 	}
 }
 
-void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde)
+void Play::Load(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, Inky *inky, Clyde *clyde)
 {
-	player->Reinit(renderer);
+	Player::Instance()->Reinit(renderer);
 	inky->ReinitPos();
 	clyde->ReinitPos();
 	map.Reinit(renderer, o);
 }
 
-void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud, Player *player, Clyde *clyde, Inky *inky, bool paused, bool running, Rect &mouse)
+void Play::Draw(Renderer *renderer, std::vector<std::vector<Objects*>> &o, Map &map, HUD &hud,  Clyde *clyde, Inky *inky, bool paused, bool running, Rect &mouse)
 {
 	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(renderer, o);
 	clyde->Draw(renderer);
 	inky->Draw(renderer);
-	player->Draw(renderer);
-	hud.Update(renderer, player);
-	hud.Draw(renderer, player);
+	Player::Instance()->Draw(renderer);
+	hud.Update(renderer, Player::Instance());
+	hud.Draw(renderer, Player::Instance());
 
 	int frameWidth = renderer->GetTextureSize("PacmanSheet").x / 8;
 	int frameHeight = renderer->GetTextureSize("PacmanSheet").y / 8;

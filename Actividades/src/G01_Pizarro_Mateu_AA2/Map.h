@@ -15,7 +15,9 @@
 #include "Utils.h"
 #include "Character.h"
 #include "Player.h"
-
+#include "Inky.h"
+#include "Clyde.h"
+#include "Blinky.h"
 
 class Objects {
 public:

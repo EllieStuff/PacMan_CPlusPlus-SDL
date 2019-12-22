@@ -53,8 +53,6 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 	frameWidth = vec2->x / 8;
 	frameHeight = vec2->y / 8;
 	objectPos.x = objectPos.y = 0;
-	objectRect.x = 4 * frameWidth;
-	objectRect.y = 6 * frameHeight;
 	objectPos.h = TILES_PIXEL;
 	objectRect.h = frameHeight ;
 	objectPos.w = TILES_PIXEL;
@@ -103,21 +101,29 @@ void Map::Create(Renderer *_renderer, std::vector<std::vector<Objects*>> &_objec
 
 	//Empezamos PowerUps
 	pNodeI = pNodeI->next_sibling();
+	objectRect.x = 6 * frameWidth;
+	objectRect.y = 6 * frameHeight;
+	for (rapidxml::xml_node<> *pNodeII = pNodeI->first_node(); pNodeII; pNodeII = pNodeII->next_sibling())
+	{
+		rapidxml::xml_attribute<> *pAttrI = pNodeII->first_attribute();
+		objectPos.x = (std::stoi(pAttrI->value()) - 1) * TILES_PIXEL;
+		pAttrI = pAttrI->next_attribute();
+		objectPos.y = (std::stoi(pAttrI->value()) - 1) * TILES_PIXEL;
+		_objects[x][y] = (SaveWallsXML(pNodeII->name(), objectRect, objectPos));
+	}
 
-	//for (rapidxml::xml_node<> *pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
-	//{
-	//	rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
-	//	numX = pAttr->value();
-	//	pAttr = pAttr->next_attribute();
-	//	numY = pAttr->value();
-	//	x = std::stoi(numX) - 1;
-	//	y = std::stoi(numY) - 1;
-	//	objectPos.x = x  * TILES_PIXEL;
-	//	objectPos.y = y  * TILES_PIXEL;
-	//	_objects[x][y] = (SaveWallsXML(pNodeI->name(), objectRect, objectPos));
-	//}
-	//std::cout << std::endl;
-
+	//Acabamos PowerUps, empezamos Map
+	pNode = pNode->next_sibling();
+	objectRect.x = 4 * frameWidth;
+	objectRect.y = 6 * frameHeight;
+	for (pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
+	{
+		pAttr = pNodeI->first_attribute();
+		objectPos.x = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
+		pAttr = pAttr->next_attribute();
+		objectPos.y = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
+		_objects[x][y] = (SaveWallsXML(pNodeI->name(), objectRect, objectPos));
+	}
 	InitRemainingTiles(_objects, frameWidth, frameHeight);
 }
 
