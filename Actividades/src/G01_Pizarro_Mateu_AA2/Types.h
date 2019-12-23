@@ -4,6 +4,16 @@
 #include <string>
 #include <SDL.h>	
 
+
+class Objects {
+public:
+	MapTiles tile;
+	Rect rect, rectPos;
+	//Functions
+	void Draw();
+};
+
+
 struct Vector2 {
 	int x, y;
 

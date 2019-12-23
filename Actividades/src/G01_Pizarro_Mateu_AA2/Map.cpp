@@ -1,16 +1,46 @@
 #include "Map.h"
 
-Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_objectPos)
+Objects* Map::InterpretateXML(std::string s, Rect &rect, Rect &pos)
 {
 	Objects* object = new Objects;
 	if (s == "Wall")
 	{
 		object->tile = MapTiles::WALL;
-		object->rect = Utils::SDLRect_Rect(_objectRect);
-		object->rectPos = Utils::SDLRect_Rect(_objectPos);
+		object->rect = rect;
+		object->rectPos = pos;
 		return object;
 	}
+	else if (s == "PowerUps") {
+
+
+	}
+
+
 	return object;
+}
+
+void Map::InterpretateXML(std::string s, Rect &pos)
+{
+	/*if (s == "Player") {
+		Player::Instance()->SetInitPos(pos.x, pos.y);
+		Player::Instance()->pos = pos;
+
+	}
+	else if (s == "Blinky") {
+		Blinky::Instance()->SetInitPos(pos.x, pos.y);
+		Blinky::Instance()->pos = pos;
+
+	}
+	else if (s == "Inky") {
+		Inky::Instance()->SetInitPos(pos.x, pos.y);
+		Inky::Instance()->pos = pos;
+
+	}
+	else if (s == "Clyke") {
+		Clyke::Instance()->SetInitPos(pos.x, pos.y);
+		Clyke::Instance()->pos = pos;
+
+	}*/
 }
 
 
@@ -38,7 +68,7 @@ void Map::Create(std::vector<std::vector<Objects*>> &_objects)
 {
 
 	Vector2 *vec2 = new Vector2(0,0);
-	SDL_Rect objectRect, objectPos;
+	Rect objectRect, objectPos;
 	int  frameWidth, frameHeight;
 	Renderer::Instance()->Instance();
 	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
@@ -65,6 +95,25 @@ void Map::Create(std::vector<std::vector<Objects*>> &_objects)
 	std::string content(buffer.str());
 	doc.parse<0>(&content[0]);
 	rapidxml::xml_node<> *pRoot = doc.first_node();
+	for (rapidxml::xml_node<> *pNode = pRoot->first_node("Positions"); pNode; pNode = pNode->next_sibling()) {
+		rapidxml::xml_node<> *pNodeI = pNode->first_node();
+		rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
+		x = std::stoi(pAttr->value()) - 1;
+		pAttr->next_attribute();
+		y = std::stoi(pAttr->value()) - 1;
+		Rect tmpRect(x, y, TILES_PIXEL, TILES_PIXEL);
+		InterpretateXML(pNodeI->name(), tmpRect);
+
+	}
+	/*rapidxml::xml_node<> *pNode = pRoot->first_node("Positions");
+	rapidxml::xml_node<> *pNodeI = pNode->first_node();
+	rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
+	x = std::stoi(pAttr->value()) - 1;
+	pAttr->next_attribute();
+	y = std::stoi(pAttr->value()) - 1;
+	Player::Instance()->pos.Init(x, y, TILES_PIXEL, TILES_PIXEL);
+	Player::Instance()->SetInitPos(x, y);
+	pNodeI = pNodeI->next_sibling();*/
 	for (rapidxml::xml_node<> *pNode = pRoot->first_node("Map"); pNode; pNode = pNode->next_sibling())
 	{
 		std::cout << pNode->name() << ':' << std::endl;
@@ -82,7 +131,7 @@ void Map::Create(std::vector<std::vector<Objects*>> &_objects)
 			y = std::stoi(numY) - 1;
 			objectPos.x = x  * TILES_PIXEL;
 			objectPos.y = y  * TILES_PIXEL;
-			_objects[x][y] = (SaveWallsXML(pNodeI->name(), objectRect, objectPos));
+			_objects[x][y] = (InterpretateXML(pNodeI->name(), objectRect, objectPos));
 		}
 		std::cout << std::endl;
 	}

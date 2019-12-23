@@ -17,9 +17,9 @@ Controller::Controller()
 	//int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
 	//HUD hud(player);
 	map.Create(o);
-	player->LecturaXMLPlayer();
-	clyde->LecturaXMLEnemy();
-	inky->LecturaXMLEnemy();
+	//player->LecturaXMLPlayer();
+	//clyde->LecturaXMLEnemy();
+	//inky->LecturaXMLEnemy();
 
 }
 
@@ -35,6 +35,7 @@ void Controller::SceneControl()
 
 	bool isClicked = false;
 	int pixelsPerFrame = 4;
+	int n = 0;
 	std::vector<bool> keys(255);
 	switch (state) {
 	case SceneState::RUNNING_PLAY:
@@ -42,14 +43,14 @@ void Controller::SceneControl()
 		if (keys[SDLK_p] && running) paused = true;
 		if (keys[SDLK_SPACE] && running) paused = false;
 		if (!running && keys[SDLK_SPACE]) running = true;
-		scene->Update(o, player, clyde, inky, keys, paused, running, cursor, isClicked);
-		scene->Draw(o, map, player, clyde, inky, paused, running, cursor);
+		scene->Update(o, keys, paused, running, cursor, isClicked);
+		scene->Draw(o, map, paused, running, cursor);
 
 		if (paused && sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(cursor, isClicked)) sound.Stop();
 		else if (paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(cursor, isClicked)) sound.Play();
 
 		//GameOver Provisional ja que no es te el ranking
-		if ((player->dead && player->livesLeft <= 0) || player->score >= map.maxScore) 
+		if ((Player::Instance()->dead && Player::Instance()->livesLeft <= 0) || Player::Instance()->score >= map.maxScore)
 			state = SceneState::GO_TO_MENU;
 
 		//GoToMenu
@@ -88,7 +89,7 @@ void Controller::SceneControl()
 	case SceneState::GO_TO_PLAY:
 		quitSceneTarget = SceneState::GO_TO_MENU;
 		scene = new Play;
-		scene->Load(o, map, player, inky, clyde);
+		scene->Load(o, map);
 		running = false;
 		paused = false;
 

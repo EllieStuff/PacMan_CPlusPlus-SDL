@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Constants.h"
 #include "Types.h"
+#include "Utils.h"
 #include "Renderer.h"
 #include <string>
 #include <sstream>
@@ -12,26 +13,29 @@
 #include "../XML/rapidxml_print.hpp"
 #include "../XML/rapidxml_utils.hpp"
 
-#include "Utils.h"
+
 #include "Character.h"
+#include "Player.h"
+#include "Blinky.h"
+#include "Inky.h"
+#include "Clyde.h"
+#include "Enemies.h"
 
-
-class Objects {
-public:
-	MapTiles tile;
-	Rect rect, rectPos;
-	//Functions
-	void Draw();
-};
-
-
+//class Objects {
+//public:
+//	MapTiles tile;
+//	Rect rect, rectPos;
+//	//Functions
+//	void Draw();
+//};
 
 class Map {
 public:
 	int maxScore = 0;
 
 	//Functions
-	Objects* SaveWallsXML(std::string, SDL_Rect&, SDL_Rect &);
+	Objects* InterpretateXML(std::string, Rect&, Rect &);
+	void InterpretateXML(std::string, Rect&);
 	void Create(std::vector<std::vector<Objects*>> &);
 	void InitRemainingTiles(std::vector<std::vector<Objects*>> &, int &, int &);
 	void Reinit(std::vector<std::vector<Objects*>> &);

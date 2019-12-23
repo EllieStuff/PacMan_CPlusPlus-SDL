@@ -25,9 +25,9 @@ public:
 	Rect orange[static_cast<int>(COUNT)];
 	Text oranText;
 	//Constructor
-	HUD(Player *);
+	HUD();
 	//Functions
-	void Update(Player *);
-	void Draw(Player *);
+	void Update();
+	void Draw();
 
 };

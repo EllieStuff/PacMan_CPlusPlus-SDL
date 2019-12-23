@@ -3,6 +3,13 @@
 
 Player::Player()
 {
+	/*score = 0;
+	fruits = 0;
+	hasPowerUp = false;
+	livesLeft = 3;
+	dead = false;
+	frameTimeSprite = 0;
+	hasHitEnemy = false;*/
 
 }
 
@@ -12,7 +19,7 @@ bool Player::OnEdge() {
 		|| pos.y <= 0 || pos.y >= SCREEN_HEIGHT - TILES_PIXEL;
 }
 
-void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky)
+void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o)
 {
 	if (keys[SDLK_w] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::DOWN)
 		|| (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 && goingToMove == Direction::UP)) {
@@ -49,7 +56,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::UP) {
 		pos.y -= PIXELS_PER_FRAME;
 		if (pos.y < 0) pos.y = SCREEN_HEIGHT - TILES_PIXEL;
-		if (Hits(o, clyde, inky)) {
+		if (Hits(o)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -58,7 +65,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::DOWN) {
 		pos.y += PIXELS_PER_FRAME;
 		if (pos.y >= SCREEN_HEIGHT) pos.y = 0;
-		if (Hits(o, clyde, inky)) {
+		if (Hits(o)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -67,7 +74,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::LEFT) {
 		pos.x -= PIXELS_PER_FRAME;
 		if (pos.x < 0) pos.x = SCREEN_WIDTH - HUD_WIDTH - TILES_PIXEL;
-		if (Hits(o, clyde, inky)) {
+		if (Hits(o)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -76,7 +83,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::RIGHT) {
 		pos.x += PIXELS_PER_FRAME;
 		if (pos.x >= SCREEN_WIDTH - HUD_WIDTH) pos.x = 0;
-		if (Hits(o, clyde, inky)) {
+		if (Hits(o)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -85,7 +92,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 
 }
 
-bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky)
+bool Player::Hits(std::vector<std::vector<Objects*>> &o)
 {
 	for (int i = 0; i < MAP_WIDTH; i++) {
 		for (int j = 0; j < MAP_HEIGHT; j++) {
@@ -128,7 +135,8 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					return true;
 				}
 			}*/
-			if (Utils::OnSquareCollision(pos, clyde->pos) && Utils::PointsDistance(pos, clyde->pos) < TILES_PIXEL / 2)
+			if (Utils::OnSquareCollision(pos, Clyde::Instance()->pos) 
+				&& Utils::PointsDistance(pos, Clyde::Instance()->pos) < TILES_PIXEL / 2)
 			{
 				if (!hasHitEnemy) {
 					livesLeft--;
@@ -138,7 +146,8 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 				//ReinitPos();
 				
 			}
-			if (Utils::OnSquareCollision(pos, inky->pos) && Utils::PointsDistance(pos, inky->pos) < TILES_PIXEL / 2)
+			if (Utils::OnSquareCollision(pos, Inky::Instance()->pos) 
+				&& Utils::PointsDistance(pos, Inky::Instance()->pos) < TILES_PIXEL / 2)
 			{
 				if (!hasHitEnemy) {
 					livesLeft--;
@@ -150,8 +159,8 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 			}
 			if (dead) {
 				ReinitPos();
-				clyde->ReinitPos();
-				inky->ReinitPos();
+				Clyde::Instance()->ReinitPos();
+				Inky::Instance()->ReinitPos();
 				dir = Direction::NONE;
 				hasHitEnemy = false;
 				dead = false;
@@ -182,47 +191,54 @@ void Player::Reinit()
 	hasHitEnemy = false;
 	livesLeft = MAX_LIVES;
 }
-
-void Player::LecturaXMLPlayer()
-{
-	Vector2 *vec2 = new Vector2(0, 0);
-	int frameWidth, frameHeight;
-	*vec2 = Renderer::Instance()->GetTextureSize("PacmanSheet");
-	frameWidth = vec2->x / 8;
-	frameHeight = vec2->y / 8;
-	rect.x = 4 * frameWidth;
-	rect.y = 0 * frameHeight;
-	pos.h = TILES_PIXEL;
-	rect.h = frameHeight;
-	pos.w = TILES_PIXEL;
-	rect.w = frameWidth;
-	std::string numX, numY;
-	int x, y;
-
-	//Lectura XML
-	rapidxml::xml_document<> doc;
-	std::ifstream file("../../res/files/config.xml");
-	std::stringstream buffer;
-	buffer << file.rdbuf();
-	file.close();
-	std::string content(buffer.str());
-	doc.parse<0>(&content[0]);
-	rapidxml::xml_node<> *pRoot = doc.first_node();
-	rapidxml::xml_node<> *pNode = pRoot->first_node("Positions");
-	rapidxml::xml_node<> *pNodeI = pNode->first_node();
-	rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
-	numX = pAttr->value();
-	pAttr = pAttr->next_attribute();
-	numY = pAttr->value();
-	x = std::stoi(numX) - 1;
-	y = std::stoi(numY) - 1;
-	pos.x = x * TILES_PIXEL;
-	pos.y = y * TILES_PIXEL;
-	initialPos.x = pos.x;
-	initialPos.y = pos.y;
-}
+//
+//void Player::LecturaXMLPlayer()
+//{
+//	Vector2 *vec2 = new Vector2(0, 0);
+//	int frameWidth, frameHeight;
+//	*vec2 = Renderer::Instance()->GetTextureSize("PacmanSheet");
+//	frameWidth = vec2->x / 8;
+//	frameHeight = vec2->y / 8;
+//	rect.x = 4 * frameWidth;
+//	rect.y = 0 * frameHeight;
+//	pos.h = TILES_PIXEL;
+//	rect.h = frameHeight;
+//	pos.w = TILES_PIXEL;
+//	rect.w = frameWidth;
+//	std::string numX, numY;
+//	int x, y;
+//
+//	//Lectura XML
+//	rapidxml::xml_document<> doc;
+//	std::ifstream file("../../res/files/config.xml");
+//	std::stringstream buffer;
+//	buffer << file.rdbuf();
+//	file.close();
+//	std::string content(buffer.str());
+//	doc.parse<0>(&content[0]);
+//	rapidxml::xml_node<> *pRoot = doc.first_node();
+//	rapidxml::xml_node<> *pNode = pRoot->first_node("Positions");
+//	rapidxml::xml_node<> *pNodeI = pNode->first_node();
+//	rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
+//	numX = pAttr->value();
+//	pAttr = pAttr->next_attribute();
+//	numY = pAttr->value();
+//	x = std::stoi(numX) - 1;
+//	y = std::stoi(numY) - 1;
+//	pos.x = x * TILES_PIXEL;
+//	pos.y = y * TILES_PIXEL;
+//	initialPos.x = pos.x;
+//	initialPos.y = pos.y;
+//}
 
 void Player::Draw()
 {
 	Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(rect), Utils::RectToSDL_Rect(pos));
 }
+
+void Player::SetScore(int _score)
+{
+	score = _score;
+}
+
+Player* Player::player = nullptr;

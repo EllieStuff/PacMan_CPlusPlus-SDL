@@ -7,6 +7,12 @@ Character::Character()
 
 }
 
+void Character::SetInitPos(int & _x, int & _y)
+{
+	initialPos.x = _x;
+	initialPos.y = _y;
+}
+
 void Character::Move()
 {
 }

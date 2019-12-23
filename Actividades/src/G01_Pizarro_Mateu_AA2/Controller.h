@@ -21,9 +21,9 @@ public:
 	int frameTimePlayerSprite = 0;
 	Map map;
 	std::vector<std::vector<Objects*>> o;
-	Player *player = new Player;
+	/*Player *player = new Player;
 	Clyde *clyde = new Clyde;
-	Inky *inky = new Inky;
+	Inky *inky = new Inky;*/
 	//Constructor
 	Controller();
 	//Functions

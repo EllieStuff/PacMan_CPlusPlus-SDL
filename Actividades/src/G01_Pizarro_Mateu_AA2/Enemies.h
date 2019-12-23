@@ -16,5 +16,5 @@ public:
 	void Reinit();
 	void Update(Direction, Map);
 	void Draw();
-	virtual void LecturaXMLEnemy();
+	//virtual void LecturaXMLEnemy();
 };
