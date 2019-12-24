@@ -126,15 +126,19 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					o[i][j]->tile == MapTiles::EMPTY;
 					return true;
 				}
-			}
+			}*/
 			if (o[i][j]->tile == MapTiles::POWER_UP)
 			{
 				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos))
 				{
 					o[i][j]->tile == MapTiles::EMPTY;
-					return true;
+					o[i][j]->rect.w = 0;
+					o[i][j]->rect.h = 0;
+					hasPowerUp = true;
+					time_t start = clock() + POWER_UP_TIME;
+					//return true;
 				}
-			}*/
+			}
 			if (Utils::OnSquareCollision(pos, clyde->pos) && Utils::PointsDistance(pos, clyde->pos) < TILES_PIXEL / 2)
 			{
 				if (!hasHitEnemy) {
