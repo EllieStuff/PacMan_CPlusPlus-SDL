@@ -140,30 +140,36 @@ void Map::Create(std::vector<std::vector<Objects*>> &_objects, Rect &player, Rec
 	pAttr = pNode->first_attribute();
 	InitCharacter(SetXMLPos(pAttr), clyde);
 
-	for (pNode = pRoot->first_node("Map"); pNode; pNode = pNode->next_sibling())
+	//Empezamos PowerUps
+	pNode = pNode->next_sibling();
+	objectRect.x = 6 * frameWidth;
+	objectRect.y = 6 * frameHeight;
+	for (rapidxml::xml_node<> *pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
 	{
-		std::cout << pNode->name() << ':' << std::endl;
-		for (rapidxml::xml_attribute<> *pAttr = pNode->first_attribute(); pAttr; pAttr->next_attribute())
-		{
-			std::cout << '-' << pAttr->name() << '-' << pAttr->value();
-		}
-		for (rapidxml::xml_node<> *pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
-		{
-			rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
-			numX = pAttr->value();
-			pAttr = pAttr->next_attribute();
-			numY = pAttr->value();
-			x = std::stoi(numX) - 1;
-			y = std::stoi(numY) - 1;
-			objectPos.x = x  * TILES_PIXEL;
-			objectPos.y = y  * TILES_PIXEL;
-			_objects[x][y] = (InterpretateXML(pNodeI->name(), objectRect, objectPos));
-		}
-		std::cout << std::endl;
+		pAttr = pNodeI->first_attribute();
+		x = std::stoi(pAttr->value()) - 1;
+		pAttr = pAttr->next_attribute();
+		y = std::stoi(pAttr->value()) - 1;
+		objectPos.x = x * TILES_PIXEL;
+		objectPos.y = y * TILES_PIXEL;
+		_objects[x][y] = (InterpretateXML(pNodeI->name(), objectRect, objectPos));
+	}
+	
+	//Acabamos PowerUps, empezamos Map
+	objectRect.x = 4 * frameWidth;
+	objectRect.y = 6 * frameHeight;
+	for (pNode = pRoot->first_node("Map")->first_node(); pNode; pNode = pNode->next_sibling())
+	{
+		rapidxml::xml_attribute<> *pAttrI = pNode->first_attribute();
+		x = std::stoi(pAttrI->value()) - 1;
+		pAttrI = pAttrI->next_attribute();
+		y = std::stoi(pAttrI->value()) - 1;
+		objectPos.x = x * TILES_PIXEL;
+		objectPos.y = y * TILES_PIXEL;
+		_objects[x][y] = (InterpretateXML(pNode->name(), objectRect, objectPos));
 	}
 	InitRemainingTiles(_objects, frameWidth, frameHeight);
 }
-
 void Map::Reinit(std::vector<std::vector<Objects*>>&o)
 {
 	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
