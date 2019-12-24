@@ -36,15 +36,15 @@ void Scene::Load(std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *ink
 {
 }
 
-void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, Blinky *, std::vector<bool>&, bool, bool, Rect &, bool &)
+void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, Blinky *, bool, bool, InputHandle &)
 {
 }
 
-void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, Blinky *, bool, bool, Rect &)
+void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, Blinky *, bool, bool, InputHandle &)
 {
 }
 
-void Scene::Update(Rect &)
+void Scene::Update(InputHandle &)
 {
 }
 
@@ -88,10 +88,10 @@ void SplashScreen::Draw()
 	}
 }
 
-void Menu::Update(Rect &mouse)
+void Menu::Update(InputHandle &keyboard)
 {
 	for (int i = 1; i < static_cast<int>(COUNT); i++)
-		buttons[i].ChangeHover(mouse);
+		buttons[i].ChangeHover(keyboard);
 		
 }
 
@@ -108,12 +108,12 @@ void Menu::Draw()
 	}
 }
 
-void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, std::vector<bool> &keys, bool paused, bool running, Rect &mouse, bool &isClicked)
+void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, bool paused, bool running, InputHandle &keyboard)
 {
 	if (!paused && running)
 	{
 		//Moure Player 
-		player->Move(keys, o, clyde, inky, blinky);
+		player->Move(keyboard.keys, o, clyde, inky, blinky);
 		//Moure Enemics 
 		clyde->Move(player->dir, o);
 		inky->Move(player->dir, o);
@@ -202,9 +202,8 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 
 		}
 	}
-
 	else {
-		buttons[PLAY_SOUND].ChangeHover(mouse);
+		buttons[PLAY_SOUND].ChangeHover(keyboard);
 	}
 }
 
@@ -217,7 +216,7 @@ void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 	map.Reinit(o);
 }
 
-void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, bool paused, bool running, Rect &mouse)
+void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, bool paused, bool running, InputHandle &keyboard)
 {
 	HUD hud(player);
 	Rect fadedSpriteRect, fadedSpritePos;

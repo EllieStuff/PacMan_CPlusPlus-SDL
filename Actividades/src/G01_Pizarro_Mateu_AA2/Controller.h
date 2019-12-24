@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Sound.h"
+#include "InputHandle.h"
 
 class Controller {
 private:
@@ -12,7 +13,7 @@ private:
 	bool paused = false;
 	bool running = false;
 public:
-	Rect cursor;
+	InputHandle keyboard;
 	Scene *scene = new Scene;
 	SceneState state = SceneState::RUNNING_SPLASH_SCREEN;
 	SceneState quitSceneTarget = SceneState::GO_TO_EXIT;
@@ -29,7 +30,4 @@ public:
 	Controller();
 	//Functions
 	void SceneControl();
-private:
-	void PollForPlay(std::vector<bool> &, bool &);
-	void GeneralPoll(bool &);
 };
