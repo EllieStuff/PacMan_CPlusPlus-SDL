@@ -1,5 +1,5 @@
 #pragma once
-#include <Windows.h>
+//#include <Windows.h>
 #include <time.h>
 
 #include "Constants.h"
@@ -15,6 +15,7 @@
 #include "Blinky.h"
 #include "HUD.h"
 #include "Button.h"
+#include "InputHandle.h"
 
 
 class Scene {
@@ -31,25 +32,25 @@ public:
 	virtual void Update();
 	virtual void Load();
 	virtual void Draw();
-	virtual void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, std::vector<bool> &, bool, bool, Rect &, bool &);
+	virtual void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, bool, bool, InputHandle &);
 	virtual void Load(std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *, Blinky *);
-	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, Blinky *, bool, bool, Rect &);
-	virtual void Update(Rect &);
+	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, Blinky *, bool, bool, InputHandle &);
+	virtual void Update(InputHandle &);
 };
 
 class Play : public Scene {
 public:
 	//Functions
-	void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, std::vector<bool> &, bool, bool, Rect &, bool &);
+	void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, bool, bool, InputHandle &);
 	void Load(std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *, Blinky *);
-	void Draw(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*, Blinky *, bool, bool, Rect &);
+	void Draw(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*, Blinky *, bool, bool, InputHandle &);
 
 };
 
 class Menu : public Scene {
 public:
 	//Functions
-	void Update(Rect &);
+	void Update(InputHandle &);
 	void Load();
 	void Draw();
 };

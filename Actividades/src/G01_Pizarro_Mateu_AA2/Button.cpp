@@ -13,9 +13,9 @@ void Button::Init(Color _c, Color _h, std::string _t, std::string _hoverTFont, F
 	text.color = c;
 }
 
-void Button::ChangeHover(Rect mouse)
+void Button::ChangeHover(InputHandle &keyboard)
 {
-	if (MouseColliding(mouse))
+	if (MouseColliding(keyboard))
 	{
 		text.color = h;
 		text.text = t;
@@ -28,17 +28,17 @@ void Button::ChangeHover(Rect mouse)
 
 }
 
-bool Button::Used(Rect mouse, bool isClicked)
+bool Button::Used(InputHandle &keyboard)
 {
 
-	return MouseColliding(mouse) && isClicked;
+	return MouseColliding(keyboard) && keyboard.isClicked;
 }
 
 
-bool Button::MouseColliding(Rect mouse)
+bool Button::MouseColliding(InputHandle &keyboard)
 {
 
-	return mouse.x > rect.x && mouse.x < rect.x + rect.w
-		&& mouse.y > rect.y && mouse.y < rect.y + rect.h;
+	return keyboard.cursor.x > rect.x && keyboard.cursor.x < rect.x + rect.w
+		&& keyboard.cursor.y > rect.y && keyboard.cursor.y < rect.y + rect.h;
 }
 
