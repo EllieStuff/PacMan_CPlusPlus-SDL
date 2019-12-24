@@ -7,6 +7,7 @@ protected:
 	Direction dir = Direction::NONE;
 public:
 	int extraScore;
+	bool dying = false;
 	//Constructor
 	Enemies();
 	//Functions

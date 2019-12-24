@@ -10,8 +10,8 @@
 class Controller {
 private:
 	bool changeSceneType = true;
-	bool paused = false;
-	bool running = false;
+	PlayAuxiliars pAux;
+
 public:
 	InputHandle keyboard;
 	Scene *scene = new Scene;

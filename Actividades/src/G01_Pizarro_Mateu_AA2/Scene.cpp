@@ -36,11 +36,11 @@ void Scene::Load(std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *ink
 {
 }
 
-void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, Blinky *, bool, bool, InputHandle &)
+void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &)
 {
 }
 
-void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, Blinky *, bool, bool, InputHandle &)
+void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &)
 {
 }
 
@@ -108,10 +108,18 @@ void Menu::Draw()
 	}
 }
 
-void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, bool paused, bool running, InputHandle &keyboard)
+void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard)
 {
-	if (!paused && running)
+	if (!pAux.paused && pAux.running)
 	{
+		//Actualitzar temps despres de pausa
+		if (player->hasPowerUp && pAux.timeDifChecked) {	//Falta fer un cas per a la regeneracio de les fruites
+			player->powerUpEnd = clock() + pAux.powerUpTDif;
+			pAux.timeDifChecked = false;
+
+		}
+
+
 		//Moure Player 
 		player->Move(keyboard.keys, o, clyde, inky, blinky);
 		//Moure Enemics 
@@ -119,10 +127,12 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 		inky->Move(player->dir, o);
 		//blinky->Move(/*Dir?*/, o);
 		//Recollir power ups i punts 
-
+		
+		if (player->hasPowerUp) std::cout << "\nHas PowerUp\n\n";
+		else std::cout << "\n ---\n\n";
 
 		//Animacions
-		///Recordar posar animació Blinky
+		///Recordar posar animació Blinky i d'enemics morint-se
 		int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
 		int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
 		if (player->rect.y == 0 && player->hasHitEnemy) {
@@ -204,6 +214,11 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 	}
 	else {
 		buttons[PLAY_SOUND].ChangeHover(keyboard);
+		if (player->hasPowerUp && !pAux.timeDifChecked) {
+			pAux.powerUpTDif = player->powerUpEnd - clock();
+			pAux.timeDifChecked = true;
+
+		}
 	}
 }
 
@@ -216,7 +231,7 @@ void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 	map.Reinit(o);
 }
 
-void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, bool paused, bool running, InputHandle &keyboard)
+void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard)
 {
 	HUD hud(player);
 	Rect fadedSpriteRect, fadedSpritePos;
@@ -234,7 +249,7 @@ void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 	fadedSpriteRect.w = frameWidth; fadedSpriteRect.h = frameHeight;
 	fadedSpritePos.x = fadedSpritePos.y = 0;
 	fadedSpritePos.w = SCREEN_WIDTH; fadedSpritePos.h = SCREEN_HEIGHT;
-	if (paused)
+	if (pAux.paused)
 	{
 		Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(fadedSpriteRect), Utils::RectToSDL_Rect(fadedSpritePos));
 
@@ -267,7 +282,7 @@ void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 		Renderer::Instance()->PushImage(buttons[PLAY_SOUND].font.id, Utils::RectToSDL_Rect(buttons[PLAY_SOUND].rect));
 
 	}
-	else if (!running) {
+	else if (!pAux.running) {
 		Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(fadedSpriteRect), Utils::RectToSDL_Rect(fadedSpritePos));
 
 		textColor.Init(255, 0, 0, 255);

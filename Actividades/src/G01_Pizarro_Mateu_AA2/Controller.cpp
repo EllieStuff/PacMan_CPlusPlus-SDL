@@ -35,21 +35,21 @@ void Controller::SceneControl()
 	switch (state) {
 	case SceneState::RUNNING_PLAY:
 		keyboard.PollForPlay();
-		if (keyboard.keys[SDLK_p] && running) paused = true;
-		if (keyboard.keys[SDLK_SPACE] && running) paused = false;
-		if (!running && keyboard.keys[SDLK_SPACE]) running = true;
-		scene->Update(o, player, clyde, inky, blinky, paused, running, keyboard);
-		scene->Draw(o, map, player, clyde, inky, blinky, paused, running, keyboard);
+		if (keyboard.keys[SDLK_p] && pAux.running) pAux.paused = true;
+		if (keyboard.keys[SDLK_SPACE] && pAux.running) pAux.paused = false;
+		if (!pAux.running && keyboard.keys[SDLK_SPACE]) pAux.running = true;
+		scene->Update(o, player, clyde, inky, blinky, pAux, keyboard);
+		scene->Draw(o, map, player, clyde, inky, blinky, pAux, keyboard);
 
-		if (paused && sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Stop();
-		else if (paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Play();
+		if (pAux.paused && sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Stop();
+		else if (pAux.paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Play();
 
 		//GameOver Provisional ja que no es te el ranking
 		if ((player->dead && player->livesLeft <= 0) || player->score >= map.maxScore) 
 			state = SceneState::GO_TO_MENU;
 
 		//GoToMenu
-		if (paused && keyboard.keys[SDLK_ESCAPE] || !running && keyboard.keys[SDLK_ESCAPE]) state = SceneState::GO_TO_MENU;
+		if (pAux.paused && keyboard.keys[SDLK_ESCAPE] || !pAux.running && keyboard.keys[SDLK_ESCAPE]) state = SceneState::GO_TO_MENU;
 
 		break;
 
@@ -85,8 +85,7 @@ void Controller::SceneControl()
 		quitSceneTarget = SceneState::GO_TO_MENU;
 		scene = new Play;
 		scene->Load(o, map, player, inky, clyde, blinky);
-		running = false;
-		paused = false;
+		pAux.Reinit();
 
 		state = SceneState::RUNNING_PLAY;
 		if (sound.soundOn)

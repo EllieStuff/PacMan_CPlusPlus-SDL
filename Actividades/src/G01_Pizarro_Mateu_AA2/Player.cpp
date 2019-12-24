@@ -90,6 +90,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 		}
 	}
 
+	FinishPowerUp();
 }
 
 bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky, Blinky *blinky)
@@ -129,41 +130,56 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 			}*/
 			if (o[i][j]->tile == MapTiles::POWER_UP)
 			{
-				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos))
+				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos) && Utils::PointsDistance(pos, o[i][j]->rectPos) < TILES_PIXEL / 3)
 				{
 					o[i][j]->tile == MapTiles::EMPTY;
 					o[i][j]->rect.w = 0;
 					o[i][j]->rect.h = 0;
 					hasPowerUp = true;
-					time_t start = clock() + POWER_UP_TIME;
+					powerUpEnd = clock() + POWER_UP_TIME;
 					//return true;
 				}
 			}
-			if (Utils::OnSquareCollision(pos, clyde->pos) && Utils::PointsDistance(pos, clyde->pos) < TILES_PIXEL / 2)
+			if (Utils::OnSquareCollision(pos, clyde->pos) && Utils::PointsDistance(pos, clyde->pos) < TILES_PIXEL / 2 && !clyde->dying)
 			{
-				if (!hasHitEnemy) {
+				if (!hasHitEnemy && !hasPowerUp) {
 					livesLeft--;
 					hasHitEnemy = true;
+
+				}
+				else if (hasPowerUp) {
+					clyde->dying = true;
+					score += clyde->extraScore;
 
 				}
 				//ReinitPos();
 				
 			}
-			if (Utils::OnSquareCollision(pos, inky->pos) && Utils::PointsDistance(pos, inky->pos) < TILES_PIXEL / 2)
+			if (Utils::OnSquareCollision(pos, inky->pos) && Utils::PointsDistance(pos, inky->pos) < TILES_PIXEL / 2 && !inky->dying)
 			{
-				if (!hasHitEnemy) {
+				if (!hasHitEnemy && !hasPowerUp) {
 					livesLeft--;
 					hasHitEnemy = true;
+
+				}
+				else if (hasPowerUp) {
+					inky->dying = true;
+					score += inky->extraScore;
 
 				}
 				//ReinitPos();
 				
 			}
-			if (Utils::OnSquareCollision(pos, blinky->pos) && Utils::PointsDistance(pos, blinky->pos) < TILES_PIXEL / 2)
+			if (Utils::OnSquareCollision(pos, blinky->pos) && Utils::PointsDistance(pos, blinky->pos) < TILES_PIXEL / 2 && !blinky->dying)
 			{
-				if (!hasHitEnemy) {
+				if (!hasHitEnemy && !hasPowerUp) {
 					livesLeft--;
 					hasHitEnemy = true;
+
+				}
+				else if (hasPowerUp) {
+					blinky->dying = true;
+					score += blinky->extraScore;
 
 				}
 				//ReinitPos();
@@ -185,11 +201,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 }
 
 
-bool Player::GetHasPowerUp()
-{
-	return false;
-}
-
 void Player::Reinit()
 {
 	ReinitPos();
@@ -202,5 +213,10 @@ void Player::Reinit()
 	dead = false;
 	hasHitEnemy = false;
 	livesLeft = MAX_LIVES;
+}
+
+void Player::FinishPowerUp()
+{
+	if (powerUpEnd < clock()) hasPowerUp = false;
 }
 

@@ -12,8 +12,11 @@ class Player : public Character
 {
 private: 
 	Direction goingToMove = Direction::NONE;
+	void FinishPowerUp();
+
 public:
 	Direction dir = Direction::NONE;
+	time_t powerUpEnd;
 	int score = 0;
 	int fruits = 0;
 	bool hasPowerUp = false;
@@ -27,7 +30,6 @@ public:
 	bool OnEdge();
 	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *, Blinky *);
 	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *, Blinky *);
-	bool GetHasPowerUp();
 	void Reinit();
 
 };
