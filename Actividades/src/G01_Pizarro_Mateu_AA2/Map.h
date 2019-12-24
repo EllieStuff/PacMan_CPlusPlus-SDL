@@ -31,8 +31,9 @@ public:
 	int maxScore = 0;
 
 	//Functions
-	Objects* SaveWallsXML(std::string, SDL_Rect&, SDL_Rect &);
-	void Create(std::vector<std::vector<Objects*>> &);
+	Objects* InterpretateXML(std::string, Rect&, Rect &);
+	void InterpretateXML(std::string, Rect&, Rect &, Rect &, Rect &, Rect &);
+	void Create(std::vector<std::vector<Objects*>> &, Rect &player, Rect &inky, Rect &blinky, Rect &clyde);
 	void InitRemainingTiles(std::vector<std::vector<Objects*>> &, int &, int &);
 	void Reinit(std::vector<std::vector<Objects*>> &);
 	void Draw(std::vector<std::vector<Objects*>> &);

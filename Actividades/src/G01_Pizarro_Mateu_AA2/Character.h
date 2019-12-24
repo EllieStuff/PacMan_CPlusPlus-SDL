@@ -16,8 +16,11 @@ public:
 	//Functions
 	virtual void Move();
 	virtual bool OnEdge();
-	void ReinitPos();
 	virtual void Reinit();
 	virtual void Update();
-	virtual void Draw();
+	
+	void ReinitPos();
+	void SetInitPos();
+	void Draw();
+
 };

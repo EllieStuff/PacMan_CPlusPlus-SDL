@@ -32,15 +32,15 @@ void Scene::Draw()
 {
 }
 
-void Scene::Load(std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *inky, Clyde *clyde)
+void Scene::Load(std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *inky, Clyde *clyde, Blinky *)
 {
 }
 
-void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, std::vector<bool>&, bool, bool, Rect &, bool &)
+void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, Blinky *, std::vector<bool>&, bool, bool, Rect &, bool &)
 {
 }
 
-void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, bool, bool, Rect &)
+void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, Blinky *, bool, bool, Rect &)
 {
 }
 
@@ -108,19 +108,21 @@ void Menu::Draw()
 	}
 }
 
-void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, std::vector<bool> &keys, bool paused, bool running, Rect &mouse, bool &isClicked)
+void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, std::vector<bool> &keys, bool paused, bool running, Rect &mouse, bool &isClicked)
 {
 	if (!paused && running)
 	{
 		//Moure Player 
-		player->Move(keys, o, clyde, inky);
+		player->Move(keys, o, clyde, inky, blinky);
 		//Moure Enemics 
 		clyde->Move(player->dir, o);
 		inky->Move(player->dir, o);
+		//blinky->Move(/*Dir?*/, o);
 		//Recollir power ups i punts 
 
 
 		//Animacions
+		///Recordar posar animació Blinky
 		int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
 		int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
 		if (player->rect.y == 0 && player->hasHitEnemy) {
@@ -206,21 +208,23 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 	}
 }
 
-void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde)
+void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde, Blinky *blinky)
 {
 	player->Reinit();
 	inky->ReinitPos();
 	clyde->ReinitPos();
+	blinky->ReinitPos();
 	map.Reinit(o);
 }
 
-void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, bool paused, bool running, Rect &mouse)
+void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, bool paused, bool running, Rect &mouse)
 {
 	HUD hud(player);
 	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(o);
 	clyde->Draw();
 	inky->Draw();
+	blinky->Draw();
 	player->Draw();
 	hud.Update(player);
 	hud.Draw(player);

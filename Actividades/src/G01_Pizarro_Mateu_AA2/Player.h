@@ -5,6 +5,7 @@
 #include "Enemies.h"
 #include "Inky.h"
 #include "Clyde.h"
+#include "Blinky.h"
 
 class Player : public Character
 {
@@ -23,10 +24,9 @@ public:
 	Player();
 	//Functions
 	bool OnEdge();
-	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *);
-	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *);
+	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *, Blinky *);
+	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *, Blinky *);
 	bool GetHasPowerUp();
 	void Reinit();
-	void Draw();
-	void LecturaXMLPlayer();
+
 };

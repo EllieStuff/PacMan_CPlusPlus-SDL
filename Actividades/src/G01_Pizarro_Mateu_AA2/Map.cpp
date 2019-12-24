@@ -1,16 +1,57 @@
 #include "Map.h"
 
-Objects* Map::SaveWallsXML(std::string s, SDL_Rect &_objectRect, SDL_Rect &_objectPos)
+Objects* Map::InterpretateXML(std::string s, Rect &rect, Rect &pos)
 {
 	Objects* object = new Objects;
 	if (s == "Wall")
 	{
 		object->tile = MapTiles::WALL;
-		object->rect = Utils::SDLRect_Rect(_objectRect);
-		object->rectPos = Utils::SDLRect_Rect(_objectPos);
+		object->rect = rect;
+		object->rectPos = pos;
 		return object;
 	}
+	else if (s == "PowerUps") {
+
+
+	}
+
+
 	return object;
+}
+
+void Map::InterpretateXML(std::string s, Rect &newPos, Rect &player, Rect &inky, Rect &blinky, Rect &clyde)
+{
+	if (s == "Player") {
+		player = newPos;
+
+	}
+	else if (s == "Blinky") {
+		blinky = newPos;
+
+	}
+	else if (s == "Inky") {
+		inky = newPos;
+
+	}
+	else if (s == "Clyke") {
+		clyde = newPos;
+
+	}
+}
+
+void InitCharacter(const Rect &newPos, Rect &pos) {
+	pos = newPos;
+
+}
+
+
+Rect SetXMLPos(rapidxml::xml_attribute<> *pAttr) {
+	int x = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
+	pAttr = pAttr->next_attribute();
+	int y = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
+	Rect tmpRect(x, y, TILES_PIXEL, TILES_PIXEL);
+
+	return tmpRect;
 }
 
 
@@ -34,11 +75,11 @@ void Map::InitRemainingTiles(std::vector<std::vector<Objects*>> &_objects, int &
 	}
 }
 
-void Map::Create(std::vector<std::vector<Objects*>> &_objects)
+void Map::Create(std::vector<std::vector<Objects*>> &_objects, Rect &player, Rect &inky, Rect &blinky, Rect &clyde)
 {
 
 	Vector2 *vec2 = new Vector2(0,0);
-	SDL_Rect objectRect, objectPos;
+	Rect objectRect, objectPos;
 	int  frameWidth, frameHeight;
 	Renderer::Instance()->Instance();
 	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
@@ -65,7 +106,41 @@ void Map::Create(std::vector<std::vector<Objects*>> &_objects)
 	std::string content(buffer.str());
 	doc.parse<0>(&content[0]);
 	rapidxml::xml_node<> *pRoot = doc.first_node();
-	for (rapidxml::xml_node<> *pNode = pRoot->first_node("Map"); pNode; pNode = pNode->next_sibling())
+	//for (rapidxml::xml_node<> *pNode = pRoot->first_node("Positions"); pNode; pNode = pNode->next_sibling()) {
+	//	for (rapidxml::xml_node<> *pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
+	//	{
+	//		rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
+	//		if (pNodeI->name() != "PowerUps") {
+	//			x = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
+	//			pAttr = pAttr->next_attribute();
+	//			y = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
+	//			Rect tmpRect(x, y, TILES_PIXEL, TILES_PIXEL);
+	//			InterpretateXML(pNodeI->name(), tmpRect, player, inky, blinky, clyde);
+	//			std::cout << pNodeI->name() << " coordinates: (" << tmpRect.x << ", " << tmpRect.y << ")\n";
+	//		}
+	//		//Prq collons llegeix el "PowerUps" si l'estic dient que passi d'ell!!??
+
+	//	}
+
+	//}
+
+	//Lectura provisional, fer que el for funcioni per favor
+	rapidxml::xml_node<> *pNode = pRoot->first_node("Positions");
+	//rapidxml::xml_node<> *pNodeI = pNode->first_node();
+	pNode = pNode->first_node();
+	rapidxml::xml_attribute<> *pAttr = pNode->first_attribute();
+	InitCharacter(SetXMLPos(pAttr), player);
+	pNode = pNode->next_sibling();
+	pAttr = pNode->first_attribute();
+	InitCharacter(SetXMLPos(pAttr), blinky);
+	pNode = pNode->next_sibling();
+	pAttr = pNode->first_attribute();
+	InitCharacter(SetXMLPos(pAttr), inky);
+	pNode = pNode->next_sibling();
+	pAttr = pNode->first_attribute();
+	InitCharacter(SetXMLPos(pAttr), clyde);
+
+	for (pNode = pRoot->first_node("Map"); pNode; pNode = pNode->next_sibling())
 	{
 		std::cout << pNode->name() << ':' << std::endl;
 		for (rapidxml::xml_attribute<> *pAttr = pNode->first_attribute(); pAttr; pAttr->next_attribute())
@@ -82,7 +157,7 @@ void Map::Create(std::vector<std::vector<Objects*>> &_objects)
 			y = std::stoi(numY) - 1;
 			objectPos.x = x  * TILES_PIXEL;
 			objectPos.y = y  * TILES_PIXEL;
-			_objects[x][y] = (SaveWallsXML(pNodeI->name(), objectRect, objectPos));
+			_objects[x][y] = (InterpretateXML(pNodeI->name(), objectRect, objectPos));
 		}
 		std::cout << std::endl;
 	}

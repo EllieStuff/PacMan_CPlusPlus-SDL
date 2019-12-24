@@ -27,10 +27,18 @@ void Character::Reinit()
 {
 }
 
+void Character::SetInitPos()
+{
+	initialPos = Utils::Rect_Vec2(pos);
+
+}
+
 void Character::Update()
 {
 }
 
 void Character::Draw()
 {
+	Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(rect), Utils::RectToSDL_Rect(pos));
+
 }

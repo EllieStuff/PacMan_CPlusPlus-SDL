@@ -12,6 +12,7 @@
 #include "Enemies.h"
 #include "Inky.h"
 #include "Clyde.h"
+#include "Blinky.h"
 #include "HUD.h"
 #include "Button.h"
 
@@ -30,18 +31,18 @@ public:
 	virtual void Update();
 	virtual void Load();
 	virtual void Draw();
-	virtual void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, bool, Rect &, bool &);
-	virtual void Load(std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *);
-	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, bool, bool, Rect &);
+	virtual void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, std::vector<bool> &, bool, bool, Rect &, bool &);
+	virtual void Load(std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *, Blinky *);
+	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, Blinky *, bool, bool, Rect &);
 	virtual void Update(Rect &);
 };
 
 class Play : public Scene {
 public:
 	//Functions
-	void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, std::vector<bool> &, bool, bool, Rect &, bool &);
-	void Load(std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *);
-	void Draw(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*, bool, bool, Rect &);
+	void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, std::vector<bool> &, bool, bool, Rect &, bool &);
+	void Load(std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *, Blinky *);
+	void Draw(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*, Blinky *, bool, bool, Rect &);
 
 };
 

@@ -24,6 +24,7 @@ public:
 	Player *player = new Player;
 	Clyde *clyde = new Clyde;
 	Inky *inky = new Inky;
+	Blinky *blinky = new Blinky;
 	//Constructor
 	Controller();
 	//Functions

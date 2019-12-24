@@ -4,6 +4,14 @@ Inky::Inky()
 {
 	extraScore = 10;
 
+	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
+	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
+	int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
+	rect.x = 4 * frameWidth;
+	rect.y = 2 * frameHeight;
+	rect.h = frameHeight;
+	rect.w = frameWidth;
+
 }
 
 void Inky::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObjects)
@@ -59,47 +67,5 @@ void Inky::Move(Direction playerDir, std::vector<std::vector<Objects*>> mapObjec
 		break;
 
 	}
-
-}
-
-void Inky::LecturaXMLEnemy()
-{
-	Vector2 *vec2 = new Vector2(0, 0);
-	int frameWidth, frameHeight;
-	Renderer::Instance()->Instance();
-	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
-	*vec2 = Renderer::Instance()->GetTextureSize("PacmanSheet");
-	frameWidth = vec2->x / 8;
-	frameHeight = vec2->y / 8;
-	rect.x = 4 * frameWidth;
-	rect.y = 2 * frameHeight;
-	pos.h = TILES_PIXEL;
-	rect.h = frameHeight;
-	pos.w = TILES_PIXEL;
-	rect.w = frameWidth;
-	std::string numX, numY;
-	int x, y;
-	rapidxml::xml_document<> doc;
-	std::ifstream file("../../res/files/config.xml");
-	std::stringstream buffer;
-	buffer << file.rdbuf();
-	file.close();
-	std::string content(buffer.str());
-	doc.parse<0>(&content[0]);
-	//Lectura XML
-	rapidxml::xml_node<> *pRoot = doc.first_node();
-	rapidxml::xml_node<> *pNode = pRoot->first_node("Positions");
-	rapidxml::xml_node<> *pNodeI = pNode->first_node();
-	pNodeI = pNodeI->next_sibling();
-	pNodeI = pNodeI->next_sibling();
-	rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
-	numX = pAttr->value();
-	pAttr = pAttr->next_attribute();
-	numY = pAttr->value();
-	x = std::stoi(numX) - 1;
-	y = std::stoi(numY) - 1;
-	pos.x = x * TILES_PIXEL;
-	pos.y = y * TILES_PIXEL;
-	initialPos = Utils::Rect_Vec2(pos);
 
 }
