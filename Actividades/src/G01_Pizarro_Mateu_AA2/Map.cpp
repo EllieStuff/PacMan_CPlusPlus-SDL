@@ -10,9 +10,12 @@ Objects* Map::InterpretateXML(std::string s, Rect &rect, Rect &pos)
 		object->rectPos = pos;
 		return object;
 	}
-	else if (s == "PowerUps") {
+	else if (s == "Power") {
 
-
+		object->tile = MapTiles::POWER_UP;
+		object->rect = rect;
+		object->rectPos = pos;
+		return object;
 	}
 
 
