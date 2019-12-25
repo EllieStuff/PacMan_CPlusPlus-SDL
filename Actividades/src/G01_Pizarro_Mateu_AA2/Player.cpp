@@ -120,6 +120,19 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					////return true;
 				}
 			}
+			if (o[i][j]->tile == MapTiles::POWER_UP)
+			{
+				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos) && Utils::PointsDistance(pos, o[i][j]->rectPos) < TILES_PIXEL / 3)
+				{
+					score += POWER_UP_EXTRA_SCORE;
+					o[i][j]->tile = MapTiles::EMPTY_P_UP;
+					o[i][j]->rect.w = 0;
+					o[i][j]->rect.h = 0;
+					hasPowerUp = true;
+					powerUpEnd = clock() + POWER_UP_TIME;
+					//return true;
+				}
+			}
 			/*if (o[i][j]->tile == MapTiles::FRUIT)
 			{
 				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos))
@@ -128,19 +141,7 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					return true;
 				}
 			}*/
-			if (o[i][j]->tile == MapTiles::POWER_UP)
-			{
-				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos) && Utils::PointsDistance(pos, o[i][j]->rectPos) < TILES_PIXEL / 3)
-				{
-					o[i][j]->tile == MapTiles::EMPTY;
-					o[i][j]->rect.w = 0;
-					o[i][j]->rect.h = 0;
-					hasPowerUp = true;
-					powerUpEnd = clock() + POWER_UP_TIME;
-					//return true;
-				}
-			}
-			if (Utils::OnSquareCollision(pos, clyde->pos) && Utils::PointsDistance(pos, clyde->pos) < TILES_PIXEL / 2 && !clyde->dying)
+			if (Utils::OnSquareCollision(pos, clyde->pos) && Utils::PointsDistance(pos, clyde->pos) < TILES_PIXEL / 2)
 			{
 				if (!hasHitEnemy && !hasPowerUp) {
 					livesLeft--;
@@ -148,14 +149,15 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 
 				}
 				else if (hasPowerUp) {
-					clyde->dying = true;
 					score += clyde->extraScore;
+					maxScore += clyde->extraScore;
+					clyde->ReinitPos();
 
 				}
 				//ReinitPos();
 				
 			}
-			if (Utils::OnSquareCollision(pos, inky->pos) && Utils::PointsDistance(pos, inky->pos) < TILES_PIXEL / 2 && !inky->dying)
+			if (Utils::OnSquareCollision(pos, inky->pos) && Utils::PointsDistance(pos, inky->pos) < TILES_PIXEL / 2/* && !inky->dying*/)
 			{
 				if (!hasHitEnemy && !hasPowerUp) {
 					livesLeft--;
@@ -163,14 +165,16 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 
 				}
 				else if (hasPowerUp) {
-					inky->dying = true;
+					//inky->dying = true;
 					score += inky->extraScore;
+					maxScore += inky->extraScore;
+					inky->ReinitPos();
 
 				}
 				//ReinitPos();
 				
 			}
-			if (Utils::OnSquareCollision(pos, blinky->pos) && Utils::PointsDistance(pos, blinky->pos) < TILES_PIXEL / 2 && !blinky->dying)
+			if (Utils::OnSquareCollision(pos, blinky->pos) && Utils::PointsDistance(pos, blinky->pos) < TILES_PIXEL / 2 /*&& !blinky->dying*/)
 			{
 				if (!hasHitEnemy && !hasPowerUp) {
 					livesLeft--;
@@ -178,8 +182,10 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 
 				}
 				else if (hasPowerUp) {
-					blinky->dying = true;
+					//blinky->dying = true;
 					score += blinky->extraScore;
+					maxScore += blinky->extraScore;
+					blinky->ReinitPos();
 
 				}
 				//ReinitPos();
@@ -201,19 +207,36 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 }
 
 
-void Player::Reinit()
+void Player::Reinit(const int &_maxScore)
 {
 	ReinitPos();
 	dir = Direction::NONE;
 	rect.x = 4 * (Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8);
 	rect.y = 0;
 	score = 0;
+	maxScore = _maxScore;
 	fruits = 0;
 	hasPowerUp = false;
 	dead = false;
 	hasHitEnemy = false;
 	livesLeft = MAX_LIVES;
 }
+int Player::GetMaxScore()
+{
+
+	return maxScore;
+}
+//
+//void Player::AddMaxScore(int &add)
+//{
+//	maxScore += score;
+//
+//}
+//
+//void Player::InitMaxScore(int &_maxScore)
+//{
+//	maxScore = _maxScore;
+//}
 
 void Player::FinishPowerUp()
 {

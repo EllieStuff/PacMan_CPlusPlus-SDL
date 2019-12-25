@@ -13,6 +13,7 @@ class Player : public Character
 private: 
 	Direction goingToMove = Direction::NONE;
 	void FinishPowerUp();
+	int maxScore = 0;
 
 public:
 	Direction dir = Direction::NONE;
@@ -30,6 +31,7 @@ public:
 	bool OnEdge();
 	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *, Blinky *);
 	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *, Blinky *);
-	void Reinit();
+	void Reinit(const int &);
+	int GetMaxScore();
 
 };

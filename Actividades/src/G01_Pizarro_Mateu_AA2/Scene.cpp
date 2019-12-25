@@ -224,7 +224,7 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 
 void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde, Blinky *blinky)
 {
-	player->Reinit();
+	player->Reinit(map.maxScore);
 	inky->ReinitPos();
 	clyde->ReinitPos();
 	blinky->ReinitPos();

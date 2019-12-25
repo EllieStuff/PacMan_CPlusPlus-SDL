@@ -71,9 +71,11 @@ void Map::InitRemainingTiles(std::vector<std::vector<Objects*>> &_objects, int &
 				maxScore++;
 				tmpRect = { 5 * _frameWidth, 6 * _frameHeight, _frameWidth, _frameHeight };
 				_objects[i][j]->rect = tmpRect;
-				tmpPos = {(i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
+				tmpPos = { (i * TILES_PIXEL) , (j * TILES_PIXEL) , TILES_PIXEL , TILES_PIXEL };
 				_objects[i][j]->rectPos = tmpPos;
 			}
+			else if (_objects[i][j]->tile == MapTiles::POWER_UP)
+				maxScore += POWER_UP_EXTRA_SCORE;
 		}
 	}
 }
@@ -185,6 +187,13 @@ void Map::Reinit(std::vector<std::vector<Objects*>>&o)
 			if (o[i][j]->tile == MapTiles::EMPTY)
 			{
 				o[i][j]->tile = MapTiles::POINTS;
+				o[i][j]->rect.w = frameWidth;
+				o[i][j]->rect.h = frameHeight;
+
+			}
+			else if (o[i][j]->tile == MapTiles::EMPTY_P_UP)
+			{
+				o[i][j]->tile = MapTiles::POWER_UP;
 				o[i][j]->rect.w = frameWidth;
 				o[i][j]->rect.h = frameHeight;
 

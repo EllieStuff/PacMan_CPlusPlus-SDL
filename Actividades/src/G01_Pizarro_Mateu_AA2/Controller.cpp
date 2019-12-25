@@ -45,7 +45,7 @@ void Controller::SceneControl()
 		else if (pAux.paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Play();
 
 		//GameOver Provisional ja que no es te el ranking
-		if ((player->dead && player->livesLeft <= 0) || player->score >= map.maxScore) 
+		if ((player->dead && player->livesLeft <= 0) || player->score >= player->GetMaxScore()) 
 			state = SceneState::GO_TO_MENU;
 
 		//GoToMenu
