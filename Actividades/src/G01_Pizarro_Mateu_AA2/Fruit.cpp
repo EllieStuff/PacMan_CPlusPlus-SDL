@@ -2,14 +2,13 @@
 
 void Fruit::Init(const Rect & _pos)
 {
-	tDif = clock() + FRUITS_FIRST_DELAY;
+	waitEnd = clock() + FRUITS_FIRST_DELAY;
 	pos = _pos;
 
 	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
 	int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
 	rect = { 3 * frameWidth, 6 * frameHeight, frameWidth, frameHeight };
-	//ChangeFruit();
 
 }
 
@@ -57,15 +56,14 @@ void Fruit::EraseFruit()
 	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
 	rect.x = 3 * frameWidth;
 	extraScore = 0;
-	tDif = clock() + FRUITS_DELAY;
+	waitEnd = clock() + FRUITS_DELAY;
 
 }
 
 void Fruit::Instantiate()
 {
-	if (publicType == FruitTypes::EMPTY && tDif < clock())
+	if (publicType == FruitTypes::EMPTY && waitEnd < clock())
 		ChangeFruit();
-
 }
 
 void Fruit::Draw()
@@ -79,7 +77,7 @@ void Fruit::Reinit()
 {
 	///TODO: El reinit no funciona, averiguar perque
 	//Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
-	tDif = clock() + FRUITS_FIRST_DELAY;
+	waitEnd = clock() + FRUITS_FIRST_DELAY;
 	//initialized = false;
 	rect.x = 3 * (Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8);
 	publicType = lastType = currentType = FruitTypes::EMPTY;

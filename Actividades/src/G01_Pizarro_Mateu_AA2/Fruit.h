@@ -18,7 +18,8 @@ private:
 	void ChangeFruit();
 
 public:
-	long long tDif = 0;
+	//time_t tDif = 0;
+	time_t waitEnd = 0;
 	int extraScore = 0;
 	Rect rect, pos;
 	FruitTypes publicType = FruitTypes::EMPTY;

@@ -22,13 +22,16 @@ struct PlayAuxiliars {
 	bool paused = false;
 	bool running = false;
 	bool timeDifChecked = false;
-	long long powerUpTDif = 0;
+	time_t powerUpTDif = 0;
+	time_t fruitTDif = 0;
 
 	PlayAuxiliars() {};
 	void Reinit() {
 		paused = false;
 		running = false;
+		timeDifChecked = false;
 		powerUpTDif = 0;
+		fruitTDif = 0;
 
 	}
 

@@ -117,7 +117,7 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 			if (player->hasPowerUp)
 				player->powerUpEnd = clock() + pAux.powerUpTDif;
 			if (fruit.publicType == FruitTypes::EMPTY)
-				fruit.tDif = clock() + fruit.tDif;
+				fruit.waitEnd = clock() + pAux.fruitTDif;
 
 			pAux.timeDifChecked = false;
 
@@ -132,9 +132,13 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 		//blinky->Move(/*Dir?*/, o);
 		//Crear fruita
 		fruit.Instantiate();
-		
-		if (player->hasPowerUp) std::cout << "\nHas PowerUp\n\n";
-		else std::cout << "\n ---\n\n";
+
+		/*if (fruit.publicType == FruitTypes::EMPTY)
+			std::cout << "\nIS EMPTY - " << ((fruit.waitEnd - clock()) / 1000) << "s\n\n";
+		else std::cout << "\n --- " << ((fruit.waitEnd - clock()) / 1000) << "s\n\n";*/	
+		/*if (player->hasPowerUp) 
+			std::cout << "\nHAS POWER UP - " << ((player->powerUpEnd - clock()) / 1000) << "s\n\n";
+		else std::cout << "\n ---\n\n";*/
 
 		//Animacions
 		///Recordar posar animació Blinky i d'enemics morint-se
@@ -220,10 +224,13 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 	else {
 		buttons[PLAY_SOUND].ChangeHover(keyboard);
 		if (!pAux.timeDifChecked) {
-			if (player->hasPowerUp)
+			if (player->hasPowerUp && player->powerUpEnd > clock())
 				pAux.powerUpTDif = player->powerUpEnd - clock();
-			if (fruit.publicType == FruitTypes::EMPTY)
-				fruit.tDif = fruit.tDif - clock();
+			else pAux.powerUpTDif = 0;
+
+			if (fruit.publicType == FruitTypes::EMPTY && fruit.waitEnd > clock())
+				pAux.fruitTDif = fruit.waitEnd - clock();
+			else pAux.fruitTDif = 0;
 
 			pAux.timeDifChecked = true;
 
