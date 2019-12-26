@@ -26,6 +26,7 @@ public:
 	Clyde *clyde = new Clyde;
 	Inky *inky = new Inky;
 	Blinky *blinky = new Blinky;
+	Fruit fruit;
 	//Constructor
 	Controller();
 	//Functions

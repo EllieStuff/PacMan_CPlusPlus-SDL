@@ -25,7 +25,6 @@ public:
 };
 
 
-
 class Map {
 public:
 	int maxScore = 0;

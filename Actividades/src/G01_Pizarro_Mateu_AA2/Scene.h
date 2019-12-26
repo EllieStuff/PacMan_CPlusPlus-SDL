@@ -13,6 +13,7 @@
 #include "Inky.h"
 #include "Clyde.h"
 #include "Blinky.h"
+#include "Fruit.h"
 #include "HUD.h"
 #include "Button.h"
 #include "InputHandle.h"
@@ -21,7 +22,7 @@ struct PlayAuxiliars {
 	bool paused = false;
 	bool running = false;
 	bool timeDifChecked = false;
-	int powerUpTDif = 0;
+	long long powerUpTDif = 0;
 
 	PlayAuxiliars() {};
 	void Reinit() {
@@ -47,18 +48,18 @@ public:
 	virtual void Update();
 	virtual void Load();
 	virtual void Draw();
-	virtual void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &);
-	virtual void Load(std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *, Blinky *);
-	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &);
+	virtual void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
+	virtual void Load(std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *, Blinky *, Fruit &);
+	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
 	virtual void Update(InputHandle &);
 };
 
 class Play : public Scene {
 public:
 	//Functions
-	void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &);
-	void Load(std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *, Blinky *);
-	void Draw(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*, Blinky *, PlayAuxiliars &, InputHandle &);
+	void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
+	void Load(std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *, Blinky *, Fruit &);
+	void Draw(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
 
 };
 

@@ -169,6 +169,7 @@
     <ClCompile Include="Clyde.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Enemies.cpp" />
+    <ClCompile Include="Fruit.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Inky.cpp" />
     <ClCompile Include="InputHandle.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Enemies.h" />
+    <ClInclude Include="Fruit.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Inky.h" />
     <ClInclude Include="InputHandle.h" />

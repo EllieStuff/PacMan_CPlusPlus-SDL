@@ -14,6 +14,7 @@ Controller::Controller()
 	}
 	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	map.Create(o, player->pos, inky->pos, blinky->pos, clyde->pos);
+	fruit.Init(player->pos);
 	player->SetInitPos();
 	inky->SetInitPos();
 	blinky->SetInitPos();
@@ -38,8 +39,8 @@ void Controller::SceneControl()
 		if (keyboard.keys[SDLK_p] && pAux.running) pAux.paused = true;
 		if (keyboard.keys[SDLK_SPACE] && pAux.running) pAux.paused = false;
 		if (!pAux.running && keyboard.keys[SDLK_SPACE]) pAux.running = true;
-		scene->Update(o, player, clyde, inky, blinky, pAux, keyboard);
-		scene->Draw(o, map, player, clyde, inky, blinky, pAux, keyboard);
+		scene->Update(o, player, clyde, inky, blinky, pAux, keyboard, fruit);
+		scene->Draw(o, map, player, clyde, inky, blinky, pAux, keyboard, fruit);
 
 		if (pAux.paused && sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Stop();
 		else if (pAux.paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Play();
@@ -84,7 +85,7 @@ void Controller::SceneControl()
 	case SceneState::GO_TO_PLAY:
 		quitSceneTarget = SceneState::GO_TO_MENU;
 		scene = new Play;
-		scene->Load(o, map, player, inky, clyde, blinky);
+		scene->Load(o, map, player, inky, clyde, blinky, fruit);
 		pAux.Reinit();
 
 		state = SceneState::RUNNING_PLAY;

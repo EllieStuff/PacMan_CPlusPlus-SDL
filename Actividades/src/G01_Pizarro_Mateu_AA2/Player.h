@@ -3,6 +3,7 @@
 #include <time.h>
 #include "Character.h"
 #include "Map.h"
+#include "Fruit.h"
 #include "Enemies.h"
 #include "Inky.h"
 #include "Clyde.h"
@@ -29,8 +30,8 @@ public:
 	Player();
 	//Functions
 	bool OnEdge();
-	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *, Blinky *);
-	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *, Blinky *);
+	void Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *, Inky *, Blinky *, Fruit &);
+	bool Hits(std::vector<std::vector<Objects*>> &, Clyde *, Inky *, Blinky *, Fruit &);
 	void Reinit(const int &);
 	int GetMaxScore();
 

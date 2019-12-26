@@ -19,7 +19,7 @@ bool Player::OnEdge() {
 		|| pos.y <= 0 || pos.y >= SCREEN_HEIGHT - TILES_PIXEL;
 }
 
-void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky, Blinky *blinky)
+void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky, Blinky *blinky, Fruit &fruit)
 {
 	if (keys[SDLK_w] && (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 || dir == Direction::DOWN)
 		|| (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0 && goingToMove == Direction::UP)) {
@@ -56,7 +56,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::UP) {
 		pos.y -= PIXELS_PER_FRAME;
 		if (pos.y < 0) pos.y = SCREEN_HEIGHT - TILES_PIXEL;
-		if (Hits(o, clyde, inky, blinky)) {
+		if (Hits(o, clyde, inky, blinky, fruit)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -65,7 +65,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::DOWN) {
 		pos.y += PIXELS_PER_FRAME;
 		if (pos.y >= SCREEN_HEIGHT) pos.y = 0;
-		if (Hits(o, clyde, inky, blinky)) {
+		if (Hits(o, clyde, inky, blinky, fruit)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -74,7 +74,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::LEFT) {
 		pos.x -= PIXELS_PER_FRAME;
 		if (pos.x < 0) pos.x = SCREEN_WIDTH - HUD_WIDTH - TILES_PIXEL;
-		if (Hits(o, clyde, inky, blinky)) {
+		if (Hits(o, clyde, inky, blinky, fruit)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -83,7 +83,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	if (dir == Direction::RIGHT) {
 		pos.x += PIXELS_PER_FRAME;
 		if (pos.x >= SCREEN_WIDTH - HUD_WIDTH) pos.x = 0;
-		if (Hits(o, clyde, inky, blinky)) {
+		if (Hits(o, clyde, inky, blinky, fruit)) {
 			pos.x = lastPos.x;
 			pos.y = lastPos.y;
 
@@ -93,7 +93,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 	FinishPowerUp();
 }
 
-bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky, Blinky *blinky)
+bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky, Blinky *blinky, Fruit &fruit)
 {
 	for (int i = 0; i < MAP_WIDTH; i++) {
 		for (int j = 0; j < MAP_HEIGHT; j++) {
@@ -157,7 +157,7 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 				//ReinitPos();
 				
 			}
-			if (Utils::OnSquareCollision(pos, inky->pos) && Utils::PointsDistance(pos, inky->pos) < TILES_PIXEL / 2/* && !inky->dying*/)
+			if (Utils::OnSquareCollision(pos, inky->pos) && Utils::PointsDistance(pos, inky->pos) < TILES_PIXEL / 2)
 			{
 				if (!hasHitEnemy && !hasPowerUp) {
 					livesLeft--;
@@ -174,7 +174,7 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 				//ReinitPos();
 				
 			}
-			if (Utils::OnSquareCollision(pos, blinky->pos) && Utils::PointsDistance(pos, blinky->pos) < TILES_PIXEL / 2 /*&& !blinky->dying*/)
+			if (Utils::OnSquareCollision(pos, blinky->pos) && Utils::PointsDistance(pos, blinky->pos) < TILES_PIXEL / 2)
 			{
 				if (!hasHitEnemy && !hasPowerUp) {
 					livesLeft--;
@@ -191,10 +191,18 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 				//ReinitPos();
 
 			}
+			if (fruit.publicType != FruitTypes::EMPTY && Utils::OnSquareCollision(pos, fruit.pos) && Utils::PointsDistance(pos, fruit.pos) < TILES_PIXEL / 2) {
+				score += fruit.extraScore;
+				maxScore += fruit.extraScore;
+				fruit.EraseFruit();
+
+			}
+
 			if (dead) {
 				ReinitPos();
 				clyde->ReinitPos();
 				inky->ReinitPos();
+				blinky->ReinitPos();
 				dir = Direction::NONE;
 				hasHitEnemy = false;
 				dead = false;

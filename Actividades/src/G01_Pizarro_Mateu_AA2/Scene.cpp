@@ -32,15 +32,15 @@ void Scene::Draw()
 {
 }
 
-void Scene::Load(std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *inky, Clyde *clyde, Blinky *)
+void Scene::Load(std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *inky, Clyde *clyde, Blinky *blinky, Fruit &)
 {
 }
 
-void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &)
+void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &)
 {
 }
 
-void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &)
+void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &)
 {
 }
 
@@ -108,25 +108,30 @@ void Menu::Draw()
 	}
 }
 
-void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard)
+void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard, Fruit &fruit)
 {
 	if (!pAux.paused && pAux.running)
 	{
 		//Actualitzar temps despres de pausa
-		if (player->hasPowerUp && pAux.timeDifChecked) {	//Falta fer un cas per a la regeneracio de les fruites
-			player->powerUpEnd = clock() + pAux.powerUpTDif;
+		if (pAux.timeDifChecked) {	//Falta fer un cas per a la regeneracio de les fruites
+			if (player->hasPowerUp)
+				player->powerUpEnd = clock() + pAux.powerUpTDif;
+			if (fruit.publicType == FruitTypes::EMPTY)
+				fruit.tDif = clock() + fruit.tDif;
+
 			pAux.timeDifChecked = false;
 
 		}
 
 
 		//Moure Player 
-		player->Move(keyboard.keys, o, clyde, inky, blinky);
+		player->Move(keyboard.keys, o, clyde, inky, blinky, fruit);
 		//Moure Enemics 
 		clyde->Move(player->dir, o);
 		inky->Move(player->dir, o);
 		//blinky->Move(/*Dir?*/, o);
-		//Recollir power ups i punts 
+		//Crear fruita
+		fruit.Instantiate();
 		
 		if (player->hasPowerUp) std::cout << "\nHas PowerUp\n\n";
 		else std::cout << "\n ---\n\n";
@@ -214,28 +219,35 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 	}
 	else {
 		buttons[PLAY_SOUND].ChangeHover(keyboard);
-		if (player->hasPowerUp && !pAux.timeDifChecked) {
-			pAux.powerUpTDif = player->powerUpEnd - clock();
+		if (!pAux.timeDifChecked) {
+			if (player->hasPowerUp)
+				pAux.powerUpTDif = player->powerUpEnd - clock();
+			if (fruit.publicType == FruitTypes::EMPTY)
+				fruit.tDif = fruit.tDif - clock();
+
 			pAux.timeDifChecked = true;
 
 		}
 	}
 }
 
-void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde, Blinky *blinky)
+void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde, Blinky *blinky, Fruit &fruit)
 {
 	player->Reinit(map.maxScore);
 	inky->ReinitPos();
 	clyde->ReinitPos();
 	blinky->ReinitPos();
 	map.Reinit(o);
+	fruit.Reinit();
+
 }
 
-void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard)
+void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard, Fruit &fruit)
 {
 	HUD hud(player);
 	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(o);
+	fruit.Draw();
 	clyde->Draw();
 	inky->Draw();
 	blinky->Draw();

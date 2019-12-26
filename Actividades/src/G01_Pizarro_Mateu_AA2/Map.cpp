@@ -22,31 +22,35 @@ Objects* Map::InterpretateXML(std::string s, Rect &rect, Rect &pos)
 	return object;
 }
 
-void Map::InterpretateXML(std::string s, Rect &newPos, Rect &player, Rect &inky, Rect &blinky, Rect &clyde)
-{
-	if (s == "Player") {
-		player = newPos;
-
-	}
-	else if (s == "Blinky") {
-		blinky = newPos;
-
-	}
-	else if (s == "Inky") {
-		inky = newPos;
-
-	}
-	else if (s == "Clyke") {
-		clyde = newPos;
-
-	}
-}
+//void Map::InterpretateXML(std::string s, Rect &newPos, Rect &player, Rect &inky, Rect &blinky, Rect &clyde)
+//{
+//	if (s == "Player") {
+//		player = newPos;
+//
+//	}
+//	else if (s == "Blinky") {
+//		blinky = newPos;
+//
+//	}
+//	else if (s == "Inky") {
+//		inky = newPos;
+//
+//	}
+//	else if (s == "Clyke") {
+//		clyde = newPos;
+//
+//	}
+//}
 
 void InitCharacter(const Rect &newPos, Rect &pos) {
 	pos = newPos;
 
 }
 
+//void InitFruit(const Rect &pos, std::vector<std::vector<Objects*>> &o) {
+//	o[pos.x][pos.y]->tile = MapTiles::EMPTY_FRUIT;
+//
+//}
 
 Rect SetXMLPos(rapidxml::xml_attribute<> *pAttr) {
 	int x = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
@@ -86,7 +90,7 @@ void Map::Create(std::vector<std::vector<Objects*>> &_objects, Rect &player, Rec
 	Vector2 *vec2 = new Vector2(0,0);
 	Rect objectRect, objectPos;
 	int  frameWidth, frameHeight;
-	Renderer::Instance()->Instance();
+	//Renderer::Instance()->Instance();
 	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	*vec2 = Renderer::Instance()->GetTextureSize("PacmanSheet");
 	frameWidth = vec2->x / 8;
@@ -129,20 +133,24 @@ void Map::Create(std::vector<std::vector<Objects*>> &_objects, Rect &player, Rec
 
 	//}
 
-	//Lectura provisional, fer que el for funcioni per favor
 	rapidxml::xml_node<> *pNode = pRoot->first_node("Positions");
-	//rapidxml::xml_node<> *pNodeI = pNode->first_node();
 	pNode = pNode->first_node();
 	rapidxml::xml_attribute<> *pAttr = pNode->first_attribute();
+	//Player
 	InitCharacter(SetXMLPos(pAttr), player);
+	//Fruit
+	//InitFruit(SetXMLPos(pAttr), _objects);
 	pNode = pNode->next_sibling();
 	pAttr = pNode->first_attribute();
+	//Blinky
 	InitCharacter(SetXMLPos(pAttr), blinky);
 	pNode = pNode->next_sibling();
 	pAttr = pNode->first_attribute();
+	//Inky
 	InitCharacter(SetXMLPos(pAttr), inky);
 	pNode = pNode->next_sibling();
 	pAttr = pNode->first_attribute();
+	//Clyde
 	InitCharacter(SetXMLPos(pAttr), clyde);
 
 	//Empezamos PowerUps
