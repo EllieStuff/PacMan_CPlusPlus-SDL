@@ -133,14 +133,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					//return true;
 				}
 			}
-			/*if (o[i][j]->tile == MapTiles::FRUIT)
-			{
-				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos))
-				{
-					o[i][j]->tile == MapTiles::EMPTY;
-					return true;
-				}
-			}*/
 			if (Utils::OnSquareCollision(pos, clyde->pos) && Utils::PointsDistance(pos, clyde->pos) < TILES_PIXEL / 2)
 			{
 				if (!hasHitEnemy && !hasPowerUp) {
@@ -165,7 +157,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 
 				}
 				else if (hasPowerUp) {
-					//inky->dying = true;
 					score += inky->extraScore;
 					maxScore += inky->extraScore;
 					inky->ReinitPos();
@@ -182,7 +173,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 
 				}
 				else if (hasPowerUp) {
-					//blinky->dying = true;
 					score += blinky->extraScore;
 					maxScore += blinky->extraScore;
 					blinky->ReinitPos();

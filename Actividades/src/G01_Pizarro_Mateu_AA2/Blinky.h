@@ -4,10 +4,14 @@
 
 class Blinky : public Enemies
 {
+private:
+	void AddPos();
+	void DecidePos(const Direction &forbiddenDir, std::vector<std::vector<Objects*>>);
+
 public:
 	//Constructor
 	Blinky();
 	//Functions
-	void Move(Direction, std::vector<std::vector<Objects*>>);
+	void Move(std::vector<std::vector<Objects*>>);
 
 };

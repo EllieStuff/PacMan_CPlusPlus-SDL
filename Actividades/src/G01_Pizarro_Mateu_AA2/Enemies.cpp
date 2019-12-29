@@ -27,6 +27,11 @@ void Enemies::Move(Direction, std::vector<std::vector<Objects*>>)
 {
 }
 
+void Enemies::Move(std::vector<std::vector<Objects*>>)
+{
+
+}
+
 bool Enemies::HitsWall(Direction playerDir, std::vector<std::vector<Objects*>> o)
 {
 	for (int i = 0; i < MAP_WIDTH; i++) {
@@ -42,6 +47,47 @@ bool Enemies::HitsWall(Direction playerDir, std::vector<std::vector<Objects*>> o
 						return true;
 
 				}
+
+			}
+		}
+
+	}
+
+	return false;
+}
+
+bool Enemies::HitsWall(const int &dirN, std::vector<std::vector<Objects*>> o)
+{
+	Rect tmpPos = pos;
+	switch (static_cast<Direction>(dirN)) {
+	case Direction::UP:
+		tmpPos.y -= PIXELS_PER_FRAME;
+
+		break;
+
+	case Direction::DOWN:
+		tmpPos.y += PIXELS_PER_FRAME;
+
+		break;
+
+	case Direction::LEFT:
+		tmpPos.x -= PIXELS_PER_FRAME;
+
+		break;
+
+	case Direction::RIGHT:
+		tmpPos.x += PIXELS_PER_FRAME;
+
+		break;
+
+	default:;
+
+	}
+	for (int i = 0; i < MAP_WIDTH; i++) {
+		for (int j = 0; j < MAP_HEIGHT; j++) {
+			if (o[j][i]->tile == MapTiles::WALL) {
+				if (Utils::OnSquareCollision(tmpPos, o[j][i]->rectPos))
+					return true;
 
 			}
 		}

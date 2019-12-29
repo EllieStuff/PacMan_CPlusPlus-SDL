@@ -129,7 +129,7 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 		//Moure Enemics 
 		clyde->Move(player->dir, o);
 		inky->Move(player->dir, o);
-		//blinky->Move(/*Dir?*/, o);
+		blinky->Move(o);
 		//Crear fruita
 		fruit.Instantiate();
 

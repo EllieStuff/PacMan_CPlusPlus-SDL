@@ -35,6 +35,7 @@ void Character::SetInitPos()
 
 void Character::Update()
 {
+
 }
 
 void Character::Draw()

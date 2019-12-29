@@ -32,6 +32,7 @@
 
 int main(int, char*[])
 {
+	srand(time(NULL));
 
 	///GameLoop
 	Controller controller;
