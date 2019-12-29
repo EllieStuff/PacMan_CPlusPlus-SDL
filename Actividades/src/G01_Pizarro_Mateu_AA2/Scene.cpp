@@ -141,7 +141,6 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 		else std::cout << "\n ---\n\n";*/
 
 		//Animacions
-		///Recordar posar animació Blinky i d'enemics morint-se
 		int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
 		int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
 		if (player->rect.y == 0 && player->hasHitEnemy) {
@@ -166,59 +165,198 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 					player->dead = true;
 				}
 			}
-			else if (player->dir == Direction::NONE || player->dir == Direction::RIGHT)
+			if (!player->hasPowerUp)
 			{
-				player->rect.x += frameWidth;
-				clyde->rect.x += frameWidth;
-				inky->rect.x += frameWidth;
-				if ((player->rect.x >= frameWidth * 6) || (clyde->rect.x >= frameWidth * 8)
-					|| (inky->rect.x >= frameWidth * 6))
+				clyde->rect.y = 3 * frameHeight;
+				inky->rect.y = 2 * frameHeight;
+				blinky->rect.y = 1 * frameHeight;
+				if (player->dir == Direction::NONE || player->dir == Direction::RIGHT)
 				{
-					player->rect.x = 4 * frameWidth;
 					clyde->rect.x = 6 * frameWidth;
 					inky->rect.x = 4 * frameWidth;
+					player->rect.x += frameWidth;
+					clyde->rect.x += frameWidth;
+					inky->rect.x += frameWidth;
+					if ((player->rect.x >= frameWidth * 6) || (clyde->rect.x >= frameWidth * 8)
+						|| (inky->rect.x >= frameWidth * 6))
+					{
+						player->rect.x = 4 * frameWidth;
+						clyde->rect.x = 6 * frameWidth;
+						inky->rect.x = 4 * frameWidth;
+					}
 				}
-			}
-			else if (player->dir == Direction::LEFT)
-			{
-				player->rect.x += frameWidth;
-				clyde->rect.x += frameWidth;
-				inky->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 8 || (clyde->rect.x >= frameWidth * 6)
-					|| (inky->rect.x >= frameWidth * 8))
+				else if (player->dir == Direction::LEFT)
 				{
-					player->rect.x = 6 * frameWidth;
 					clyde->rect.x = 4 * frameWidth;
 					inky->rect.x = 6 * frameWidth;
+					player->rect.x += frameWidth;
+					clyde->rect.x += frameWidth;
+					inky->rect.x += frameWidth;
+					if (player->rect.x >= frameWidth * 8 || (clyde->rect.x >= frameWidth * 6)
+						|| (inky->rect.x >= frameWidth * 8))
+					{
+						player->rect.x = 6 * frameWidth;
+						clyde->rect.x = 4 * frameWidth;
+						inky->rect.x = 6 * frameWidth;
+					}
 				}
-			}
-			else if (player->dir == Direction::UP)
-			{
-				player->rect.x += frameWidth;
-				clyde->rect.x += frameWidth;
-				inky->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 2 || (clyde->rect.x >= frameWidth * 4)
-					|| (inky->rect.x >= frameWidth * 2))
+				else if (player->dir == Direction::UP)
 				{
-					player->rect.x = 0;
 					clyde->rect.x = 2 * frameWidth;
 					inky->rect.x = 0;
+					player->rect.x += frameWidth;
+					clyde->rect.x += frameWidth;
+					inky->rect.x += frameWidth;
+					if (player->rect.x >= frameWidth * 2 || (clyde->rect.x >= frameWidth * 4)
+						|| (inky->rect.x >= frameWidth * 2))
+					{
+						player->rect.x = 0;
+						clyde->rect.x = 2 * frameWidth;
+						inky->rect.x = 0;
+					}
 				}
-			}
-			else if (player->dir == Direction::DOWN)
-			{
-				player->rect.x += frameWidth;
-				clyde->rect.x += frameWidth;
-				inky->rect.x += frameWidth;
-				if (player->rect.x >= frameWidth * 4 || (clyde->rect.x >= frameWidth * 2)
-					|| (inky->rect.x >= frameWidth * 4))
+				else if (player->dir == Direction::DOWN)
 				{
-					player->rect.x = 2 * frameWidth;
 					clyde->rect.x = 0;
 					inky->rect.x = 2 * frameWidth;
+					player->rect.x += frameWidth;
+					clyde->rect.x += frameWidth;
+					inky->rect.x += frameWidth;
+					blinky->rect.x += frameWidth;
+					if (player->rect.x >= frameWidth * 4 || (clyde->rect.x >= frameWidth * 2)
+						|| (inky->rect.x >= frameWidth * 4))
+					{
+						player->rect.x = 2 * frameWidth;
+						clyde->rect.x = 0;
+						inky->rect.x = 2 * frameWidth;
+					}
+				}
+				if (blinky->dir == Direction::RIGHT)
+				{
+					blinky->rect.x = 4 * frameWidth;
+					blinky->rect.x += frameWidth;
+					if (blinky->rect.x >= frameWidth * 6)
+					{
+						blinky->rect.x = 4 * frameWidth;
+					}
+				}
+				else if (blinky->dir == Direction::LEFT)
+				{
+					blinky->rect.x = 6 * frameWidth;
+					blinky->rect.x += frameWidth;
+					if (blinky->rect.x >= frameWidth * 8)
+					{
+						blinky->rect.x = 6 * frameWidth;
+					}
+				}
+				else if (blinky->dir == Direction::UP)
+				{
+					blinky->rect.x = 0;
+					blinky->rect.x += frameWidth;
+					if (blinky->rect.x >= frameWidth * 2)
+					{
+						blinky->rect.x = 0;
+					}
+				}
+				else if (blinky->dir == Direction::DOWN)
+				{
+					blinky->rect.x = 2 * frameWidth;
+					blinky->rect.x += frameWidth;
+					if (blinky->rect.x >= frameWidth * 4)
+					{
+						blinky->rect.x = 2 * frameWidth;
+					}
 				}
 			}
-
+			else
+			{
+				if (player->dir == Direction::NONE || player->dir == Direction::RIGHT)
+				{
+					player->rect.x += frameWidth;
+					clyde->rect.x += frameWidth;
+					inky->rect.x += frameWidth;
+					if ((player->rect.x >= frameWidth * 6) || (clyde->rect.x >= frameWidth * 4)
+						|| (inky->rect.x >= frameWidth * 4))
+					{
+						player->rect.x = 4 * frameWidth;
+						clyde->rect.x = 0;
+						inky->rect.x = 0;
+					}
+				}
+				else if (player->dir == Direction::LEFT)
+				{
+					player->rect.x += frameWidth;
+					clyde->rect.x += frameWidth;
+					inky->rect.x += frameWidth;
+					if (player->rect.x >= frameWidth * 8 || (clyde->rect.x >= frameWidth * 4)
+						|| (inky->rect.x >= frameWidth * 4))
+					{
+						player->rect.x = 6 * frameWidth;
+						clyde->rect.x = 0;
+						inky->rect.x = 0;
+					}
+				}
+				else if (player->dir == Direction::UP)
+				{
+					player->rect.x += frameWidth;
+					clyde->rect.x += frameWidth;
+					inky->rect.x += frameWidth;
+					if (player->rect.x >= frameWidth * 2 || (clyde->rect.x >= frameWidth * 4)
+						|| (inky->rect.x >= frameWidth * 4))
+					{
+						player->rect.x = 0;
+						clyde->rect.x = 0;
+						inky->rect.x = 0;
+					}
+				}
+				else if (player->dir == Direction::DOWN)
+				{
+					player->rect.x += frameWidth;
+					clyde->rect.x += frameWidth;
+					inky->rect.x += frameWidth;
+					blinky->rect.x += frameWidth;
+					if (player->rect.x >= frameWidth * 4 || (clyde->rect.x >= frameWidth * 4)
+						|| (inky->rect.x >= frameWidth * 4))
+					{
+						player->rect.x = 2 * frameWidth;
+						clyde->rect.x = 0;
+						inky->rect.x = 0;
+					}
+				}
+				if (blinky->dir == Direction::RIGHT)
+				{
+					blinky->rect.x += frameWidth;
+					if (blinky->rect.x >= frameWidth * 4)
+					{
+						blinky->rect.x = 0;
+					}
+				}
+				else if (blinky->dir == Direction::LEFT)
+				{
+					blinky->rect.x = 0;
+					blinky->rect.x += frameWidth;
+					if (blinky->rect.x >= frameWidth * 4)
+					{
+						blinky->rect.x = 0;
+					}
+				}
+				else if (blinky->dir == Direction::UP)
+				{
+					blinky->rect.x += frameWidth;
+					if (blinky->rect.x >= frameWidth * 4)
+					{
+						blinky->rect.x = 0;
+					}
+				}
+				else if (blinky->dir == Direction::DOWN)
+				{
+					blinky->rect.x += frameWidth;
+					if (blinky->rect.x >= frameWidth * 4)
+					{
+						blinky->rect.x = 0;
+					}
+				}
+			}
 		}
 	}
 	else {

@@ -79,7 +79,6 @@ Blinky::Blinky()
 	rect.y = 1 * frameHeight;
 	rect.h = frameHeight;
 	rect.w = frameWidth;
-
 }
 
 void Blinky::Move(std::vector<std::vector<Objects*>> mapObjects)
