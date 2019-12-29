@@ -241,9 +241,9 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Inky *inky, Clyde *clyde, Blinky *blinky, Fruit &fruit)
 {
 	player->Reinit(map.maxScore);
-	inky->ReinitPos();
-	clyde->ReinitPos();
-	blinky->ReinitPos();
+	inky->Reinit();
+	clyde->Reinit();
+	blinky->Reinit();
 	map.Reinit(o);
 	fruit.Reinit();
 

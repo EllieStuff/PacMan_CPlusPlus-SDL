@@ -9,6 +9,9 @@ bool Enemies::OnEdge() {
 
 void Enemies::Reinit()
 {
+	ReinitPos();
+	dir = Direction::NONE;
+
 }
 
 void Enemies::Update(Direction, Map)

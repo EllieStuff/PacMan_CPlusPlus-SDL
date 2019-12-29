@@ -5,32 +5,25 @@ void Blinky::AddPos()
 	switch (dir) {
 	case Direction::UP:
 		pos.y -= PIXELS_PER_FRAME;
-		std::cout << "Up\n\n";
 
 		break;
 
 	case Direction::DOWN:
 		pos.y += PIXELS_PER_FRAME;
-		std::cout << "Down\n\n";
 
 		break;
 
 	case Direction::LEFT:
 		pos.x -= PIXELS_PER_FRAME;
-		std::cout << "Left\n\n";
 
 		break;
 
 	case Direction::RIGHT:
 		pos.x += PIXELS_PER_FRAME;
-		std::cout << "Right\n\n";
 
 		break;
 
-	default:
-		std::cout << "None\n\n";
-		
-		break;
+	default:;
 
 	}
 
@@ -50,15 +43,15 @@ void Blinky::DecidePos(const Direction &forbiddenDir, std::vector<std::vector<Ob
 		randNum++;
 		if (randNum == static_cast<int>(Direction::NONE)) randNum = 0;
 
+		if (firstNum == randNum) {
+			dir = Direction::NONE;
+			break;
+
+		}
 
 		if (randNum == static_cast<int>(forbiddenDir)) {
-			if (firstNum == randNum) {
-				dir = Direction::NONE;
-				break;
-
-			}
 			randNum++;
-
+			if (randNum == static_cast<int>(Direction::NONE)) randNum = 0;
 		}
 
 	}
@@ -87,27 +80,38 @@ void Blinky::Move(std::vector<std::vector<Objects*>> mapObjects)
 	if (pos.x % TILES_PIXEL == 0 && pos.y % TILES_PIXEL == 0) {
 		switch (dir) {
 		case Direction::UP:
+			if (pos.y < 0) 
+				pos.y = SCREEN_HEIGHT - TILES_PIXEL;
 			DecidePos(Direction::DOWN, mapObjects);
 
 			break;
 
 		case Direction::DOWN:
+			if (pos.y > SCREEN_HEIGHT - TILES_PIXEL)
+				pos.y = 0;
 			DecidePos(Direction::UP, mapObjects);
 
 			break;
 
 		case Direction::LEFT:
+			if (pos.x < 0)
+				pos.x = SCREEN_WIDTH - HUD_WIDTH - TILES_PIXEL;
 			DecidePos(Direction::RIGHT, mapObjects);
 
 			break;
 
 		case Direction::RIGHT:
+			if (pos.x > SCREEN_WIDTH - HUD_WIDTH - TILES_PIXEL)
+				pos.x = 0;
 			DecidePos(Direction::LEFT, mapObjects);
 
 			break;
 
 		case Direction::NONE:
-			DecidePos(Direction::NONE, mapObjects);
+			if (!OnEdge()) {
+				DecidePos(Direction::NONE, mapObjects);
+				std::cout << "NONE\n\n";
+			}
 
 			break;
 
