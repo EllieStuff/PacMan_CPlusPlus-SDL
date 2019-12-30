@@ -46,8 +46,11 @@ void Controller::SceneControl()
 		else if (pAux.paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Play();
 
 		//GameOver Provisional ja que no es te el ranking
-		if ((player->dead && player->livesLeft <= 0) || player->score >= player->GetMaxScore() || player->score >= MAX_SCORE) 
-			state = SceneState::GO_TO_MENU;
+		if ((player->dead && player->livesLeft <= 0) || player->score >= player->GetMaxScore() || player->score >= MAX_SCORE) {
+			ranking.AskPlayerInfo(player->score);
+			state = SceneState::GO_TO_RANKING;
+
+		}
 
 		//GoToMenu
 		if (pAux.paused && keyboard.keys[SDLK_ESCAPE] || !pAux.running && keyboard.keys[SDLK_ESCAPE]) state = SceneState::GO_TO_MENU;
@@ -60,7 +63,7 @@ void Controller::SceneControl()
 		scene->Draw();
 
 		if (scene->buttons[MENU_PLAY].Used(keyboard)) state = SceneState::GO_TO_PLAY;
-		//if (scene->buttons[MENU_RANKING].Used(cursor, isClicked)) state = SceneState::GO_TO_RANKING;	//Silenciat prq el ranking encara no hi es
+		if (scene->buttons[MENU_RANKING].Used(keyboard)) state = SceneState::GO_TO_RANKING;
 		if (scene->buttons[MENU_SOUND].Used(keyboard) && sound.soundOn) sound.Stop();
 		else if (scene->buttons[MENU_SOUND].Used(keyboard) && !sound.soundOn) sound.Play();
 		if (scene->buttons[MENU_EXIT].Used(keyboard)) state = SceneState::GO_TO_EXIT;
@@ -72,6 +75,7 @@ void Controller::SceneControl()
 
 	case SceneState::RUNNING_RANKING:
 		keyboard.GeneralPoll();
+		scene->Draw(ranking);
 
 		break;
 
@@ -107,6 +111,7 @@ void Controller::SceneControl()
 	case SceneState::GO_TO_RANKING:
 		quitSceneTarget = SceneState::GO_TO_MENU;
 		scene = new Ranking;
+		scene->Load(ranking);
 
 		state = SceneState::RUNNING_RANKING;
 

@@ -25,10 +25,10 @@ HUD::HUD(Player *player)
 
 void HUD::Update(Player *player)
 {
-	scoreText.Init(font.id, Utils::AddZerosInFrontOfStr(player->score, 4), textColor);
+	/*scoreText.Init(font.id, Utils::AddZerosInFrontOfStr(player->score, 4), textColor);
 	score.Init(SCREEN_WIDTH - HUD_WIDTH + HUD_EDGES, HUD_EDGES * 3, 160, 80);
 	Renderer::Instance()->LoadFont(font);
-	Renderer::Instance()->LoadTextureText(font.id, scoreText);
+	Renderer::Instance()->LoadTextureText(font.id, scoreText);*/
 
 }
 
@@ -38,5 +38,5 @@ void HUD::Draw(Player *player)
 	for (int i = 0; i < player->livesLeft; i++) {
 		Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(lives[i][RECT]), Utils::RectToSDL_Rect(lives[i][SPRITE]));
 	}
-	Renderer::Instance()->PushImage(font.id, Utils::RectToSDL_Rect(score));
+	Renderer::Instance()->PushImage(scoreText.id, Utils::RectToSDL_Rect(score));
 }

@@ -48,6 +48,18 @@ void Scene::Update(InputHandle &)
 {
 }
 
+void Scene::Load(RankingData & ranking)
+{
+}
+
+void Scene::Update(RankingData & ranking)
+{
+}
+
+void Scene::Draw(RankingData & ranking)
+{
+}
+
 void SplashScreen::Update()
 {
 }
@@ -326,23 +338,25 @@ void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 	}
 }
 
-void Ranking::Update()
-{
-	//Necessitem un Update del ranking?
 
-}
-
-void Ranking::Load()
+void Ranking::Update(RankingData & ranking)
 {
 
 
 }
 
-void Ranking::Draw()
+void Ranking::Load(RankingData & ranking)
 {
-
+	ranking.Load();
 
 }
+
+void Ranking::Draw(RankingData & ranking)
+{
+	ranking.Draw();
+
+}
+
 
 void Exit::Load()
 {

@@ -17,6 +17,7 @@
 #include "HUD.h"
 #include "Button.h"
 #include "InputHandle.h"
+#include "Ranking.h"
 
 struct PlayAuxiliars {
 	bool paused = false;
@@ -55,6 +56,9 @@ public:
 	virtual void Load(std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *, Blinky *, Fruit &);
 	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
 	virtual void Update(InputHandle &);
+	virtual void Load(RankingData &ranking);
+	virtual void Update(RankingData &ranking);
+	virtual void Draw(RankingData &ranking);
 };
 
 class Play : public Scene {
@@ -77,9 +81,9 @@ public:
 class Ranking : public Scene {
 public:
 	//Functions
-	void Update();
-	void Load();
-	void Draw();
+	void Update(RankingData &ranking);
+	void Load(RankingData &ranking);
+	void Draw(RankingData &ranking);
 };
 
 class SplashScreen : public Scene {

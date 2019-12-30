@@ -8,6 +8,7 @@ const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 700;
 const int HUD_WIDTH = 200;
 const int HUD_EDGES = 15;
+const int RANKING_EDGES = 30;
 
 const int FPS = 30;
 const float DELAY_TIME = 1000.0f / FPS;
@@ -21,6 +22,7 @@ const int MAX_LIVES = 3;
 const int POWER_UP_EXTRA_SCORE = 20;
 const int MAX_SCORE = 9999;
 const int MAX_FRUITS = 9;
+const int RANKING_CAPACITY = 5;
 
 enum class SceneState { GO_TO_PLAY = 0, GO_TO_MENU, GO_TO_RANKING, GO_TO_EXIT, RUNNING_PLAY, RUNNING_MENU, RUNNING_RANKING, RUNNING_SPLASH_SCREEN, EXIT };
 

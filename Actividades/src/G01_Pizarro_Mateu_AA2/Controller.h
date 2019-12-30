@@ -21,6 +21,7 @@ public:
 	Uint32 frameStart, frameTime;
 	int frameTimePlayerSprite = 0;
 	Map map;
+	RankingData ranking;
 	std::vector<std::vector<Objects*>> o;
 	Player *player = new Player;
 	Clyde *clyde = new Clyde;
