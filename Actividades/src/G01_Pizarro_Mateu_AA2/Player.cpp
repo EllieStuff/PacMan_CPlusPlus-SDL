@@ -245,7 +245,7 @@ int Player::GetMaxScore()
 
 void Player::FinishPowerUp(Clyde* clyde, Inky* inky, Blinky* blinky)
 {
-	if (powerUpEnd < clock())
+	if (powerUpEnd < clock() && hasPowerUp)
 	{
 		hasPowerUp = false;
 		int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;

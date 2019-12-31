@@ -167,9 +167,9 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 			}
 			if (!player->hasPowerUp)
 			{
-				clyde->rect.y = 3 * frameHeight;
+				/*clyde->rect.y = 3 * frameHeight;
 				inky->rect.y = 2 * frameHeight;
-				blinky->rect.y = 1 * frameHeight;
+				blinky->rect.y = 1 * frameHeight;*/
 				if (player->dir == Direction::NONE || player->dir == Direction::RIGHT)
 				{
 					clyde->rect.x = 6 * frameWidth;
@@ -273,88 +273,43 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 				if (player->dir == Direction::NONE || player->dir == Direction::RIGHT)
 				{
 					player->rect.x += frameWidth;
-					clyde->rect.x += frameWidth;
-					inky->rect.x += frameWidth;
-					if ((player->rect.x >= frameWidth * 6) || (clyde->rect.x >= frameWidth * 4)
-						|| (inky->rect.x >= frameWidth * 4))
+					if ((player->rect.x >= frameWidth * 6))
 					{
 						player->rect.x = 4 * frameWidth;
-						clyde->rect.x = 0;
-						inky->rect.x = 0;
 					}
 				}
 				else if (player->dir == Direction::LEFT)
 				{
 					player->rect.x += frameWidth;
-					clyde->rect.x += frameWidth;
-					inky->rect.x += frameWidth;
-					if (player->rect.x >= frameWidth * 8 || (clyde->rect.x >= frameWidth * 4)
-						|| (inky->rect.x >= frameWidth * 4))
+					if (player->rect.x >= frameWidth * 8 )
 					{
 						player->rect.x = 6 * frameWidth;
-						clyde->rect.x = 0;
-						inky->rect.x = 0;
 					}
 				}
 				else if (player->dir == Direction::UP)
 				{
 					player->rect.x += frameWidth;
-					clyde->rect.x += frameWidth;
-					inky->rect.x += frameWidth;
-					if (player->rect.x >= frameWidth * 2 || (clyde->rect.x >= frameWidth * 4)
-						|| (inky->rect.x >= frameWidth * 4))
+					if (player->rect.x >= frameWidth * 2 )
 					{
 						player->rect.x = 0;
-						clyde->rect.x = 0;
-						inky->rect.x = 0;
 					}
 				}
 				else if (player->dir == Direction::DOWN)
 				{
 					player->rect.x += frameWidth;
-					clyde->rect.x += frameWidth;
-					inky->rect.x += frameWidth;
-					blinky->rect.x += frameWidth;
-					if (player->rect.x >= frameWidth * 4 || (clyde->rect.x >= frameWidth * 4)
-						|| (inky->rect.x >= frameWidth * 4))
+					if (player->rect.x >= frameWidth * 4)
 					{
 						player->rect.x = 2 * frameWidth;
-						clyde->rect.x = 0;
-						inky->rect.x = 0;
 					}
 				}
-				if (blinky->dir == Direction::RIGHT)
+				clyde->rect.x += frameWidth;
+				inky->rect.x += frameWidth;
+				blinky->rect.x += frameWidth;
+				if (clyde->rect.x >= frameWidth * 4 || inky->rect.x >= frameWidth * 4 || blinky->rect.x >= frameWidth * 4)
 				{
-					blinky->rect.x += frameWidth;
-					if (blinky->rect.x >= frameWidth * 4)
-					{
-						blinky->rect.x = 0;
-					}
-				}
-				else if (blinky->dir == Direction::LEFT)
-				{
+					clyde->rect.x = 0;
+					inky->rect.x = 0;
 					blinky->rect.x = 0;
-					blinky->rect.x += frameWidth;
-					if (blinky->rect.x >= frameWidth * 4)
-					{
-						blinky->rect.x = 0;
-					}
-				}
-				else if (blinky->dir == Direction::UP)
-				{
-					blinky->rect.x += frameWidth;
-					if (blinky->rect.x >= frameWidth * 4)
-					{
-						blinky->rect.x = 0;
-					}
-				}
-				else if (blinky->dir == Direction::DOWN)
-				{
-					blinky->rect.x += frameWidth;
-					if (blinky->rect.x >= frameWidth * 4)
-					{
-						blinky->rect.x = 0;
-					}
 				}
 			}
 		}
