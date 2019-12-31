@@ -3,9 +3,8 @@
 
 class Enemies : public Character
 {
-protected:
-	Direction dir = Direction::NONE;
 public:
+	Direction dir = Direction::NONE;
 	int extraScore;
 	bool dying = false;
 	//Constructor

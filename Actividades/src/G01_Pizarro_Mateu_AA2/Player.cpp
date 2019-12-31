@@ -90,7 +90,7 @@ void Player::Move(std::vector<bool> keys, std::vector<std::vector<Objects*>> &o,
 		}
 	}
 
-	FinishPowerUp();
+	FinishPowerUp(clyde, inky, blinky);
 }
 
 bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *inky, Blinky *blinky, Fruit &fruit)
@@ -124,12 +124,19 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 			{
 				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos) && Utils::PointsDistance(pos, o[i][j]->rectPos) < TILES_PIXEL / 3)
 				{
-					score += POWER_UP_EXTRA_SCORE;
+					int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
+					//score += POWER_UP_EXTRA_SCORE;
 					o[i][j]->tile = MapTiles::EMPTY_P_UP;
 					o[i][j]->rect.w = 0;
 					o[i][j]->rect.h = 0;
 					hasPowerUp = true;
 					powerUpEnd = clock() + POWER_UP_TIME;
+					clyde->rect.x = 0;
+					clyde->rect.y = 4 * frameHeight;
+					inky->rect.x = 0;
+					inky->rect.y = 4 * frameHeight;
+					blinky->rect.x = 0;
+					blinky->rect.y = 4 * frameHeight;
 					//return true;
 				}
 			}
@@ -236,8 +243,19 @@ int Player::GetMaxScore()
 //	maxScore = _maxScore;
 //}
 
-void Player::FinishPowerUp()
+void Player::FinishPowerUp(Clyde* clyde, Inky* inky, Blinky* blinky)
 {
-	if (powerUpEnd < clock()) hasPowerUp = false;
+	if (powerUpEnd < clock() && hasPowerUp)
+	{
+		hasPowerUp = false;
+		int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
+		int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
+		clyde->rect.x = 4 * frameWidth;
+		clyde->rect.y = 3 * frameHeight;
+		inky->rect.x = 4 * frameWidth;
+		inky->rect.y = 2 * frameHeight;
+		blinky->rect.x = 4 * frameWidth;
+		blinky->rect.y = frameWidth;
+	}
 }
 
