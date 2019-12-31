@@ -176,7 +176,7 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 					player->dead = true;
 				}
 			}
-			if (!player->hasPowerUp)
+			else if (!player->hasPowerUp)
 			{
 				/*clyde->rect.y = 3 * frameHeight;
 				inky->rect.y = 2 * frameHeight;
@@ -279,7 +279,7 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 					}
 				}
 			}
-			else
+			else if (player->hasPowerUp)
 			{
 				if (player->dir == Direction::NONE || player->dir == Direction::RIGHT)
 				{

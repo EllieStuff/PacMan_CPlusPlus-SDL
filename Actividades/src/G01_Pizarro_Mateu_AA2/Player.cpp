@@ -125,7 +125,8 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 				if (Utils::OnSquareCollision(pos, o[i][j]->rectPos) && Utils::PointsDistance(pos, o[i][j]->rectPos) < TILES_PIXEL / 3)
 				{
 					int frameHeight = Renderer::Instance()->GetTextureSize("PacmanSheet").y / 8;
-					//score += POWER_UP_EXTRA_SCORE;
+					score += POWER_UP_EXTRA_SCORE;
+					maxScore += POWER_UP_EXTRA_SCORE;
 					o[i][j]->tile = MapTiles::EMPTY_P_UP;
 					o[i][j]->rect.w = 0;
 					o[i][j]->rect.h = 0;
