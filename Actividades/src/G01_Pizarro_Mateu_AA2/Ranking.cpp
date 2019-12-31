@@ -4,6 +4,7 @@ void RankingData::AddPlayer(const PlayerData &newPlayer)
 {
 	if (players.empty() || players.size() < RANKING_CAPACITY && newPlayer.score < players[players.size() - 1].score) {
 		players.push_back(newPlayer);
+		InitRects();
 		Save();
 		return;
 
@@ -13,6 +14,7 @@ void RankingData::AddPlayer(const PlayerData &newPlayer)
 		if (newPlayer.score >= it->score) {
 			players.insert(it, newPlayer);
 			if (players.size() > RANKING_CAPACITY) players.resize(RANKING_CAPACITY);
+			InitRects();
 			Save();
 
 			break;
@@ -33,11 +35,8 @@ RankingData::RankingData()
 	//scoreText.Init(font.id, Utils::AddZerosInFrontOfStr(player->score, 4), textColor);
 	//score.Init(SCREEN_WIDTH - HUD_WIDTH + HUD_EDGES, HUD_EDGES * 3, 160, 80);
 
-	for (int i = 0; i < RANKING_CAPACITY; i++) {
-		//Aixo seria millor fer-ho amb rects pels nmos i per les scores per separat, pero de moment mirem que tot funcioni be
-		rects[i].Init(RANKING_EDGES, i * (50 + RANKING_EDGES) + RANKING_EDGES, 600, 50);
 
-	}
+	InitRects();
 
 }
 
@@ -47,6 +46,12 @@ void RankingData::AskPlayerInfo(const int &pScore)
 	pData.score = pScore;
 	std::cout << "\nGAME OVER\n\nCongrats! You got " << pScore << " points.\nWhat's your name? ";
 	std::cin >> pData.name;
+	while (pData.name.length() >= NAME_MAX_SIZE) {
+		std::cout << "\n\nSORRY! Your name must have less than " << NAME_MAX_SIZE << " characters! Try again, you troll.\n";
+		std::cin >> pData.name;
+
+	}
+
 
 	AddPlayer(pData);
 
@@ -54,10 +59,11 @@ void RankingData::AskPlayerInfo(const int &pScore)
 
 void RankingData::Draw()
 {
-	//std::cout << "\n\nRANKING\n";
+	Renderer::Instance()->PushImage(rankingText.id, Utils::RectToSDL_Rect(rankingRect));
 	for (int i = 0; i < players.size(); i++) {
-		//std::cout << players[i].name << "	" << players[i].score << std::endl;
-		Renderer::Instance()->PushImage(texts[i].id, Utils::RectToSDL_Rect(rects[i]));
+		Renderer::Instance()->PushImage(numTexts[i].id, Utils::RectToSDL_Rect(numRects[i]));
+		Renderer::Instance()->PushImage(nameTexts[i].id, Utils::RectToSDL_Rect(nameRects[i]));
+		Renderer::Instance()->PushImage(scoreTexts[i].id, Utils::RectToSDL_Rect(scoreRects[i]));
 
 	}
 
@@ -71,11 +77,27 @@ void RankingData::Update()
 
 void RankingData::Load()
 {
+	rankingText.Init("RankingText", "Ranking", textColor);
+	Renderer::Instance()->LoadTextureText(font.id, rankingText);
 	for (int i = 0; i < players.size(); i++) {
-		std::string newId = "ranking";
-		newId += static_cast<char>(i);
-		texts[i].Init(newId, players[i].name + " - " + Utils::AddZerosInFrontOfStr(players[i].score, 4), textColor);
-		Renderer::Instance()->LoadTextureText(font.id, texts[i]);
+		char pos = i + '1';
+		//std::string num = pos + ". ";
+		std::string numsId = "";
+		numsId += pos;
+		numsId += ". ";
+		std::string scoresId = "RankedScores";
+		scoresId += pos;
+		std::string namesId = "RankedNames";
+		namesId += pos;
+		//newId += static_cast<char>(i);
+		numTexts[i].Init(numsId, numsId, textColor);
+		nameTexts[i].Init(scoresId, players[i].name, textColor);
+		scoreTexts[i].Init(namesId, " - " + Utils::AddZerosInFrontOfStr(players[i].score, 4), textColor);
+
+
+		Renderer::Instance()->LoadTextureText(font.id, numTexts[i]);
+		Renderer::Instance()->LoadTextureText(font.id, nameTexts[i]);
+		Renderer::Instance()->LoadTextureText(font.id, scoreTexts[i]);
 
 	}
 
@@ -100,7 +122,6 @@ void RankingData::Save()
 
 void RankingData::Recover()
 {
-	//TODO: Veure prq ja no llegeix el ranking amb mes de 5 players
 	size_t len;
 	std::ifstream fEntrada(fileName, std::ios::in | std::ios::binary);
 	fEntrada.read(reinterpret_cast<char *>(&len), sizeof(size_t));
@@ -110,11 +131,25 @@ void RankingData::Recover()
 		fEntrada.read(reinterpret_cast<char *>(tmp), sizeof(PlayerData) *len);
 		for (int i = 0; i < len; i++)
 		{
+			std::cout << players[i].name << std::endl;
 			players[i] = tmp[i];
 		}
 
 		//delete[]tmp;
 		fEntrada.close();
+
+	}
+
+}
+
+void RankingData::InitRects()
+{
+	rankingRect.Init(RANKING_EDGES, RANKING_EDGES, 300, 70);
+
+	for (int i = 0; i < players.size(); i++) {
+		numRects[i].Init(RANKING_EDGES, i * (50 + RANKING_EDGES) + RANKING_EDGES + 100, 50, 50);
+		nameRects[i].Init(100 + RANKING_EDGES, i * (50 + RANKING_EDGES) + RANKING_EDGES + 100, players[i].name.length() * 50, 50);
+		scoreRects[i].Init(SCREEN_WIDTH - 200, i * (50 + RANKING_EDGES) + RANKING_EDGES + 100, 150, 50);
 
 	}
 

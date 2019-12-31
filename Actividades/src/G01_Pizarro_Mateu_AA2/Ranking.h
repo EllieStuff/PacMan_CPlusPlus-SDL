@@ -12,7 +12,7 @@
 
 
 struct PlayerData {
-	std::string name = "";
+	std::string name = " ";
 	int score = 0;
 
 
@@ -27,12 +27,19 @@ class RankingData {
 private:
 	Font font;
 	Color textColor;
-	Text texts[RANKING_CAPACITY];
-	Rect rects[RANKING_CAPACITY];
+	Text rankingText;
+	Rect rankingRect;
+	Text scoreTexts[RANKING_CAPACITY];
+	Text nameTexts[RANKING_CAPACITY];
+	Text numTexts[RANKING_CAPACITY];
+	Rect scoreRects[RANKING_CAPACITY];
+	Rect nameRects[RANKING_CAPACITY];
+	Rect numRects[RANKING_CAPACITY];
 
 	void AddPlayer(const PlayerData &newPlayer);
 	void Save();
 	void Recover();
+	void InitRects();
 
 public:
 	std::vector<PlayerData> players;

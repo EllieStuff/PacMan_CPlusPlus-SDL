@@ -57,7 +57,6 @@ public:
 	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
 	virtual void Update(InputHandle &);
 	virtual void Load(RankingData &ranking);
-	virtual void Update(RankingData &ranking);
 	virtual void Draw(RankingData &ranking);
 };
 
@@ -81,7 +80,7 @@ public:
 class Ranking : public Scene {
 public:
 	//Functions
-	void Update(RankingData &ranking);
+	void Update(InputHandle &keyboard);
 	void Load(RankingData &ranking);
 	void Draw(RankingData &ranking);
 };

@@ -75,7 +75,10 @@ void Controller::SceneControl()
 
 	case SceneState::RUNNING_RANKING:
 		keyboard.GeneralPoll();
+		scene->Update(keyboard);
 		scene->Draw(ranking);
+
+		if (scene->buttons[RANKING_EXIT].Used(keyboard)) state = SceneState::GO_TO_MENU;
 
 		break;
 

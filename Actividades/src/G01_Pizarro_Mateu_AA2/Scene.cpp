@@ -17,6 +17,9 @@ Scene::Scene()
 	buttons[(int)MENU_EXIT].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "exit", "EXIT",
 		{ "Exit", "../../res/ttf/PAC-FONT.TTF", 90 },
 		{ (int)(2.05f * SCREEN_WIDTH / 5), 5 * SCREEN_HEIGHT / 7, 200, 50 });
+	buttons[(int)RANKING_EXIT].Init({ 255, 0, 0, 255 }, { 255, 0, 0, 255 }, "exit", "EXIT",
+		{ "Exit", "../../res/ttf/PAC-FONT.TTF", 90 },
+		{ SCREEN_WIDTH - 200 - RANKING_EDGES, SCREEN_HEIGHT - 50 - RANKING_EDGES, 200, 50 });
 
 }
 
@@ -44,15 +47,11 @@ void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, 
 {
 }
 
-void Scene::Update(InputHandle &)
-{
-}
-
 void Scene::Load(RankingData & ranking)
 {
 }
 
-void Scene::Update(RankingData & ranking)
+void Scene::Update(InputHandle &keyboard)
 {
 }
 
@@ -113,7 +112,7 @@ void Menu::Load()
 
 void Menu::Draw()
 {
-	for (int i = 1; i < static_cast<int>(COUNT); i++) {
+	for (int i = 2; i < static_cast<int>(COUNT); i++) {
 		Renderer::Instance()->LoadFont(buttons[i].font);
 		Renderer::Instance()->LoadTextureText(buttons[i].font.id, buttons[i].text);
 		Renderer::Instance()->PushImage(buttons[i].font.id, Utils::RectToSDL_Rect(buttons[i].rect));
@@ -339,11 +338,12 @@ void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 }
 
 
-void Ranking::Update(RankingData & ranking)
+void Ranking::Update(InputHandle &keyboard)
 {
-
+	buttons[RANKING_EXIT].ChangeHover(keyboard);
 
 }
+
 
 void Ranking::Load(RankingData & ranking)
 {
@@ -354,6 +354,9 @@ void Ranking::Load(RankingData & ranking)
 void Ranking::Draw(RankingData & ranking)
 {
 	ranking.Draw();
+	Renderer::Instance()->LoadFont(buttons[RANKING_EXIT].font);
+	Renderer::Instance()->LoadTextureText(buttons[RANKING_EXIT].font.id, buttons[RANKING_EXIT].text);
+	Renderer::Instance()->PushImage(buttons[RANKING_EXIT].font.id, Utils::RectToSDL_Rect(buttons[RANKING_EXIT].rect));
 
 }
 
