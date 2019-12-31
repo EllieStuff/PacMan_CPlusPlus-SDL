@@ -26,6 +26,7 @@ public:
 	bool dead = false;
 	int frameTimeSprite = 0;
 	bool hasHitEnemy = false;
+	int cherries, strawBerries, oranges = 0;
 	//Constructor
 	Player();
 	//Functions

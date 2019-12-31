@@ -10,6 +10,7 @@ Player::Player()
 	rect.y = 0 * frameHeight;
 	rect.h = frameHeight;
 	rect.w = frameWidth;
+	cherries = strawBerries = oranges = 0;
 
 }
 
@@ -190,6 +191,9 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 
 			}
 			if (fruit.publicType != FruitTypes::EMPTY && Utils::OnSquareCollision(pos, fruit.pos) && Utils::PointsDistance(pos, fruit.pos) < TILES_PIXEL / 2) {
+				if (fruit.publicType == FruitTypes::CHERRY && cherries < MAX_FRUITS) cherries++;
+				else if (fruit.publicType == FruitTypes::STRAWBERRY && strawBerries < MAX_FRUITS) strawBerries++;
+				else if (fruit.publicType == FruitTypes::ORANGE && oranges < MAX_FRUITS) oranges++;
 				score += fruit.extraScore;
 				maxScore += fruit.extraScore;
 				fruit.EraseFruit();

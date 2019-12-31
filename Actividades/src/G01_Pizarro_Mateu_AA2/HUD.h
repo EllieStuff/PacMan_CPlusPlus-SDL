@@ -1,5 +1,6 @@
 #pragma once
-#include <string>
+#include <string.h>
+
 #include "Renderer.h"
 #include"Utils.h"
 #include "Constants.h"
@@ -9,7 +10,7 @@
 
 class HUD {
 private:
-	enum TypeOfRect { RECT = 0, SPRITE, TEXT, COUNT };
+	enum TypeOfRect { RECT = 0, POS, TEXT, COUNT };
 	Color textColor;
 public:
 	Font font;
