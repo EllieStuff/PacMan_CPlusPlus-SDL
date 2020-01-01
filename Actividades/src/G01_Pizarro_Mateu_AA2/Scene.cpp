@@ -39,11 +39,11 @@ void Scene::Load(std::vector<std::vector<Objects*>>&, Map &, Player *, Inky *ink
 {
 }
 
-void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &)
+void Scene::Update(std::vector<std::vector<Objects*>>&, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &, HUD &hud)
 {
 }
 
-void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &)
+void Scene::Draw(std::vector<std::vector<Objects*>>&, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &, HUD &hud)
 {
 }
 
@@ -119,7 +119,7 @@ void Menu::Draw()
 	}
 }
 
-void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard, Fruit &fruit)
+void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard, Fruit &fruit, HUD &hud)
 {
 	if (!pAux.paused && pAux.running)
 	{
@@ -141,6 +141,7 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 		clyde->Move(player->dir, o);
 		inky->Move(player->dir, o);
 		blinky->Move(o);
+		hud.Update(player);
 		//Crear fruita
 		fruit.Instantiate();
 
@@ -353,9 +354,9 @@ void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 
 }
 
-void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard, Fruit &fruit)
+void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard, Fruit &fruit, HUD &hud)
 {
-	HUD hud(player);
+	//HUD hud(player);
 	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(o);
 	fruit.Draw();
@@ -363,7 +364,7 @@ void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 	inky->Draw();
 	blinky->Draw();
 	player->Draw();
-	hud.Update(player);
+	//hud.Update(player);
 	hud.Draw(player);
 
 	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
@@ -453,9 +454,3 @@ void Ranking::Draw(RankingData & ranking)
 
 }
 
-
-void Exit::Load()
-{
-
-
-}

@@ -1,7 +1,7 @@
 #include "HUD.h"
 
 
-HUD::HUD(Player *player)
+void HUD::Init(Player *player)
 {
 	textColor.Init(0, 0, 0, 0);
 	Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
@@ -37,6 +37,11 @@ HUD::HUD(Player *player)
 		lives[i][RECT].Init(7 * frameWidth, 0 * frameHeight, frameWidth, frameHeight);
 	}
 	
+}
+
+HUD::HUD()
+{
+
 }
 
 void HUD::Update(Player *player)

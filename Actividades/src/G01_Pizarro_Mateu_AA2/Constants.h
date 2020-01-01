@@ -11,7 +11,7 @@ const int HUD_EDGES = 15;
 const int RANKING_EDGES = 30;
 
 const int FPS = 30;
-const float DELAY_TIME = 1000.0f / FPS;
+const float DELAY_TIME = 1500.0f / FPS;
 const int PIXELS_PER_FRAME = 7;
 const int TILES_PIXEL = 35;
 const int SPLASH_SCREEN_TIME = 3000;

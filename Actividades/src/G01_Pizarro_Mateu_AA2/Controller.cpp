@@ -19,6 +19,7 @@ Controller::Controller()
 	inky->SetInitPos();
 	blinky->SetInitPos();
 	clyde->SetInitPos();
+	hud.Init(player);
 
 }
 
@@ -39,8 +40,8 @@ void Controller::SceneControl()
 		if (keyboard.keys[SDLK_p] && pAux.running) pAux.paused = true;
 		if (keyboard.keys[SDLK_SPACE] && pAux.running) pAux.paused = false;
 		if (!pAux.running && keyboard.keys[SDLK_SPACE]) pAux.running = true;
-		scene->Update(o, player, clyde, inky, blinky, pAux, keyboard, fruit);
-		scene->Draw(o, map, player, clyde, inky, blinky, pAux, keyboard, fruit);
+		scene->Update(o, player, clyde, inky, blinky, pAux, keyboard, fruit, hud);
+		scene->Draw(o, map, player, clyde, inky, blinky, pAux, keyboard, fruit, hud);
 
 		if (pAux.paused && sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Stop();
 		else if (pAux.paused && !sound.soundOn && scene->buttons[(int)MENU_SOUND].Used(keyboard)) sound.Play();
@@ -121,15 +122,11 @@ void Controller::SceneControl()
 		break;
 
 	case SceneState::GO_TO_EXIT:
-		scene = new Exit;
 
 		state = SceneState::EXIT;
 
 		break;
 
-		/*case SceneState::EXIT:	//Crec que no fa falta el case tenint el del GO_TO_EXIT
-
-			break;*/
 
 	default:;
 

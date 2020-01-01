@@ -52,9 +52,9 @@ public:
 	virtual void Update();
 	virtual void Load();
 	virtual void Draw();
-	virtual void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
+	virtual void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &, HUD &);
 	virtual void Load(std::vector<std::vector<Objects*>> &, Map &, Player*, Inky *, Clyde *, Blinky *, Fruit &);
-	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
+	virtual void Draw(std::vector<std::vector<Objects*>> &, Map &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &, HUD &);
 	virtual void Update(InputHandle &);
 	virtual void Load(RankingData &ranking);
 	virtual void Draw(RankingData &ranking);
@@ -63,9 +63,9 @@ public:
 class Play : public Scene {
 public:
 	//Functions
-	void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
+	void Update(std::vector<std::vector<Objects*>> &, Player *, Clyde *, Inky *, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &, HUD &);
 	void Load(std::vector<std::vector<Objects*>> &, Map &,Player*, Inky *, Clyde *, Blinky *, Fruit &);
-	void Draw(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &);
+	void Draw(std::vector<std::vector<Objects*>> &, Map &, Player*, Clyde*, Inky*, Blinky *, PlayAuxiliars &, InputHandle &, Fruit &, HUD &);
 
 };
 
@@ -90,10 +90,4 @@ public:
 	//Functions
 	void Update();
 	void Draw();
-};
-
-class Exit : public Scene {
-public:
-	//Functions
-	void Load();
 };
