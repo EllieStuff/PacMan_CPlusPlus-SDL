@@ -122,6 +122,7 @@ void RankingData::Save()
 
 void RankingData::Recover()
 {
+	//Save();	//Pa borrar el ranking
 	size_t len;
 	std::ifstream fEntrada(fileName, std::ios::in | std::ios::binary);
 	fEntrada.read(reinterpret_cast<char *>(&len), sizeof(size_t));

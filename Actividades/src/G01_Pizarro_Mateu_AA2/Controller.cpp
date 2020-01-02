@@ -133,4 +133,5 @@ void Controller::SceneControl()
 	}
 
 	Renderer::Instance()->Render();
+
 }
