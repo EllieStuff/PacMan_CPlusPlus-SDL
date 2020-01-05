@@ -13,7 +13,6 @@ void InputHandle::PollForPlay()
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_QUIT:
-			//state = quitSceneTarget;
 			break;
 		case SDL_KEYDOWN:
 			keys[event.key.keysym.sym] = true;
@@ -41,7 +40,6 @@ void InputHandle::GeneralPoll()
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_QUIT:
-			//state = quitSceneTarget;
 			break;
 		case SDL_MOUSEMOTION:
 			cursor.x = event.motion.x;
@@ -57,7 +55,6 @@ void InputHandle::GeneralPoll()
 void InputHandle::ResetKeys()
 {
 	isClicked = false;
-	//keys[event.key.keysym.sym] = false;
 	for (std::vector<bool>::iterator it = keys.begin(); it != keys.end(); it++)
 		*it = false;
 

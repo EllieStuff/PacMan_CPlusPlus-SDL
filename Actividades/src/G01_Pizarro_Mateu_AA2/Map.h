@@ -31,7 +31,6 @@ public:
 
 	//Functions
 	Objects* InterpretateXML(std::string, Rect&, Rect &);
-	void InterpretateXML(std::string, Rect&, Rect &, Rect &, Rect &, Rect &);
 	void Create(std::vector<std::vector<Objects*>> &, Rect &player, Rect &inky, Rect &blinky, Rect &clyde);
 	void InitRemainingTiles(std::vector<std::vector<Objects*>> &, int &, int &);
 	void Reinit(std::vector<std::vector<Objects*>> &);

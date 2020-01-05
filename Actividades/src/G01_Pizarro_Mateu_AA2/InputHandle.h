@@ -12,7 +12,6 @@ public:
 	std::vector<bool> keys;
 	bool isClicked = false;
 	Rect cursor;
-	//SDL_Event event;
 
 	InputHandle();
 	void PollForPlay();

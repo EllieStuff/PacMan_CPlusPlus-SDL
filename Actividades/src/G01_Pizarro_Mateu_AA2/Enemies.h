@@ -6,7 +6,6 @@ class Enemies : public Character
 public:
 	Direction dir = Direction::NONE;
 	int extraScore;
-	bool dying = false;
 	//Constructor
 	Enemies();
 	//Functions

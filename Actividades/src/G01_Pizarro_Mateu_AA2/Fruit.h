@@ -7,7 +7,7 @@
 #include "Renderer.h"
 #include "Map.h"
 
-struct Fruit {
+class Fruit {
 private:
 	FruitTypes currentType = FruitTypes::EMPTY;
 	FruitTypes lastType = FruitTypes::EMPTY;
@@ -18,7 +18,6 @@ private:
 	void ChangeFruit();
 
 public:
-	//time_t tDif = 0;
 	time_t waitEnd = 0;
 	int extraScore = 0;
 	Rect rect, pos;

@@ -27,7 +27,6 @@
 #include "Constants.h"
 #include "Utils.h"
 
-//Game general information
 
 
 int main(int, char*[])

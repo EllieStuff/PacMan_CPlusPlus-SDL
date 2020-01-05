@@ -34,5 +34,3 @@ enum class FruitTypes { CHERRY = 0, STRAWBERRY, ORANGE, COUNT, EMPTY };
 enum class Direction { UP = 0, DOWN, RIGHT, LEFT, NONE };
 
 enum ButtonPosition { PLAY_SOUND = 0, RANKING_EXIT, MENU_SOUND, MENU_PLAY, MENU_RANKING, MENU_EXIT, COUNT };
-
-enum EnemyType { ClYDE = 0, INKY, BLINKY };

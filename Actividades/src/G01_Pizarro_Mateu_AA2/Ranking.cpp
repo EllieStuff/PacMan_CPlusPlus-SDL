@@ -32,9 +32,6 @@ RankingData::RankingData()
 	font.Init("GameplayFont", "../../res/ttf/Gameplay.ttf", 80);
 	Renderer::Instance()->LoadFont(font);
 
-	//scoreText.Init(font.id, Utils::AddZerosInFrontOfStr(player->score, 4), textColor);
-	//score.Init(SCREEN_WIDTH - HUD_WIDTH + HUD_EDGES, HUD_EDGES * 3, 160, 80);
-
 
 	InitRects();
 
@@ -81,7 +78,6 @@ void RankingData::Load()
 	Renderer::Instance()->LoadTextureText(font.id, rankingText);
 	for (int i = 0; i < players.size(); i++) {
 		char pos = i + '1';
-		//std::string num = pos + ". ";
 		std::string numsId = "";
 		numsId += pos;
 		numsId += ". ";
@@ -89,7 +85,6 @@ void RankingData::Load()
 		scoresId += pos;
 		std::string namesId = "RankedNames";
 		namesId += pos;
-		//newId += static_cast<char>(i);
 		numTexts[i].Init(numsId, numsId, textColor);
 		nameTexts[i].Init(scoresId, players[i].name, textColor);
 		scoreTexts[i].Init(namesId, " - " + Utils::AddZerosInFrontOfStr(players[i].score, 4), textColor);
@@ -136,7 +131,6 @@ void RankingData::Recover()
 			players[i] = tmp[i];
 		}
 
-		//delete[]tmp;
 		fEntrada.close();
 
 	}

@@ -13,8 +13,8 @@ class Player : public Character
 {
 private: 
 	Direction goingToMove = Direction::NONE;
-	void FinishPowerUp(Clyde *, Inky*, Blinky *);
 	int maxScore = 0;
+	void FinishPowerUp(Clyde *, Inky*, Blinky *);
 
 public:
 	Direction dir = Direction::NONE;

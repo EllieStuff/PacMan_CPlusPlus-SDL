@@ -22,35 +22,11 @@ Objects* Map::InterpretateXML(std::string s, Rect &rect, Rect &pos)
 	return object;
 }
 
-//void Map::InterpretateXML(std::string s, Rect &newPos, Rect &player, Rect &inky, Rect &blinky, Rect &clyde)
-//{
-//	if (s == "Player") {
-//		player = newPos;
-//
-//	}
-//	else if (s == "Blinky") {
-//		blinky = newPos;
-//
-//	}
-//	else if (s == "Inky") {
-//		inky = newPos;
-//
-//	}
-//	else if (s == "Clyke") {
-//		clyde = newPos;
-//
-//	}
-//}
-
 void InitCharacter(const Rect &newPos, Rect &pos) {
 	pos = newPos;
 
 }
 
-//void InitFruit(const Rect &pos, std::vector<std::vector<Objects*>> &o) {
-//	o[pos.x][pos.y]->tile = MapTiles::EMPTY_FRUIT;
-//
-//}
 
 Rect SetXMLPos(rapidxml::xml_attribute<> *pAttr) {
 	int x = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
@@ -115,23 +91,6 @@ void Map::Create(std::vector<std::vector<Objects*>> &_objects, Rect &player, Rec
 	std::string content(buffer.str());
 	doc.parse<0>(&content[0]);
 	rapidxml::xml_node<> *pRoot = doc.first_node();
-	//for (rapidxml::xml_node<> *pNode = pRoot->first_node("Positions"); pNode; pNode = pNode->next_sibling()) {
-	//	for (rapidxml::xml_node<> *pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
-	//	{
-	//		rapidxml::xml_attribute<> *pAttr = pNodeI->first_attribute();
-	//		if (pNodeI->name() != "PowerUps") {
-	//			x = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
-	//			pAttr = pAttr->next_attribute();
-	//			y = (std::stoi(pAttr->value()) - 1) * TILES_PIXEL;
-	//			Rect tmpRect(x, y, TILES_PIXEL, TILES_PIXEL);
-	//			InterpretateXML(pNodeI->name(), tmpRect, player, inky, blinky, clyde);
-	//			std::cout << pNodeI->name() << " coordinates: (" << tmpRect.x << ", " << tmpRect.y << ")\n";
-	//		}
-	//		//Prq collons llegeix el "PowerUps" si l'estic dient que passi d'ell!!??
-
-	//	}
-
-	//}
 
 	rapidxml::xml_node<> *pNode = pRoot->first_node("Positions");
 	pNode = pNode->first_node();

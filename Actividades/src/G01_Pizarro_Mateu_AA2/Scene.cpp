@@ -123,8 +123,7 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 {
 	if (!pAux.paused && pAux.running)
 	{
-		//Actualitzar temps despres de pausa
-		if (pAux.timeDifChecked) {	//Falta fer un cas per a la regeneracio de les fruites
+		if (pAux.timeDifChecked) {
 			if (player->hasPowerUp)
 				player->powerUpEnd = clock() + pAux.powerUpTDif;
 			if (fruit.publicType == FruitTypes::EMPTY)
@@ -144,13 +143,6 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 		hud.Update(player);
 		//Crear fruita
 		fruit.Instantiate();
-
-		/*if (fruit.publicType == FruitTypes::EMPTY)
-			std::cout << "\nIS EMPTY - " << ((fruit.waitEnd - clock()) / 1000) << "s\n\n";
-		else std::cout << "\n --- " << ((fruit.waitEnd - clock()) / 1000) << "s\n\n";*/	
-		/*if (player->hasPowerUp) 
-			std::cout << "\nHAS POWER UP - " << ((player->powerUpEnd - clock()) / 1000) << "s\n\n";
-		else std::cout << "\n ---\n\n";*/
 
 		//Animacions
 		int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
@@ -179,9 +171,6 @@ void Play::Update(std::vector<std::vector<Objects*>> &o, Player *player, Clyde *
 			}
 			else if (!player->hasPowerUp)
 			{
-				/*clyde->rect.y = 3 * frameHeight;
-				inky->rect.y = 2 * frameHeight;
-				blinky->rect.y = 1 * frameHeight;*/
 				if (player->dir == Direction::NONE || player->dir == Direction::RIGHT)
 				{
 					clyde->rect.x = 6 * frameWidth;
@@ -356,7 +345,6 @@ void Play::Load(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 
 void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player, Clyde *clyde, Inky *inky, Blinky *blinky, PlayAuxiliars &pAux, InputHandle &keyboard, Fruit &fruit, HUD &hud)
 {
-	//HUD hud(player);
 	Rect fadedSpriteRect, fadedSpritePos;
 	map.Draw(o);
 	fruit.Draw();
@@ -364,7 +352,6 @@ void Play::Draw(std::vector<std::vector<Objects*>> &o, Map &map, Player *player,
 	inky->Draw();
 	blinky->Draw();
 	player->Draw();
-	//hud.Update(player);
 	hud.Draw(player);
 
 	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;

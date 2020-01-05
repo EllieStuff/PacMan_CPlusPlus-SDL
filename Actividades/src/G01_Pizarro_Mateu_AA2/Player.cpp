@@ -118,7 +118,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					o[i][j]->tile = MapTiles::EMPTY;
 					o[i][j]->rect.w = 0;
 					o[i][j]->rect.h = 0;
-					////return true;
 				}
 			}
 			if (o[i][j]->tile == MapTiles::POWER_UP)
@@ -138,7 +137,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					inky->rect.y = 4 * frameHeight;
 					blinky->rect.x = 0;
 					blinky->rect.y = 4 * frameHeight;
-					//return true;
 				}
 			}
 			if (Utils::OnSquareCollision(pos, clyde->pos) && Utils::PointsDistance(pos, clyde->pos) < TILES_PIXEL / 2)
@@ -154,7 +152,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					clyde->ReinitPos();
 
 				}
-				//ReinitPos();
 				
 			}
 			if (Utils::OnSquareCollision(pos, inky->pos) && Utils::PointsDistance(pos, inky->pos) < TILES_PIXEL / 2)
@@ -170,7 +167,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					inky->ReinitPos();
 
 				}
-				//ReinitPos();
 				
 			}
 			if (Utils::OnSquareCollision(pos, blinky->pos) && Utils::PointsDistance(pos, blinky->pos) < TILES_PIXEL / 2)
@@ -186,7 +182,6 @@ bool Player::Hits(std::vector<std::vector<Objects*>> &o, Clyde *clyde, Inky *ink
 					blinky->ReinitPos();
 
 				}
-				//ReinitPos();
 
 			}
 			if (fruit.publicType != FruitTypes::EMPTY && Utils::OnSquareCollision(pos, fruit.pos) && Utils::PointsDistance(pos, fruit.pos) < TILES_PIXEL / 2) {
@@ -235,17 +230,7 @@ int Player::GetMaxScore()
 
 	return maxScore;
 }
-//
-//void Player::AddMaxScore(int &add)
-//{
-//	maxScore += score;
-//
-//}
-//
-//void Player::InitMaxScore(int &_maxScore)
-//{
-//	maxScore = _maxScore;
-//}
+
 
 void Player::FinishPowerUp(Clyde* clyde, Inky* inky, Blinky* blinky)
 {

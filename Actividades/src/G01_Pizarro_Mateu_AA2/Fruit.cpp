@@ -14,7 +14,6 @@ void Fruit::Init(const Rect & _pos)
 
 void Fruit::ChangeFruit()
 {
-	//Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
 	int newType = rand() % static_cast<int>(FruitTypes::COUNT);
 	while (lastType == currentType && static_cast<FruitTypes>(newType) == currentType)
@@ -22,7 +21,6 @@ void Fruit::ChangeFruit()
 	
 	lastType = currentType;
 	publicType = currentType = static_cast<FruitTypes>(newType);
-	//rect.x = newType * frameWidth;
 	switch (currentType) {
 	case FruitTypes::CHERRY:
 		rect.x = 0;
@@ -52,7 +50,6 @@ void Fruit::EraseFruit()
 {
 	publicType = FruitTypes::EMPTY;
 
-	//Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	int frameWidth = Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8;
 	rect.x = 3 * frameWidth;
 	extraScore = 0;
@@ -68,17 +65,13 @@ void Fruit::Instantiate()
 
 void Fruit::Draw()
 {
-	//Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	Renderer::Instance()->PushSprite("PacmanSheet", Utils::RectToSDL_Rect(rect), Utils::RectToSDL_Rect(pos));
 
 }
 
 void Fruit::Reinit()
 {
-	///TODO: El reinit no funciona, averiguar perque
-	//Renderer::Instance()->LoadTexture("PacmanSheet", "../../res/img/PacManSpritesheet.png");
 	waitEnd = clock() + FRUITS_FIRST_DELAY;
-	//initialized = false;
 	rect.x = 3 * (Renderer::Instance()->GetTextureSize("PacmanSheet").x / 8);
 	publicType = lastType = currentType = FruitTypes::EMPTY;
 	extraScore = 0;
